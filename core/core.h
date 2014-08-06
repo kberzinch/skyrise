@@ -265,18 +265,6 @@ long Auton_TimerCheck(tTimer this) {
     return this - nSysTime;
 }
 
-void Auton_Rollers(tSpeed Speed = 0, int Runtime = 0) {
-#if defined(_DEBUG)
-    if(Speed != 127)
-        writeDebugStreamLine("Auton_Rollers(%i,%i)",Speed,Runtime);
-#endif
-    Auton_Motor_Set(eRollers,Speed);
-    if(Runtime > 0) {
-        sleep(Runtime);
-        Auton_Rollers();
-    }
-}
-
 tError Auton_WaitForKeyPress(long Timeout = 4000) {
     tTimer Timer = Auton_TimerSet();
 #ifndef NoLCD
@@ -313,40 +301,6 @@ void Auton_SemaphoreLock(TSemaphore nSemaphore) {
 void Auton_SemaphoreUnlock(TSemaphore nSemaphore) {
     while(Auton_SemaphoreOwned(nSemaphore))
         semaphoreUnlock(nSemaphore);
-}
-
-task PID_Lift {
-    while(true) {
-        Auton_SemaphoreLock(pLift.Semaphore);
-
-        pLift.Error = (pLift.Target) - (SensorValue[eLift.Sensor]);
-        pLift.Integral = pLift.Integral + pLift.Error;
-        if (pLift.Error == 0 || abs(pLift.Error) > pLift.Margin) {
-            pLift.Integral = 0;
-        }
-        pLift.Derivative = pLift.Error - pLift.Error_Prev;
-        pLift.Error_Prev = pLift.Error;
-        Auton_Motor_Set(eLift,pLift.Kp * pLift.Error + pLift.Ki * pLift.Integral + pLift.Kd * pLift.Derivative);
-
-        Auton_SemaphoreUnlock(pLift.Semaphore);
-        EndTimeSlice();
-    }
-}
-
-task PID_LiftSupervisor {
-    while(true) {
-        if(SensorBoolean[LimitLift]) {
-            Auton_SemaphoreLock(pLift.Semaphore);
-            Auton_ClearPID(pLift);
-            while(SensorBoolean[LimitLift])
-                EndTimeSlice();
-            } else {
-            Auton_SemaphoreUnlock(pLift.Semaphore);
-            while(!SensorBoolean[LimitLift])
-                EndTimeSlice();
-        }
-        EndTimeSlice();
-    }
 }
 
 tError Auton_Lift(int Target = 0, tSpeed Speed = 127, bool Wait = true, long Timeout = 1000) {
