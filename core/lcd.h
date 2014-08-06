@@ -146,7 +146,6 @@ void LCD_Menu() {
 #endif
 
 #ifndef LCD_NotUsing_Prompt && LCD_NotUsing_Display
-; // won't compile without this (on my machine)
 void LCD_Timer_Set(const char Timer, const float Value = 0) {
 	LCD.Timer[Timer] = nSysTime - Value;
 }
@@ -250,10 +249,10 @@ task LCD_Display {
 				} else {
 				displayLCDString(0,0,"R");
 			}
-			if(Competition.AtHanging) {
-				displayLCDString(1,1,"H");
+			if(Competition.AtLoader) {
+				displayLCDString(1,1,"L");
 				} else {
-				displayLCDString(0,1,"M");
+				displayLCDString(0,1,"I");
 			}
 			if (bIfiRobotDisabled) {
 				displayLCDString(0, 3, "Disabled");
