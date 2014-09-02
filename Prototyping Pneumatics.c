@@ -64,8 +64,8 @@ task main {
     clearDebugStream();
     startTask(TransmissionControl);
     while (true) {
-        //motor[DriveLeft] = vexRT[Ch3];
-        //motor[DriveRight] = vexRT[Ch2];
+        motor[DriveLeft] = vexRT[Ch3];
+        motor[DriveRight] = vexRT[Ch2];
         if (vexRT[Btn6U] == 1) {
             TransmissionState = false;
         }
