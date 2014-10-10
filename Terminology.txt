@@ -1,0 +1,2 @@
+Starting position with autoloader is called autoloader
+Starting position without autoloader is called freedom
