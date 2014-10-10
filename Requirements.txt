@@ -5,3 +5,4 @@ PID-based drive? (builtin?)
 Gyro turns
 Power expander issues: overvoltage
 Limit switch(es) for lift soft stop
+Read through existing code, strip any unneeded functions
