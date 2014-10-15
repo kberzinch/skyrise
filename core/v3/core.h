@@ -6,6 +6,7 @@
 #pragma DebuggerWindows("debugStream")
 #endif
 #ifndef NoLCD
+#define LCD_NotUsing_Prompt
 #include "lcd_menu.h"
 #endif
 #include "competition.h"
@@ -43,12 +44,17 @@ typedef enum tSide {
 	RIGHT
 };
 
+typedef enum tTransmission {
+	SPEED,
+	TORQUE
+};
+
 // Must be defined per robot
 void init();
 void ResetDriveEncoders();
 void ResetLiftEncoders();
 tMotor DriveLeftA, DriveLeftB, DriveRightA, DriveRightB;
-tSensors DriveEncoderLeft, DriveEncoderRight, LiftEncoder, LiftLimitA, LiftLimitB;
+tSensors DriveEncoderLeft, DriveEncoderRight, LiftEncoder, LiftLimitA, LiftLimitB, Gyro, TransmissionPneumatic;
 
 // Function definitions
 void Halt(int Line) {
@@ -57,12 +63,6 @@ void Halt(int Line) {
 #endif
 	allMotorsOff();
 	stopAllTasks();
-}
-
-void Die() {
-#if defined(_DEBUG)
-	VERIFY(false);
-#endif
 }
 
 int Auton_GetMultiplier(tDirection Direction, tSide Side) {
@@ -103,34 +103,55 @@ void Auton_Drive(tDirection Direction = STOP, tSpeed Speed = 0, int Time = 0) {
 }
 
 #ifdef HasGyro
-void Auton_Drive_Turn(tDirection Direction, tSpeed Speed = 0, int Distance = 0) {
+void Auton_Drive_TurnTo(tDirection Direction, tSpeed Speed = 0, int Heading = 0) {
 	Auton_Drive(Direction, Speed);
-	while(SensorValue[DriveEncoderLeft] > 10);
+	while(SensorValue[Gyro] > Heading) {}
 }
 #endif
 
-void Auton_Drive_Linear(tDirection Direction, tSpeed Speed = 0, int Distance = 0) {
+void Auton_Drive_Targeted(tDirection Direction, tSpeed Speed = 0, int Distance = 0) {
 	Auton_Drive(Direction, Speed);
-	while(SensorValue[DriveEncoderLeft] > 0);
-}
-
-void Auton_Drive_Targeted(tDirection Direction = STOP, tSpeed Speed = 0, int Distance = 0) {
-#ifdef HasGyro
-	if(Direction == CLOCKWISE || Direction == COUNTERCLOCKWISE) {
-		Auton_Drive_Turn(Direction, Speed, Distance);
+	switch(Auton_GetMultiplier(Direction,LEFT)) {
+	case -1:
+		while(SensorValue[DriveEncoderLeft] > Distance) {}
+		break;
+	case 1:
+		while(SensorValue[DriveEncoderLeft] < Distance) {}
+		break;
+	case 0:
+#if defined(_DEBUG)
+		VERIFY(false);
 #endif
+		break;
 	}
 }
 
+#ifndef NoLCD
 void Auton_WaitForKeyPress(int Sleep = 0) {
-	while(nLCDButtons == 0)
-		EndTimeSlice();
-	while(nLCDButtons != 0)
-		EndTimeSlice();
+	LCD.Display.Paused = true;
+	while(nLCDButtons == 0) {}
+	while(nLCDButtons != 0) {}
 	sleep(Sleep);
+	LCD.Display.Paused = false;
+}
+#endif
+
+void Transmission(tTransmission NewStatus) {
+	if(NewStatus == TORQUE) {
+		SensorValue[TransmissionPneumatic] = 0;
+		} else {
+		SensorValue[TransmissionPneumatic] = 1;
+	}
 }
 
 void pre_auton() {
+#ifndef NoLCD
+	clearLCDLine(0);
+	clearLCDLine(1);
+	bLCDBacklight = true;
+	displayLCDCenteredString(0, "Starting up");
+	displayLCDCenteredString(1, "Please stand by");
+#endif
 #if defined(_DEBUG)
 	clearDebugStream();
 	writeDebugStream(FILE);
@@ -159,12 +180,11 @@ void pre_auton() {
 #endif
 	writeDebugStreamLine(" - Batt A   %1.2fv", (float)nImmediateBatteryLevel / (float)1000);
 #ifndef NoPowerExpander
-	writeDebugStreamLine(" - Batt B   %1.2fv", (float)SensorValue[PowerExpander] / (float)280);
+	writeDebugStreamLine(" - Batt B   %1.2fv", (float)SensorValue[PowerExpander] / (float)280); // TBD: Verify magic number
 #endif
 	writeDebugStreamLine(" - Backup   %1.2fv", (float)BackupBatteryLevel / (float)1000);
 #endif
 	bPlaySounds = false;
-	bLCDBacklight = true;
 #ifndef NoLCD
 	LCD.Display.BattA = true;
 #ifndef NoPowerExpander
@@ -174,9 +194,16 @@ void pre_auton() {
 #endif
 	clearLCDLine(0);
 	clearLCDLine(1);
-	if(!bIfiRobotDisabled) {
+  if(!bIfiRobotDisabled) {
 #if defined(_DEBUG)
 		writeDebugStreamLine("Not disabled: exiting");
+#endif
+#ifndef NoLCD
+		clearLCDLine(0);
+		clearLCDLine(1);
+		bLCDBacklight = true;
+		displayLCDCenteredString(0, "SETUP SKIPPED");
+		displayLCDCenteredString(1, "Robot enabled");
 #endif
 		return;
 	}
@@ -191,18 +218,18 @@ void pre_auton() {
 	writeDebugStreamLine("Menu launched");
 #endif
 	LCD_Menu();
-#endif
 	clearLCDLine(0);
 	clearLCDLine(1);
 	displayLCDCenteredString(0, "Position robot then");
 	displayLCDCenteredString(1, "press any key");
 	Auton_WaitForKeyPress();
+	clearLCDLine(0);
+	clearLCDLine(1);
 	displayLCDString(0, 0, "*** KEEP BACK ***");
-	displayLCDString(1, 0, " CALIBRATING...");
+	displayLCDString(1, 0, " CALIBRATING");
 	sleep(1000);
 	clearLCDLine(0);
 	clearLCDLine(1);
-#ifndef NoLCD
 	startTask(LCD_Display);
 #endif
 #if defined(_DEBUG)
