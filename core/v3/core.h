@@ -39,6 +39,11 @@ typedef enum tDirection {
 	COUNTERCLOCKWISE
 };
 
+typedef enum tVertical {
+	UP = 1,
+	DOWN = -1
+};
+
 typedef enum tSide {
 	LEFT,
 	RIGHT
@@ -53,10 +58,12 @@ typedef enum tTransmission {
 void init();
 void ResetDriveEncoders();
 void ResetLiftEncoders();
-tMotor DriveLeftA, DriveLeftB, DriveRightA, DriveRightB;
-tSensors DriveEncoderLeft, DriveEncoderRight, LiftEncoder, LiftLimitA, LiftLimitB, Gyro, TransmissionPneumatic;
+tMotor DriveLeftA, DriveLeftB, DriveRightA, DriveRightB, LiftA, LiftB, LiftC, LiftD, LiftE, LiftF;
+tSensors DriveEncoderLeft, LiftEncoder, LiftLimitA, LiftLimitB, Gyro, TransmissionPneumatic, ClawPneumatic, ClawLimitA, ClawLimitB;
 
 // Function definitions
+
+// Use __LINE__ as the parameter
 void Halt(int Line) {
 #if defined(_DEBUG)
 	writeDebugStreamLine("Halt command sent from line %i",Line);
@@ -105,7 +112,11 @@ void Auton_Drive(tDirection Direction = STOP, tSpeed Speed = 0, int Time = 0) {
 #ifdef HasGyro
 void Auton_Drive_TurnTo(tDirection Direction, tSpeed Speed = 0, int Heading = 0) {
 	Auton_Drive(Direction, Speed);
-	while(SensorValue[Gyro] > Heading) {}
+	if(SensorValue[Gyro] > Heading) {
+		while(SensorValue[Gyro] > Heading) {}
+		} else {
+		while(SensorValue[Gyro] < Heading) {}
+	}
 }
 #endif
 
@@ -117,11 +128,6 @@ void Auton_Drive_Targeted(tDirection Direction, tSpeed Speed = 0, int Distance =
 		break;
 	case 1:
 		while(SensorValue[DriveEncoderLeft] < Distance) {}
-		break;
-	case 0:
-#if defined(_DEBUG)
-		VERIFY(false);
-#endif
 		break;
 	}
 }
@@ -194,7 +200,7 @@ void pre_auton() {
 #endif
 	clearLCDLine(0);
 	clearLCDLine(1);
-  if(!bIfiRobotDisabled) {
+	if(!bIfiRobotDisabled) {
 #if defined(_DEBUG)
 		writeDebugStreamLine("Not disabled: exiting");
 #endif
@@ -239,4 +245,36 @@ void pre_auton() {
 #if defined(_DEBUG)
 	writeDebugStreamLine("Ready to roll!");
 #endif
+}
+
+void Auton_Lift(tVertical Direction, tSpeed Speed = 127, int Time = 0) {
+	motor[LiftA] = Direction * Speed;
+	motor[LiftB] = Direction * Speed;
+	motor[LiftC] = Direction * Speed;
+	motor[LiftD] = Direction * Speed;
+	motor[LiftE] = Direction * Speed;
+	motor[LiftF] = Direction * Speed;
+	if (Time > 0)
+		sleep(Time);
+}
+
+// if sensorvalue == newposition nothing will happen
+void Auton_Lift_Targeted(tVertical Direction, tSpeed Speed = 127, int NewPosition = 0) {
+	if(SensorValue[LiftEncoder] > NewPosition) {
+		while(SensorValue[LiftEncoder] > NewPosition) {
+			Auton_Lift(Direction, Speed);
+		}
+		} else if(SensorValue[LiftEncoder] < NewPosition) {
+		while(SensorValue[LiftEncoder] < NewPosition) {
+			Auton_Lift(Direction, Speed);
+		}
+	}
+}
+
+void Auton_Claw(bool Open) {
+	if(Open) {
+		SensorValue[ClawPneumatic] = 0;
+	} else {
+		SensorValue[ClawPneumatic] = 1;
+	}
 }
