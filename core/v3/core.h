@@ -41,7 +41,8 @@ typedef enum tDirection {
 
 typedef enum tVertical {
 	UP = 1,
-	DOWN = -1
+	DOWN = -1,
+	VSTOP = 0
 };
 
 typedef enum tSide {
@@ -173,10 +174,10 @@ void pre_auton() {
 	writeDebugStreamLine(" - Progskill	OFF");
 #endif
 #ifndef NoInit
-	writeDebugStreamLine(" - Init				OFF");
+	writeDebugStreamLine(" - Init				 ON");
 #endif
 #ifdef NoInit
-	writeDebugStreamLine(" - Init				 ON");
+	writeDebugStreamLine(" - Init				OFF");
 #endif
 #ifndef NoLCD
 	writeDebugStreamLine(" - LCD				 ON");
@@ -247,7 +248,7 @@ void pre_auton() {
 #endif
 }
 
-void Auton_Lift(tVertical Direction, tSpeed Speed = 127, int Time = 0) {
+void Auton_Lift(tVertical Direction = VSTOP, tSpeed Speed = 127, int Time = 0) {
 	motor[LiftA] = Direction * Speed;
 	motor[LiftB] = Direction * Speed;
 	motor[LiftC] = Direction * Speed;
