@@ -2,8 +2,8 @@ task usercontrol { // Each driver has his/her own file.
 	int leftdrive, rightdrive;
 	while(true) {
 		// MAIN DRIVE
-		leftdrive = vexRT[Ch3] + vexRT[Ch1];
-		rightdrive = vexRT[Ch3] - vexRT[Ch1];
+		leftdrive = vexRT[Ch2] + vexRT[Ch1];
+		rightdrive = vexRT[Ch2] - vexRT[Ch1];
 		motor[DriveLeftA] = leftdrive;
 		motor[DriveLeftB] = leftdrive;
 		motor[DriveRightA] = rightdrive;
