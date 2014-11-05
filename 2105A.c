@@ -1,3 +1,5 @@
+#pragma config(UART_Usage, UART1, uartVEXLCD, baudRate19200, IOPins, None, None)
+#pragma config(UART_Usage, UART2, uartNotUsed, baudRate4800, IOPins, None, None)
 #pragma config(Sensor, dgtl1,  TransmissionPneumatic, sensorDigitalOut)
 #pragma config(Sensor, dgtl2,  ClawPneumatic,  sensorDigitalOut)
 #pragma config(Motor,  port1,           DriveLeftA,    tmotorVex393_HBridge, openLoop, driveLeft)
@@ -15,7 +17,6 @@
 #define NoProgrammingSkills
 #define NoPowerExpander
 #define NoInit
-#define NoLCD
 const string FILE = __FILE__;
 #include "core\v3\core.h"
 #include "usercontrol\2105A.h"

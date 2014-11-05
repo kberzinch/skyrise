@@ -216,7 +216,7 @@ task LCD_Display {
 					} else {
 					Text[0] = "";
 				}
-				if (LCD.Display.BattB != -1) {
+				if (LCD.Display.BattB != 0) {
 					sprintf(Text[1], "Batt B: %1.2fv  ", (float)SensorValue[LCD.Display.BattB] / (float)280);
 					} else {
 					Text[1] = "";
@@ -265,7 +265,7 @@ task LCD_Display {
 					displayLCDString(0, 3, "Auton");
 					Competition.Status = 1;
 					} else {
-					displayLCDString(0, 3, "Driver");
+					displayLCDString(0, 3, "Driver    ");
 					Competition.Status = 2;
 				}
 			}
