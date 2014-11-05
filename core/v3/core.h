@@ -208,9 +208,7 @@ void pre_auton() {
 #ifndef NoLCD
 		clearLCDLine(0);
 		clearLCDLine(1);
-		bLCDBacklight = true;
-		displayLCDCenteredString(0, "SETUP SKIPPED");
-		displayLCDCenteredString(1, "Robot enabled");
+		startTask(LCD_Display);
 #endif
 		return;
 	}
@@ -227,7 +225,7 @@ void pre_auton() {
 	LCD_Menu();
 	clearLCDLine(0);
 	clearLCDLine(1);
-	displayLCDCenteredString(0, "Position robot then");
+	displayLCDCenteredString(0, "Position robot");
 	displayLCDCenteredString(1, "press any key");
 	Auton_WaitForKeyPress();
 	clearLCDLine(0);
@@ -275,7 +273,7 @@ void Auton_Lift_Targeted(tVertical Direction, tSpeed Speed = 127, int NewPositio
 void Auton_Claw(bool Open) {
 	if(Open) {
 		SensorValue[ClawPneumatic] = 0;
-	} else {
+		} else {
 		SensorValue[ClawPneumatic] = 1;
 	}
 }
