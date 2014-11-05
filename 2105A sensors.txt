@@ -1,0 +1,6 @@
+ - [!] Min. 1x encoder on lift. If more are added they will both be used (avg?)
+ - [!] Min. 2x limit switches on lift: Min/max positions. If more are added the first one triggered will stop the lift.
+ - [!] Gyroscope. Must be mounted horizontally, other than that doesn't matter.
+ - Ultrasonic sensors on front of chassis? May be useful for collection but not placing pylons due to other robot.
+ - Line followers? Idk where the heck you'd put them; optimally near center and as close to the floor as possible.
+ - Accelerometer could be used to detect collisions. Should also be mounted horizontally.
