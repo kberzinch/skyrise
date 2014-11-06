@@ -1,4 +1,7 @@
-task usercontrol { // Each driver has his/her own file.
+// ROBOT:  2015A
+// DRIVER: John
+
+task usercontrol {
 	int leftdrive, rightdrive;
 	while(true) {
 		// MAIN DRIVE
