@@ -3,10 +3,17 @@
 
 task usercontrol {
 	int leftdrive, rightdrive;
+	const int deadband = 15;
 	while(true) {
 		// MAIN DRIVE
 		leftdrive = vexRT[Ch2] + vexRT[Ch1];
 		rightdrive = vexRT[Ch2] - vexRT[Ch1];
+		// ** DEADBANDING
+		if(leftdrive < deadband && leftdrive > -deadband)
+			leftdrive = 0;
+		if(rightdrive < deadband && rightdrive > -deadband)
+			rightdrive = 0;
+		// DEADBANDING **
 		motor[DriveLeftA] = leftdrive;
 		motor[DriveLeftB] = leftdrive;
 		motor[DriveRightA] = rightdrive;
