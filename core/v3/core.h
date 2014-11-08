@@ -247,12 +247,12 @@ void pre_auton() {
 }
 
 void Auton_Lift(tVertical Direction = VSTOP, tSpeed Speed = 127, int Time = 0) {
-	motor[LiftA] = Direction * Speed;
-	motor[LiftB] = Direction * Speed;
-	motor[LiftC] = Direction * Speed;
-	motor[LiftD] = Direction * Speed;
-	motor[LiftE] = Direction * Speed;
-	motor[LiftF] = Direction * Speed;
+	motor[LiftLeftA] = Direction * Speed;
+	motor[LiftLeftB] = Direction * Speed;
+	motor[LiftLeftC] = Direction * Speed;
+	motor[LiftRightA] = Direction * Speed;
+	motor[LiftRightB] = Direction * Speed;
+	motor[LiftRightC] = Direction * Speed;
 	if (Time > 0)
 		sleep(Time);
 }
