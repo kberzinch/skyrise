@@ -216,7 +216,7 @@ task LCD_Display {
 					} else {
 					Text[0] = "";
 				}
-				if (LCD.Display.BattB != 0) {
+				if (LCD.Display.BattB != -1) {
 					sprintf(Text[1], "Batt B: %1.2fv  ", (float)SensorValue[LCD.Display.BattB] / (float)280);
 					} else {
 					Text[1] = "";
