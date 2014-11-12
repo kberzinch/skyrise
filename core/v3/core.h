@@ -201,6 +201,12 @@ void pre_auton() {
 #endif
 	clearLCDLine(0);
 	clearLCDLine(1);
+#ifndef NoInit
+#if defined(_DEBUG)
+	writeDebugStreamLine("Starting init()");
+#endif
+	init();
+#endif
 	if(!bIfiRobotDisabled) {
 #if defined(_DEBUG)
 		writeDebugStreamLine("Not disabled: exiting");
@@ -212,12 +218,6 @@ void pre_auton() {
 #endif
 		return;
 	}
-#ifndef NoInit
-#if defined(_DEBUG)
-	writeDebugStreamLine("Starting init()");
-#endif
-	init();
-#endif
 #ifndef NoLCD
 #if defined(_DEBUG)
 	writeDebugStreamLine("Menu launched");
@@ -275,5 +275,17 @@ void Auton_Claw(bool Open) {
 		SensorValue[ClawPneumatic] = 0;
 		} else {
 		SensorValue[ClawPneumatic] = 1;
+	}
+}
+
+task BatteryMonitor {
+	sleep(1000);
+	while(true) {
+		if(nAvgBatteryLevel < 7000) { // millivolts
+			SensorValue[BattALED] = 1;
+		}
+		if(((float)SensorValue[LCD.Display.BattB] / (float)280) < 7000) { // see above
+			SensorValue[BattBLED] = 1;
+		}
 	}
 }
