@@ -34,12 +34,5 @@ task usercontrol {
 			} else if(vexRT[Btn5D] == 1) {
 			SensorValue[TransmissionPneumatic] = 0;
 		}
-
-		// CLAW
-		if(vexRT[Btn7U] == 1) {
-			SensorValue[ClawPneumatic] = 1;
-			} else if(vexRT[Btn7D] == 1) {
-			SensorValue[ClawPneumatic] = 0;
-		}
 	}
 }
