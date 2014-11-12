@@ -60,7 +60,7 @@ void init();
 void ResetDriveEncoders();
 void ResetLiftEncoders();
 tMotor DriveLeftA, DriveLeftB, DriveRightA, DriveRightB, LiftA, LiftB, LiftC, LiftD, LiftE, LiftF;
-tSensors DriveEncoderLeft, LiftEncoder, LiftLimitA, LiftLimitB, Gyro, TransmissionPneumatic, ClawPneumatic, ClawLimitA, ClawLimitB;
+tSensors DriveEncoderLeft, LiftEncoder, LiftLimitMin, LiftLimitMax, Gyro, TransmissionPneumatic, ClawPneumatic, ClawLimitA, ClawLimitB;
 
 // Function definitions
 
@@ -99,7 +99,7 @@ int Auton_GetMultiplier(tDirection Direction, tSide Side) {
 	return 0;
 }
 
-void Auton_Drive(tDirection Direction = STOP, tSpeed Speed = 0, int Time = 0) {
+void Auton_Drive(tDirection Direction = STOP, tSpeed Speed = 127, int Time = 0) {
 	motor[DriveLeftA] = Speed * Auton_GetMultiplier(Direction,LEFT);
 	motor[DriveLeftB] = Speed * Auton_GetMultiplier(Direction,LEFT);
 	motor[DriveRightA] = Speed * Auton_GetMultiplier(Direction,RIGHT);
@@ -121,7 +121,7 @@ void Auton_Drive_TurnTo(tDirection Direction, tSpeed Speed = 0, int Heading = 0)
 }
 #endif
 
-void Auton_Drive_Targeted(tDirection Direction, tSpeed Speed = 0, int Distance = 0) {
+void Auton_Drive_Targeted(tDirection Direction, int Distance = 0, tSpeed Speed = 127) {
 	Auton_Drive(Direction, Speed);
 	switch(Auton_GetMultiplier(Direction,LEFT)) {
 	case -1:
@@ -131,6 +131,7 @@ void Auton_Drive_Targeted(tDirection Direction, tSpeed Speed = 0, int Distance =
 		while(SensorValue[DriveEncoderLeft] < Distance) {}
 		break;
 	}
+	Auton_Drive();
 }
 
 #ifndef NoLCD
@@ -152,6 +153,7 @@ void Transmission(tTransmission NewStatus) {
 }
 
 void pre_auton() {
+	bStopTasksBetweenModes = false;
 #ifndef NoLCD
 	clearLCDLine(0);
 	clearLCDLine(1);
@@ -258,34 +260,21 @@ void Auton_Lift(tVertical Direction = VSTOP, tSpeed Speed = 127, int Time = 0) {
 }
 
 // if sensorvalue == newposition nothing will happen
-void Auton_Lift_Targeted(tVertical Direction, tSpeed Speed = 127, int NewPosition = 0) {
-	if(SensorValue[LiftEncoder] > NewPosition) {
-		while(SensorValue[LiftEncoder] > NewPosition) {
-			Auton_Lift(Direction, Speed);
-		}
-		} else if(SensorValue[LiftEncoder] < NewPosition) {
-		while(SensorValue[LiftEncoder] < NewPosition) {
-			Auton_Lift(Direction, Speed);
-		}
+void Auton_Lift_Targeted(tVertical Direction, int NewPosition = 0, tSpeed Speed = 127) {
+	/*if(NewPosition == 0) {
+		Auton_Lift(Direction, Speed);
+		while(SensorValue[LiftLimitMin] == 0);
+		Auton_Lift();
+		return;
 	}
-}
-
-void Auton_Claw(bool Open) {
-	if(Open) {
-		SensorValue[ClawPneumatic] = 0;
-		} else {
-		SensorValue[ClawPneumatic] = 1;
-	}
-}
-
-task BatteryMonitor {
-	sleep(1000);
-	while(true) {
-		if(nAvgBatteryLevel < 7000) { // millivolts
-			SensorValue[BattALED] = 1;
-		}
-		if(((float)SensorValue[LCD.Display.BattB] / (float)280) < 7000) { // see above
-			SensorValue[BattBLED] = 1;
-		}
+	*/
+	if(Direction == UP) {
+		Auton_Lift(Direction, Speed);
+		while(SensorValue[LiftEncoder] < NewPosition);
+		Auton_Lift();
+		} else if(Direction == DOWN) {
+		Auton_Lift(Direction, Speed);
+		while(SensorValue[LiftEncoder] > NewPosition);
+		Auton_Lift();
 	}
 }

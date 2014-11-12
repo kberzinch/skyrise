@@ -253,7 +253,7 @@ task LCD_Display {
 				displayLCDString(0,0,"R");
 			}
 			if(Competition.AtLoader) {
-				displayLCDString(1,1,"L");
+				displayLCDString(0,1,"A");
 				} else {
 				displayLCDString(0,1,"F");
 			}
