@@ -9,8 +9,8 @@
 #pragma config(Sensor, dgtl2,  LiftLimitMin,   sensorTouch)
 #pragma config(Sensor, dgtl3,  LiftLimitMax,   sensorTouch)
 #pragma config(Sensor, dgtl4,  LiftEncoder,    sensorQuadEncoder)
-#pragma config(Sensor, dgtl6,  DriveLeftEncoder, sensorQuadEncoder)
-#pragma config(Sensor, dgtl8,  DriveRightEncoder, sensorQuadEncoder)
+#pragma config(Sensor, dgtl6,  DriveEncoderLeft, sensorQuadEncoder)
+#pragma config(Sensor, dgtl8,  DriveEncoderRight, sensorQuadEncoder)
 #pragma config(Sensor, dgtl10, DONOTUSE,       sensorDigitalIn)
 #pragma config(Sensor, dgtl11, BattALED,       sensorLEDtoVCC)
 #pragma config(Sensor, dgtl12, BattBLED,       sensorLEDtoVCC)
@@ -35,11 +35,15 @@
 const string FILE = __FILE__;
 #include "core\v3\core.h"
 #include "usercontrol\2105A-john.h"
+#include "auton\2105A-blue-atloader.h"
+#include "misc\2105A-autonmanager.h"
 
-void ResetDriveEncoders() {}
+void ResetDriveEncoders() {
+	SensorValue[DriveEncoderLeft] = 0;
+	SensorValue[DriveEncoderRight] = 0;
+}
 
 void init() {
-	startTask(BatteryMonitor);
 	SensorValue[Gyroscope] = 0;
 	SensorValue[BattALED] = 0;
 	SensorValue[BattBLED] = 0;
