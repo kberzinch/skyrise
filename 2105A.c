@@ -15,7 +15,7 @@
 // This file should only include functions that are applicable to this robot across drivers and autonomous programs.
 // Each driver gets his/her own file with usercontrol task
 // Each autonomous function is in its own file that defines only that function
-// Autonomous manager should also be in a seperate file? Sultan was here :D
+// Autonomous manager should also be in a seperate file?
 
 #define NoProgrammingSkills
 #define NoPowerExpander
