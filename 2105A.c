@@ -50,4 +50,5 @@ void init() {
 	SensorValue[Gyroscope] = 0;
 	SensorValue[BattALED] = 0;
 	SensorValue[BattBLED] = 0;
+	ResetDriveEncoders();
 }
