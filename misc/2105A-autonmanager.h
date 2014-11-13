@@ -1,12 +1,9 @@
 task autonomous {
 	switch(Competition.IsBlue) {
 	case true:
-		writeDebugStreamLine("Is Blue");
 		switch(Competition.AtLoader) {
 		case true:
-			writeDebugStreamLine("At Autoloader");
 			Auton_Blue_AtLoader();
-			writeDebugStreamLine("End Function");
 			break;
 		case false:
 			//Auton_Blue_Freedom();
@@ -24,4 +21,5 @@ task autonomous {
 		}
 		break;
 	}
+	LCD.Display.Paused = true;
 }
