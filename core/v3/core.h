@@ -207,12 +207,6 @@ void pre_auton() {
 #endif
 	clearLCDLine(0);
 	clearLCDLine(1);
-#ifndef NoInit
-#if defined(_DEBUG)
-	writeDebugStreamLine("Starting init()");
-#endif
-	init();
-#endif
 	if(!bIfiRobotDisabled) {
 #if defined(_DEBUG)
 		writeDebugStreamLine("Not disabled: exiting");
@@ -246,7 +240,12 @@ void pre_auton() {
 #if defined(_DEBUG)
 	writeDebugStreamLine("Waiting to reset encoders...");
 #endif
-	ResetDriveEncoders();
+#ifndef NoInit
+#if defined(_DEBUG)
+	writeDebugStreamLine("Starting init()");
+#endif
+	init();
+#endif
 #if defined(_DEBUG)
 	writeDebugStreamLine("Ready to roll!");
 #endif
