@@ -13,6 +13,7 @@ task autonomous {
 			}
 			break;
 		case false:
+		writeDebugStreamLine("Not a valid auton mode");
 			//Auton_Blue_Freedom();
 			break;
 		}
@@ -20,9 +21,11 @@ task autonomous {
 	case false:
 		switch(Competition.AtLoader) {
 		case true:
+		writeDebugStreamLine("Not a valid auton mode");
 			//Auton_Red_AtLoader();
 			break;
 		case false:
+		writeDebugStreamLine("Not a valid auton mode");
 			//Auton_Red_Freedom();
 			break;
 		}

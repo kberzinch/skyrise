@@ -231,7 +231,7 @@ void pre_auton() {
 	clearLCDLine(0);
 	clearLCDLine(1);
 	displayLCDString(0, 0, "*** KEEP BACK ***");
-	displayLCDString(1, 0, " CALIBRATING");
+	displayLCDString(1, 0, "   CALIBRATING");
 	sleep(1000);
 	clearLCDLine(0);
 	clearLCDLine(1);
