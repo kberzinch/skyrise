@@ -1,10 +1,10 @@
 #pragma config(UART_Usage, UART1, uartVEXLCD, baudRate19200, IOPins, None, None)
 #pragma config(UART_Usage, UART2, uartNotUsed, baudRate4800, IOPins, None, None)
 #pragma config(Sensor, in1,    PowerExpander,  sensorAnalog)
-#pragma config(Sensor, in2,    Gyroscope,      sensorGyro)
 #pragma config(Sensor, in3,    LineFollowerLeft, sensorLineFollower)
 #pragma config(Sensor, in4,    LineFollowerCenter, sensorLineFollower)
 #pragma config(Sensor, in5,    LineFollowerRight, sensorLineFollower)
+#pragma config(Sensor, in6,    Gyroscope,      sensorGyro)
 #pragma config(Sensor, dgtl1,  TransmissionPneumatic, sensorDigitalOut)
 #pragma config(Sensor, dgtl2,  LiftLimitMin,   sensorTouch)
 #pragma config(Sensor, dgtl3,  LiftLimitMax,   sensorTouch)
@@ -30,8 +30,10 @@
 // Each driver gets his/her own file with usercontrol task
 // Each autonomous function is in its own file that defines only that function
 // Autonomous manager should also be in a seperate file?
+// TODO: Calibrate gyro later
 
 #define NoProgrammingSkills
+#define HasGyro
 const string FILE = __FILE__;
 #include "core\v3\core.h"
 #include "usercontrol\2105A-john.h"

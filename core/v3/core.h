@@ -59,8 +59,8 @@ typedef enum tTransmission {
 void init();
 void ResetDriveEncoders();
 void ResetLiftEncoders();
-tMotor DriveLeftA, DriveLeftB, DriveRightA, DriveRightB, LiftA, LiftB, LiftC, LiftD, LiftE, LiftF;
-tSensors DriveEncoderLeft, LiftEncoder, LiftLimitMin, LiftLimitMax, Gyro, TransmissionPneumatic, ClawPneumatic, ClawLimitA, ClawLimitB;
+tMotor DriveLeftA, DriveLeftB, DriveRightA, DriveRightB;
+tSensors DriveEncoderLeft, LiftEncoder, LiftLimitMin, LiftLimitMax, TransmissionPneumatic;
 
 // Function definitions
 
@@ -111,17 +111,21 @@ void Auton_Drive(tDirection Direction = STOP, tSpeed Speed = 127, int Time = 0) 
 }
 
 #ifdef HasGyro
-void Auton_Drive_TurnTo(tDirection Direction, tSpeed Speed = 0, int Heading = 0) {
+void Auton_Drive_TurnTo(tDirection Direction, int Heading = 0, tSpeed Speed = 127) {
 	Auton_Drive(Direction, Speed);
-	if(SensorValue[Gyro] > Heading) {
-		while(SensorValue[Gyro] > Heading) {}
+	if(Direction == CLOCKWISE) {
+		while(SensorValue[Gyroscope] > Heading) {
+			//writeDebugStreamLine("TARGET=%i, POSITION=%i", Heading, SensorValue[Gyroscope]);
+		}
 		} else {
-		while(SensorValue[Gyro] < Heading) {}
+		while(SensorValue[Gyroscope] < Heading) {}
 	}
+	Auton_Drive();
 }
 #endif
 
 void Auton_Drive_Targeted(tDirection Direction, int Distance = 0, tSpeed Speed = 127) {
+	ResetDriveEncoders();
 	Auton_Drive(Direction, Speed);
 	switch(Auton_GetMultiplier(Direction,LEFT)) {
 	case -1:
@@ -255,17 +259,19 @@ void Auton_Lift(tVertical Direction = VSTOP, tSpeed Speed = 127, int Time = 0) {
 	motor[LiftRightA] = Direction * Speed;
 	motor[LiftRightB] = Direction * Speed;
 	motor[LiftRightC] = Direction * Speed;
-	if (Time > 0)
+	if (Time > 0) {
 		sleep(Time);
+		Auton_Lift();
+	}
 }
 
 // if sensorvalue == newposition nothing will happen
 void Auton_Lift_Targeted(tVertical Direction, int NewPosition = 0, tSpeed Speed = 127) {
 	/*if(NewPosition == 0) {
-		Auton_Lift(Direction, Speed);
-		while(SensorValue[LiftLimitMin] == 0);
-		Auton_Lift();
-		return;
+	Auton_Lift(Direction, Speed);
+	while(SensorValue[LiftLimitMin] == 0);
+	Auton_Lift();
+	return;
 	}
 	*/
 	if(Direction == UP) {
