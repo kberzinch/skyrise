@@ -1,11 +1,11 @@
 void Auton_Blue_AtLoader() {
 	Auton_Lift_Targeted(UP,850);
 	Auton_Drive_Targeted(FORWARD, 90);
-	sleep(1000);
-	Auton_Lift_Targeted(DOWN,500,127); // John suggests making this higher
-	sleep(1000);
+	sleep(500);
+	Auton_Lift_Targeted(DOWN,500,127);
+	sleep(500);
 	Auton_Lift(DOWN,127,50);
-	sleep(1000);
+	sleep(500);
 	Auton_Lift_Targeted(UP,1000);
 	Auton_Drive_Targeted(BACKWARD, -250);
 	Auton_Drive_TurnTo(CLOCKWISE,-800, 63);
@@ -13,7 +13,6 @@ void Auton_Blue_AtLoader() {
 	Auton_Drive_TurnTo(CLOCKWISE, -900, 50);
 	sleep(1000);
 	Auton_Lift_Targeted(DOWN,100);
-	Auton_Drive_Targeted(BACKWARD, -50);
-	sleep(1000);
+	Auton_Drive_Targeted(BACKWARD, -30);
 	Auton_Lift_Targeted(UP,850);
 }
