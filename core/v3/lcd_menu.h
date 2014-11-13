@@ -82,21 +82,29 @@ bool LCD_Menu_Execute()
 	{
 	case 0:
 		Competition.IsBlue = false;
+#if defined(_DEBUG)
+writeDebugStreamLine("Set as red");
+#endif
 		break;
 	case 1:
 		Competition.IsBlue = true;
+writeDebugStreamLine("Set as blue");
 		break;
 	case 2:
 		Competition.AtLoader = true;
+writeDebugStreamLine("Set as autoloader");
 		break;
 	case 3:
 		Competition.AtLoader = false;
+writeDebugStreamLine("Set as freedom spot");
 		break;
 	case 4:
 		Competition.Auton = 1;
+writeDebugStreamLine("Set as Numero Uno");
 		break;
 	case 5:
 		Competition.Auton = 2;
+writeDebugStreamLine("Set as Numero Dos");
 		break;
 	}
 	if (LCD.Menu[LCD.Index].SelectIndex == -1)
