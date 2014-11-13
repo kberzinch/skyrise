@@ -1,4 +1,4 @@
-void Auton_Blue_AtLoader() {
+void Auton_Blue_AtLoader_Pylon() {
 	Auton_Lift_Targeted(UP,850);
 	Auton_Drive_Targeted(FORWARD, 90);
 	sleep(500);
