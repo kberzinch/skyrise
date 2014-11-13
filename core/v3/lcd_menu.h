@@ -19,7 +19,7 @@
 /* for any consequences.                                */
 /********************************************************/
 
-const char LCD_SizeOfMenu = 5; // MUST be at least 1 to prevent crash
+const char LCD_SizeOfMenu = 6; // MUST be at least 1 to prevent crash
 
 #undef LCD_NotUsing_Menu       // Clear any statements against compiling LCD_Menu.
                                // If you don't want it, why would you include it?
@@ -67,10 +67,13 @@ void LCD_Menu_Define()
 	LCD.Menu[3].SelectIndex = 4;
 	LCD.Menu[3].NextIndex = 3;
 
-	LCD.Menu[4].Title = "Just click it.";
-	LCD.Menu[4].Text = "OK";
+	LCD.Menu[4].Title = "Auton Mode";
+	LCD.Menu[4].Text = "Numero Uno";
 	LCD.Menu[4].PrevIndex = 4;
-	LCD.Menu[4].NextIndex = 4;
+
+	LCD.Menu[5].Title = "Auton Mode";
+	LCD.Menu[5].Text = "Numero Dos";
+	LCD.Menu[5].NextIndex = 5;
 }
 
 bool LCD_Menu_Execute()
@@ -88,6 +91,12 @@ bool LCD_Menu_Execute()
 		break;
 	case 3:
 		Competition.AtLoader = false;
+		break;
+	case 4:
+		Competition.Auton = 1;
+		break;
+	case 5:
+		Competition.Auton = 2;
 		break;
 	}
 	if (LCD.Menu[LCD.Index].SelectIndex == -1)
