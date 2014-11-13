@@ -10,7 +10,7 @@ void Auton_Blue_AtLoader_Cube() {
 	Auton_Drive_Targeted(BACKWARD, -250);
 	Auton_Drive_TurnTo(CLOCKWISE,-800, 63);
 	Auton_Drive_Targeted(FORWARD, 80);
-	Auton_Drive_TurnTo(CLOCKWISE, -900, 50);
+	Auton_Drive_TurnTo(CLOCKWISE, -850, 50);
 	sleep(1000);
 	Auton_Lift_Targeted(DOWN,100);
 	Auton_Drive_Targeted(BACKWARD, -30);
