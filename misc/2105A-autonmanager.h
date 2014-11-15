@@ -18,12 +18,14 @@ task autonomous {
 		}
 		break;
 	case false:
+		OVERRIDE();
+		break;
 		switch(Competition.AtLoader) {
 		case true:
 			Auton_Red_AtLoader();
 			break;
 		case false:
-			Auton_Red_Freedom();
+			//Auton_Red_Freedom();
 			break;
 		}
 		break;

@@ -6,7 +6,7 @@ void Auton_Red_Freedom() {
 	Auton_Lift_Targeted(DOWN,550);
 	//Auton_Drive_Targeted(BACKWARD,-60);
 	Auton_Lift_Targeted(DOWN,100);
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE,700);
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE,850);
 	Auton_Drive_Targeted(FORWARD,1500);
 	Auton_Lift_Targeted(UP,1800);
 	Auton_Drive_TurnTo(CLOCKWISE,200);
