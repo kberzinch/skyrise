@@ -39,6 +39,9 @@ const string FILE = __FILE__;
 #include "usercontrol\2105A-john.h"
 #include "auton\2105A-blue-atloader-pylon.h"
 #include "auton\2105A-blue-atloader-pylon+cube.h"
+#include "auton\2105A-blue-freedom.h"
+#include "auton\2105A-red-atloader-pylon.h"
+#include "auton\2105A-red-freedom.h"
 #include "misc\2105A-autonmanager.h"
 
 void ResetDriveEncoders() {
