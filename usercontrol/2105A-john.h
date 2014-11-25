@@ -2,22 +2,12 @@
 // DRIVER: John
 
 task usercontrol {
-	int leftdrive, rightdrive;
-	const int deadband = 15;
 	while(true) {
-		// MAIN DRIVE
-		leftdrive = vexRT[Ch2] + vexRT[Ch1];
-		rightdrive = vexRT[Ch2] - vexRT[Ch1];
-		// ** DEADBANDING
-		if(leftdrive < deadband && leftdrive > -deadband)
-			leftdrive = 0;
-		if(rightdrive < deadband && rightdrive > -deadband)
-			rightdrive = 0;
-		// DEADBANDING **
-		motor[DriveLeftA] = leftdrive;
-		motor[DriveLeftB] = leftdrive;
-		motor[DriveRightA] = rightdrive;
-		motor[DriveRightB] = rightdrive;
+		// DRIVE
+		motor[DriveRearLeft]   =  vexRT[Ch1] - vexRT[Ch2] - vexRT[Ch4];
+		motor[DriveFrontLeft]  = -vexRT[Ch1] - vexRT[Ch2] - vexRT[Ch4];
+		motor[DriveRearRight]  =  vexRT[Ch1] + vexRT[Ch2] - vexRT[Ch4];
+		motor[DriveFrontRight] = -vexRT[Ch1] + vexRT[Ch2] - vexRT[Ch4];
 
 		// LIFT
 		if(vexRT[Btn6U] == 1) {
@@ -26,13 +16,6 @@ task usercontrol {
 			Auton_Lift(DOWN);
 			} else {
 			Auton_Lift();
-		}
-
-		// TRANSMISSION
-		if(vexRT[Btn5U] == 1) {
-			SensorValue[TransmissionPneumatic] = 1;
-			} else if(vexRT[Btn5D] == 1) {
-			SensorValue[TransmissionPneumatic] = 0;
 		}
 	}
 }
