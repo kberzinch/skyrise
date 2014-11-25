@@ -275,11 +275,11 @@ void Auton_Lift_Targeted(tVertical Direction, int NewPosition = 0, tSpeed Speed 
 	*/
 	if(Direction == UP) {
 		Auton_Lift(Direction, Speed);
-		while(SensorValue[LiftEncoder] < NewPosition);
+		while(SensorValue[LiftEncoder] < NewPosition) {}
 		Auton_Lift();
 		} else if(Direction == DOWN) {
 		Auton_Lift(Direction, Speed);
-		while(SensorValue[LiftEncoder] > NewPosition);
+		while(SensorValue[LiftEncoder] > NewPosition) {}
 		Auton_Lift();
 	}
 }

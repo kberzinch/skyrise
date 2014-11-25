@@ -5,24 +5,24 @@ task autonomous {
 		case true:
 			switch(Competition.Auton) {
 			case 1:
-				Auton_Blue_AtLoader_Pylon();
+				//Auton_Blue_AtLoader_Pylon();
 				break;
 			case 2:
-				Auton_Blue_AtLoader_Cube();
+				//Auton_Blue_AtLoader_Cube();
 				break;
 			}
 			break;
 		case false:
-			Auton_Blue_Freedom();
+			//Auton_Blue_Freedom();
 			break;
 		}
 		break;
 	case false:
-		OVERRIDE();
-		break;
+		//OVERRIDE();
+		//break;
 		switch(Competition.AtLoader) {
 		case true:
-			Auton_Red_AtLoader();
+			//Auton_Red_AtLoader();
 			break;
 		case false:
 			//Auton_Red_Freedom();
