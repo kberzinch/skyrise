@@ -35,6 +35,8 @@ typedef enum tDirection {
 	STOP,
 	FORWARD,
 	BACKWARD,
+	LEFT,
+	RIGHT,
 	CLOCKWISE,
 	COUNTERCLOCKWISE
 };
@@ -45,22 +47,11 @@ typedef enum tVertical {
 	VSTOP = 0
 };
 
-typedef enum tSide {
-	LEFT,
-	RIGHT
-};
-
-typedef enum tTransmission {
-	SPEED,
-	TORQUE
-};
-
 // Must be defined per robot
 void init();
 void ResetDriveEncoders();
 void ResetLiftEncoders();
-tMotor DriveLeftA, DriveLeftB, DriveRightA, DriveRightB;
-tSensors DriveEncoderLeft, LiftEncoder, LiftLimitMin, LiftLimitMax, TransmissionPneumatic;
+tSensors DriveEncoder, LiftEncoder, LiftLimitMinA, LiftLimitMinB, LiftLimitMax;
 
 // Function definitions
 
@@ -73,37 +64,49 @@ void Halt(int Line) {
 	stopAllTasks();
 }
 
-int Auton_GetMultiplier(tDirection Direction, tSide Side) {
+int Auton_GetMultiplier(tDirection Direction, tMotor WhichMotor) {
 	switch(Direction) {
 	case STOP:
 		return 0;
 	case FORWARD:
-		return 1;
+		switch(WhichMotor) {
+		case DriveFrontLeft:
+			return -1;
+		case DriveFrontRight:
+			return 1;
+		case DriveRearLeft:
+			return -1;
+		case DriveRearRight:
+			return 1;
+		}
 	case BACKWARD:
-		return -1;
+		return -Auton_GetMultiplier(FORWARD, WhichMotor);
+	case LEFT:
+		switch(WhichMotor) {
+		case DriveFrontLeft:
+			return 1;
+		case DriveFrontRight:
+			return 1;
+		case DriveRearLeft:
+			return -1;
+		case DriveRearRight:
+			return -1;
+		}
+	case RIGHT:
+		return -Auton_GetMultiplier(LEFT, WhichMotor);
 	case CLOCKWISE:
-		switch(Side) {
-		case LEFT:
-			return 1;
-		case RIGHT:
-			return -1;
-		}
+		return -1;
 	case COUNTERCLOCKWISE:
-		switch(Side) {
-		case LEFT:
-			return -1;
-		case RIGHT:
-			return 1;
-		}
+		return 1;
 	}
 	return 0;
 }
 
 void Auton_Drive(tDirection Direction = STOP, tSpeed Speed = 127, int Time = 0) {
-	motor[DriveLeftA] = Speed * Auton_GetMultiplier(Direction,LEFT);
-	motor[DriveLeftB] = Speed * Auton_GetMultiplier(Direction,LEFT);
-	motor[DriveRightA] = Speed * Auton_GetMultiplier(Direction,RIGHT);
-	motor[DriveRightB] = Speed * Auton_GetMultiplier(Direction,RIGHT);
+	motor[DriveFrontLeft] = Speed * Auton_GetMultiplier(Direction,DriveFrontLeft);
+	motor[DriveFrontRight] = Speed * Auton_GetMultiplier(Direction,DriveFrontRight);
+	motor[DriveRearLeft] = Speed * Auton_GetMultiplier(Direction,DriveRearLeft);
+	motor[DriveRearRight] = Speed * Auton_GetMultiplier(Direction,DriveRearRight);
 	if(Time > 0) {
 		sleep(Time);
 		Auton_Drive();
@@ -127,12 +130,12 @@ void Auton_Drive_TurnTo(tDirection Direction, int Heading = 0, tSpeed Speed = 12
 void Auton_Drive_Targeted(tDirection Direction, int Distance = 0, tSpeed Speed = 127) {
 	ResetDriveEncoders();
 	Auton_Drive(Direction, Speed);
-	switch(Auton_GetMultiplier(Direction,LEFT)) {
+	switch(Auton_GetMultiplier(Direction,DriveRearRight)) {
 	case -1:
-		while(SensorValue[DriveEncoderLeft] > Distance) {}
+		while(SensorValue[DriveEncoder] > Distance) {}
 		break;
 	case 1:
-		while(SensorValue[DriveEncoderLeft] < Distance) {}
+		while(SensorValue[DriveEncoder] < Distance) {}
 		break;
 	}
 	Auton_Drive();
@@ -147,14 +150,6 @@ void Auton_WaitForKeyPress(int Sleep = 0) {
 	LCD.Display.Paused = false;
 }
 #endif
-
-void Transmission(tTransmission NewStatus) {
-	if(NewStatus == TORQUE) {
-		SensorValue[TransmissionPneumatic] = 0;
-		} else {
-		SensorValue[TransmissionPneumatic] = 1;
-	}
-}
 
 void pre_auton() {
 	bStopTasksBetweenModes = false;
