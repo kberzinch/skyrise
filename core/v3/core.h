@@ -169,9 +169,9 @@ void pre_auton() {
 	clearDebugStream();
 	writeDebugStream(FILE);
 	writeDebugStream(" compiled on ");
-	writeDebugStream(__DATE__);
+	writeDebugStream(DATE);
 	writeDebugStream(" at ");
-	writeDebugStreamLine(__TIME__);
+	writeDebugStreamLine(TIME);
 	writeDebugStreamLine(" - Debug			 ON");
 #ifdef ProgrammingSkills
 	writeDebugStreamLine(" - Progskill	 ON");
