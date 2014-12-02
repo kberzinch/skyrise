@@ -251,6 +251,8 @@ void pre_auton() {
 }
 
 void Auton_Lift(tVertical Direction = VSTOP, tSpeed Speed = 127, int Time = 0) {
+	writeDebugStreamLine("Request to set lift motors to speed %i with dmult %i",Speed,Direction);
+	writeDebugStreamLine("Motors set to %i",Direction * Speed);
 	motor[LiftLeftA] = Direction * Speed;
 	motor[LiftLeftB] = Direction * Speed;
 	motor[LiftLeftC] = Direction * Speed;
@@ -258,26 +260,44 @@ void Auton_Lift(tVertical Direction = VSTOP, tSpeed Speed = 127, int Time = 0) {
 	motor[LiftRightB] = Direction * Speed;
 	motor[LiftRightC] = Direction * Speed;
 	if (Time > 0) {
+		writeDebugStreamLine("Waiting for %i ms", Time);
 		sleep(Time);
 		Auton_Lift();
-	}
+		}
 }
 
 // if sensorvalue == newposition nothing will happen
 void Auton_Lift_Targeted(tVertical Direction, int NewPosition = 0, tSpeed Speed = 127) {
+	writeDebugStreamLine("Request to move lift to position %i at speed %i",NewPosition,Speed);
 	if(NewPosition == 0) {
-		Auton_Lift(Direction, Speed);
-		while(SensorValue[LiftLimitMinA] != 0 && SensorValue[LiftLimitMinB] != 0 && vexRT[Btn6U] != 1 && vexRT[Btn6U] != 1) {}
+		writeDebugStreamLine("Running down to 0 at speed %i", Speed);
+		Auton_Lift(DOWN, Speed);
+		while(SensorValue[LiftLimitMinA] != 0 && SensorValue[LiftLimitMinB] != 0 && vexRT[Btn6U] != 1 && vexRT[Btn6D] != 1) {
+			Auton_Lift(DOWN, Speed);
+			}
+		writeDebugStreamLine("Stopping lift");
 		Auton_Lift();
+		writeDebugStreamLine("Done");
 		return;
 	}
 	if(Direction == UP) {
+		writeDebugStreamLine("Running UP");
 		Auton_Lift(Direction, Speed);
-		while(-SensorValue[LiftEncoder] < NewPosition && SensorValue[LiftLimitMax] != 0 && vexRT[Btn6U] != 1 && vexRT[Btn6U] != 1) {}
+		writeDebugStreamLine("**DEBUG Motors set");
+		while(-SensorValue[LiftEncoder] < NewPosition && SensorValue[LiftLimitMax] != 0 && vexRT[Btn6U] != 1 && vexRT[Btn6D] != 1) {
+			Auton_Lift(Direction, Speed);
+		}
+		writeDebugStreamLine("Stopping lift");
 		Auton_Lift();
+		writeDebugStreamLine("Done");
 		} else if(Direction == DOWN) {
+		writeDebugStreamLine("Running DOWN");
 		Auton_Lift(Direction, Speed);
-		while(-SensorValue[LiftEncoder] > NewPosition && SensorValue[LiftLimitMinA] != 0 && SensorValue[LiftLimitMinB] != 0 && vexRT[Btn6U] != 1 && vexRT[Btn6U] != 1) {}
+		while(-SensorValue[LiftEncoder] > NewPosition && SensorValue[LiftLimitMinA] != 0 && SensorValue[LiftLimitMinB] != 0 && vexRT[Btn6U] != 1 && vexRT[Btn6D] != 1) {
+			Auton_Lift(Direction, Speed);
+		}
+		writeDebugStreamLine("Stopping lift");
 		Auton_Lift();
+		writeDebugStreamLine("Done");
 	}
 }

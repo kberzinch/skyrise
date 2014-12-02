@@ -28,7 +28,7 @@ const string FILE = __FILE__;
 const string DATE = __DATE__;
 const string TIME = __TIME__;
 #include "core\v3\core.h"
-#include "usercontrol\2105A-bob.c"
+#include "usercontrol\2105A-bob.h"
 #include "auton\2105A-blue-atloader.h"
 #include "misc\2105A-autonmanager.h"
 
