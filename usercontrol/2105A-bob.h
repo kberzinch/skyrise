@@ -3,15 +3,21 @@
 
 task usercontrol_liftpresets;
 int preset_triggered = false;
+double drivemultiplier = 1;
 
 task usercontrol {
 	startTask(usercontrol_liftpresets);
 	while(true) {
 		// DRIVE
-		motor[DriveRearLeft]   =  vexRT[Ch1] - vexRT[Ch3] - vexRT[Ch4];
-		motor[DriveFrontLeft]  = -vexRT[Ch1] - vexRT[Ch3] - vexRT[Ch4];
-		motor[DriveRearRight]  =  vexRT[Ch1] + vexRT[Ch3] - vexRT[Ch4];
-		motor[DriveFrontRight] = -vexRT[Ch1] + vexRT[Ch3] - vexRT[Ch4];
+		if(vexRT[Btn5D] == 1) {
+			drivemultiplier = 0.5;
+		} else {
+			drivemultiplier = 1;
+		}
+		motor[DriveRearLeft]   = ( vexRT[Ch1] - vexRT[Ch3] - vexRT[Ch4]) * drivemultiplier;
+		motor[DriveFrontLeft]  = (-vexRT[Ch1] - vexRT[Ch3] - vexRT[Ch4]) * drivemultiplier;
+		motor[DriveRearRight]  = ( vexRT[Ch1] + vexRT[Ch3] - vexRT[Ch4]) * drivemultiplier;
+		motor[DriveFrontRight] = (-vexRT[Ch1] + vexRT[Ch3] - vexRT[Ch4]) * drivemultiplier;
 
 		// PRESET RESET
 		if(SensorValue[LiftLimitMinA] == 0 || SensorValue[LiftLimitMinB] == 0) {
