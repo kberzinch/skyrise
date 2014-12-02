@@ -155,7 +155,7 @@ void Auton_WaitForKeyPress(int Sleep = 0) {
 #endif
 
 void pre_auton() {
-	bStopTasksBetweenModes = false;
+	bStopTasksBetweenModes = true;
 #ifndef NoLCD
 	clearLCDLine(0);
 	clearLCDLine(1);
