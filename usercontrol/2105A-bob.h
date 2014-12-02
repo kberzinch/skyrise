@@ -25,12 +25,7 @@ task usercontrol {
 				} else if(vexRT[Btn6D] == 1 && SensorValue[LiftLimitMinA] != 0 && SensorValue[LiftLimitMinB] != 0) {
 				Auton_Lift(DOWN);
 				} else {
-				motor[LiftLeftA] = 0;
-				motor[LiftLeftB] = 0;
-				motor[LiftLeftC] = 0;
-				motor[LiftRightA] = 0;
-				motor[LiftRightB] = 0;
-				motor[LiftRightC] = 0;
+				Auton_Lift();
 			}
 		}
 	}
@@ -45,10 +40,10 @@ task usercontrol_liftpresets {
 		if(vexRT[Btn7R] == 1) {
 			preset_triggered = true;
 			if(SensorValue[LiftEncoder] < -400) {
-				Auton_Lift_Targeted(DOWN,450);
+				Auton_Lift_Targeted(DOWN,400);
 				Auton_Lift(UP,63,100);
 				} else {
-				Auton_Lift_Targeted(UP,350);
+				Auton_Lift_Targeted(UP,250);
 			}
 		}
 		preset_triggered = false;

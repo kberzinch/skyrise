@@ -251,8 +251,6 @@ void pre_auton() {
 }
 
 void Auton_Lift(tVertical Direction = VSTOP, tSpeed Speed = 127, int Time = 0) {
-	writeDebugStreamLine("Request to set lift motors to speed %i with dmult %i",Speed,Direction);
-	writeDebugStreamLine("Motors set to %i",Direction * Speed);
 	motor[LiftLeftA] = Direction * Speed;
 	motor[LiftLeftB] = Direction * Speed;
 	motor[LiftLeftC] = Direction * Speed;
@@ -260,7 +258,6 @@ void Auton_Lift(tVertical Direction = VSTOP, tSpeed Speed = 127, int Time = 0) {
 	motor[LiftRightB] = Direction * Speed;
 	motor[LiftRightC] = Direction * Speed;
 	if (Time > 0) {
-		writeDebugStreamLine("Waiting for %i ms", Time);
 		sleep(Time);
 		Auton_Lift();
 		}
