@@ -130,12 +130,15 @@ void Auton_Drive_TurnTo(tDirection Direction, int Heading = 0, tSpeed Speed = 12
 void Auton_Drive_Targeted(tDirection Direction, int Distance = 0, tSpeed Speed = 127) {
 	ResetDriveEncoders();
 	Auton_Drive(Direction, Speed);
-	switch(Auton_GetMultiplier(Direction,DriveRearRight)) {
+	writeDebugStreamLine("Multiplier is %i", -Auton_GetMultiplier(Direction,DriveRearRight));
+	switch(-Auton_GetMultiplier(Direction,DriveRearRight)) {
 	case -1:
-		while(SensorValue[DriveEncoder] > Distance) {}
+		writeDebugStreamLine("Current encoder reading is %i, wanting less than %i", SensorValue[DriveEncoder], Distance);
+		while(SensorValue[DriveEncoder] > -Auton_GetMultiplier(Direction,DriveRearRight) * Distance) {}
 		break;
 	case 1:
-		while(SensorValue[DriveEncoder] < Distance) {}
+		writeDebugStreamLine("Current encoder reading is %i, wanting greater than %i", SensorValue[DriveEncoder], Distance);
+		while(SensorValue[DriveEncoder] < -Auton_GetMultiplier(Direction,DriveRearRight) * Distance) {}
 		break;
 	}
 	Auton_Drive();
@@ -202,6 +205,7 @@ void pre_auton() {
 #endif
 	clearLCDLine(0);
 	clearLCDLine(1);
+	init();
 	if(!bIfiRobotDisabled) {
 #if defined(_DEBUG)
 		writeDebugStreamLine("Not disabled: exiting");
@@ -261,20 +265,19 @@ void Auton_Lift(tVertical Direction = VSTOP, tSpeed Speed = 127, int Time = 0) {
 
 // if sensorvalue == newposition nothing will happen
 void Auton_Lift_Targeted(tVertical Direction, int NewPosition = 0, tSpeed Speed = 127) {
-	/*if(NewPosition == 0) {
-	Auton_Lift(Direction, Speed);
-	while(SensorValue[LiftLimitMin] == 0);
-	Auton_Lift();
-	return;
+	if(NewPosition == 0) {
+		Auton_Lift(Direction, Speed);
+		while(SensorValue[LiftLimitMinA] != 0 && SensorValue[LiftLimitMinB] != 0 && vexRT[Btn6U] != 1 && vexRT[Btn6U] != 1) {}
+		Auton_Lift();
+		return;
 	}
-	*/
 	if(Direction == UP) {
 		Auton_Lift(Direction, Speed);
-		while(SensorValue[LiftEncoder] < NewPosition) {}
+		while(-SensorValue[LiftEncoder] < NewPosition && SensorValue[LiftLimitMax] != 0 && vexRT[Btn6U] != 1 && vexRT[Btn6U] != 1) {}
 		Auton_Lift();
 		} else if(Direction == DOWN) {
 		Auton_Lift(Direction, Speed);
-		while(SensorValue[LiftEncoder] > NewPosition) {}
+		while(-SensorValue[LiftEncoder] > NewPosition && SensorValue[LiftLimitMinA] != 0 && SensorValue[LiftLimitMinB] != 0 && vexRT[Btn6U] != 1 && vexRT[Btn6U] != 1) {}
 		Auton_Lift();
 	}
 }

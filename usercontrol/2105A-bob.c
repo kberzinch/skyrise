@@ -1,5 +1,5 @@
 // ROBOT:  2015A
-// DRIVER: John
+// DRIVER: Bob
 
 task usercontrol_liftpresets;
 int preset_triggered = false;
@@ -8,18 +8,20 @@ task usercontrol {
 	startTask(usercontrol_liftpresets);
 	while(true) {
 		// DRIVE
-		motor[DriveRearLeft]   =  vexRT[Ch1] - vexRT[Ch2] - vexRT[Ch4];
-		motor[DriveFrontLeft]  = -vexRT[Ch1] - vexRT[Ch2] - vexRT[Ch4];
-		motor[DriveRearRight]  =  vexRT[Ch1] + vexRT[Ch2] - vexRT[Ch4];
-		motor[DriveFrontRight] = -vexRT[Ch1] + vexRT[Ch2] - vexRT[Ch4];
+		motor[DriveRearLeft]   =  vexRT[Ch1] - vexRT[Ch3] - vexRT[Ch4];
+		motor[DriveFrontLeft]  = -vexRT[Ch1] - vexRT[Ch3] - vexRT[Ch4];
+		motor[DriveRearRight]  =  vexRT[Ch1] + vexRT[Ch3] - vexRT[Ch4];
+		motor[DriveFrontRight] = -vexRT[Ch1] + vexRT[Ch3] - vexRT[Ch4];
 
 		// LIFT MANUAL
-		if(vexRT[Btn6U] == 1 && SensorValue[LiftLimitMax] != 0) {
-			Auton_Lift(UP);
-			} else if(vexRT[Btn6D] == 1 && SensorValue[LiftLimitMinA] != 0 && SensorValue[LiftLimitMinB] != 0) {
-			Auton_Lift(DOWN);
-			} else {
-			if(!preset_triggered) Auton_Lift();
+		if(!preset_triggered) {
+			if(vexRT[Btn6U] == 1 && SensorValue[LiftLimitMax] != 0) {
+				Auton_Lift(UP);
+				} else if(vexRT[Btn6D] == 1 && SensorValue[LiftLimitMinA] != 0 && SensorValue[LiftLimitMinB] != 0) {
+				Auton_Lift(DOWN);
+				} else {
+				Auton_Lift();
+			}
 		}
 	}
 }
@@ -39,7 +41,7 @@ task usercontrol_liftpresets {
 				Auton_Lift_Targeted(DOWN,450);
 				Auton_Lift(UP,63,100);
 				} else {
-				Auton_Lift_Targeted(UP,400);
+				Auton_Lift_Targeted(UP,350);
 			}
 			writeDebugStreamLine("Lift preset complete");
 		}
