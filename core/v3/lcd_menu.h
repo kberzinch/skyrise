@@ -59,12 +59,12 @@ void LCD_Menu_Define()
 
 	LCD.Menu[2].Title = "Start Point";
 	LCD.Menu[2].Text = "Autoloader";
-	LCD.Menu[2].SelectIndex = 4;
+	//LCD.Menu[2].SelectIndex = 4; // UNCOMMENT TO ENABLE NEXT MENU LEVEL
 	LCD.Menu[2].PrevIndex = 2;
 
 	LCD.Menu[3].Title = LCD.Menu[2].Title;
 	LCD.Menu[3].Text = "Freedom";
-	LCD.Menu[3].SelectIndex = 4;
+	//LCD.Menu[3].SelectIndex = 4; // UNCOMMENT TO ENABLE NEXT MENU LEVEL
 	LCD.Menu[3].NextIndex = 3;
 
 	LCD.Menu[4].Title = "Auton Mode";

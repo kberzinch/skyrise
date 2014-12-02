@@ -3,14 +3,7 @@ task autonomous {
 	case true:
 		switch(Competition.AtLoader) {
 		case true:
-			switch(Competition.Auton) {
-			case 1:
-				//Auton_Blue_AtLoader_Pylon();
-				break;
-			case 2:
-				//Auton_Blue_AtLoader_Cube();
-				break;
-			}
+			Auton_Blue_AtLoader();
 			break;
 		case false:
 			//Auton_Blue_Freedom();
@@ -18,8 +11,6 @@ task autonomous {
 		}
 		break;
 	case false:
-		//OVERRIDE();
-		//break;
 		switch(Competition.AtLoader) {
 		case true:
 			//Auton_Red_AtLoader();
@@ -31,4 +22,5 @@ task autonomous {
 		break;
 	}
 	LCD.Display.Paused = true;
+	writeDebugStreamLine("Autonomous finished");
 }
