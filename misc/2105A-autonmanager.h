@@ -21,6 +21,8 @@ task autonomous {
 		}
 		break;
 	}
+	writeDebugStreamLine("Total time: %i:%i",LCD_Timer_Mins(0),LCD_Timer_Secs(0,true));
 	LCD.Display.Paused = true;
+	ResetDriveEncoders();
 	writeDebugStreamLine("Autonomous finished");
 }
