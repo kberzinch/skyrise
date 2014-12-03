@@ -3,7 +3,7 @@
 
 task usercontrol_liftpresets;
 int preset_triggered = false;
-double drivemultiplier = 1;
+float drivemultiplier = 1;
 
 task usercontrol {
 	startTask(usercontrol_liftpresets);
@@ -20,15 +20,15 @@ task usercontrol {
 		motor[DriveFrontRight] = (-vexRT[Ch1] + vexRT[Ch3] - vexRT[Ch4]) * drivemultiplier;
 
 		// PRESET RESET
-		if(SensorValue[LiftLimitMinA] == 0 || SensorValue[LiftLimitMinB] == 0) {
+		if(Lift_TrippedMin()) {
 			SensorValue[LiftEncoder] = 0;
 		}
 
 		// LIFT MANUAL
 		if(!preset_triggered) {
-			if(vexRT[Btn6U] == 1 && SensorValue[LiftLimitMax] != 0) {
+			if(vexRT[Btn6U] == 1 && !Lift_TrippedMax()) {
 				Auton_Lift(UP);
-				} else if(vexRT[Btn6D] == 1 && SensorValue[LiftLimitMinA] != 0 && SensorValue[LiftLimitMinB] != 0) {
+				} else if(vexRT[Btn6D] == 1 && !Lift_TrippedMin()) {
 				Auton_Lift(DOWN);
 				} else {
 				Auton_Lift();
@@ -39,7 +39,7 @@ task usercontrol {
 
 task usercontrol_liftpresets {
 	while(true) {
-		if(vexRT[Btn7D] ==  1 && SensorValue[LiftLimitMinA] != 0 && SensorValue[LiftLimitMinB] != 0) {
+		if(vexRT[Btn7D] ==  1 && !Lift_TrippedMin()) {
 			preset_triggered = true;
 			Auton_Lift_Targeted(DOWN,0);
 		}
