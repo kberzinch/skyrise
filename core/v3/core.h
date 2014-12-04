@@ -105,11 +105,11 @@ int Auton_GetMultiplier(tDirection Direction, tMotor WhichMotor) {
 	return 0;
 }
 
-void Auton_Drive(tDirection Direction = STOP, tSpeed Speed = 127, int Time = 0) {
+void Auton_Drive(tDirection Direction = STOP, tSpeed Speed = 127, int Time = 0, float LeftMult = 1) {
 	motor[DriveFrontLeft] = Speed * Auton_GetMultiplier(Direction,DriveFrontLeft);
-	motor[DriveFrontRight] = Speed * Auton_GetMultiplier(Direction,DriveFrontRight);
+	motor[DriveFrontRight] = Speed * LeftMult * Auton_GetMultiplier(Direction,DriveFrontRight);
 	motor[DriveRearLeft] = Speed * Auton_GetMultiplier(Direction,DriveRearLeft);
-	motor[DriveRearRight] = Speed * Auton_GetMultiplier(Direction,DriveRearRight);
+	motor[DriveRearRight] = Speed * LeftMult * Auton_GetMultiplier(Direction,DriveRearRight);
 	if(Time > 0) {
 		sleep(Time);
 		Auton_Drive();
@@ -130,10 +130,10 @@ void Auton_Drive_TurnTo(tDirection Direction, int Heading = 0, tSpeed Speed = 12
 }
 #endif
 
-void Auton_Drive_Targeted(tDirection Direction, int Distance = 0, tSpeed Speed = 127, int Timeout = 2000) {
+void Auton_Drive_Targeted(tDirection Direction, int Distance = 0, tSpeed Speed = 127, int Timeout = 2000, float LeftMult = 1) {
 	const int StartTime = nSysTime;
 	ResetDriveEncoders();
-	Auton_Drive(Direction, Speed);
+	Auton_Drive(Direction, Speed, 0, LeftMult);
 	writeDebugStreamLine("Multiplier is %i", -Auton_GetMultiplier(Direction,DriveRearRight));
 	switch(-Auton_GetMultiplier(Direction,DriveRearRight)) {
 	case -1:
