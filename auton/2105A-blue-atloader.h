@@ -12,7 +12,7 @@ void Auton_Blue_AtLoader() {
 	Auton_Lift_Targeted(DOWN,0, 63);
 	sleep(500);
 	Auton_Drive_Targeted(BACKWARD,70);
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE,-250);
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE,-160);
 	sleep(500);
 	Auton_Lift_Targeted(UP,400);
 	sleep(500);
