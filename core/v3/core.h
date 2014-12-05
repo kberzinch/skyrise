@@ -121,10 +121,12 @@ void Auton_Drive_TurnTo(tDirection Direction, int Heading = 0, tSpeed Speed = 12
 	Auton_Drive(Direction, Speed);
 	if(Direction == CLOCKWISE) {
 		while(SensorValue[Gyroscope] > Heading) {
-			//writeDebugStreamLine("TARGET=%i, POSITION=%i", Heading, SensorValue[Gyroscope]);
+			writeDebugStreamLine("TARGET=%i, POSITION=%i", Heading, SensorValue[Gyroscope]);
 		}
 		} else {
-		while(SensorValue[Gyroscope] < Heading) {}
+		while(SensorValue[Gyroscope] < Heading) {
+			writeDebugStreamLine("TARGET=%i, POSITION=%i", Heading, SensorValue[Gyroscope]);
+		}
 	}
 	Auton_Drive();
 }

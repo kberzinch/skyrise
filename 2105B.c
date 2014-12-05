@@ -14,10 +14,10 @@
 
 task main() {
 	while(true) {
-		motor[DriveFrontLeft] = vexRT[Ch3] + vexRT[Ch1] + vexRT[Ch4];
-		motor[DriveFrontRight] = vexRT[Ch3] - vexRT[Ch1] - vexRT[Ch4];
-		motor[DriveRearLeft] = vexRT[Ch3] + vexRT[Ch1] - vexRT[Ch4];
-		motor[DriveRearRight] = vexRT[Ch3] - vexRT[Ch1] + vexRT[Ch4];
+		motor[DriveFrontLeft] = vexRT[Ch3] + vexRT[Ch4];
+		motor[DriveFrontRight] = vexRT[Ch3] - vexRT[Ch4];
+		motor[DriveRearLeft] = vexRT[Ch3] + vexRT[Ch4];
+		motor[DriveRearRight] = vexRT[Ch3] - vexRT[Ch4];
 
 		// LIFT
 		if(vexRT[Btn6D] == 1) {
