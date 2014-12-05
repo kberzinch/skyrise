@@ -33,6 +33,7 @@ const string TIME = __TIME__;
 #include "core\v3\core.h"
 #include "usercontrol\2105A-bob.h"
 #include "auton\2105A-blue-atloader.h"
+#include "auton\2105A-red-atloader.h"
 #include "misc\2105A-autonmanager.h"
 
 void ResetDriveEncoders() {
