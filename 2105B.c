@@ -35,15 +35,22 @@ task autonomous {
 	motor[DriveFrontRight] = -127;
 	motor[DriveRearRight] = -127;
 	wait1Msec(1000);
-allMotorsOff();
+	allMotorsOff();
 }
+
+float multiplier = 1;
 
 task usercontrol {
 	while(true) {
-		motor[DriveFrontLeft] = vexRT[Ch3] + vexRT[Ch4];
-		motor[DriveFrontRight] = vexRT[Ch3] - vexRT[Ch4];
-		motor[DriveRearLeft] = vexRT[Ch3] + vexRT[Ch4];
-		motor[DriveRearRight] = vexRT[Ch3] - vexRT[Ch4];
+		if(vexRT[Btn8D] == 1) {
+			multiplier = 0.2;
+		} else {
+			multiplier = 1;
+		}
+		motor[DriveFrontLeft] = (vexRT[Ch3] + vexRT[Ch4]) * multiplier;
+		motor[DriveFrontRight] = (vexRT[Ch3] - vexRT[Ch4]) * multiplier;
+		motor[DriveRearLeft] = (vexRT[Ch3] + vexRT[Ch4]) * multiplier;
+		motor[DriveRearRight] = (vexRT[Ch3] - vexRT[Ch4]) * multiplier;
 
 		// LIFT
 		if(vexRT[Btn6D] == 1) {

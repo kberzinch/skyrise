@@ -8,12 +8,12 @@ task LiftTo800 {
 
 void Auton_Red_AtLoader() {
 	Auton_Lift_Targeted(UP,400);
-	Auton_Drive_Targeted(LEFT,80);
+	Auton_Drive_Targeted(LEFT,90);
 	sleep(500);
 	Auton_Drive_Targeted(FORWARD, 120, 127, 1000);
 	sleep(250);
 	Auton_Lift_Targeted(UP,700);
-	Auton_Drive_TurnTo(CLOCKWISE,-1800);
+	Auton_Drive_TurnTo(CLOCKWISE,-1700);
 	Auton_Drive_Targeted(FORWARD,100);
 	sleep(500);
 	Auton_Lift_Targeted(DOWN,0,63);
@@ -33,5 +33,5 @@ void Auton_Red_AtLoader() {
 	Auton_Drive_Targeted(FORWARD,100);
 	Auton_Drive_Targeted(BACKWARD,50);
 	Auton_Lift_Targeted(DOWN,0);
-	Auton_Drive_Targeted(BACKWARD,100);
+	Auton_Drive_Targeted(BACKWARD,150);
 }
