@@ -24,7 +24,6 @@ void Auton_Blue_AtLoader() {
 	// PICKED UP SECOND PYLON
 	sleep(250);
 	Auton_Lift_Targeted(UP,750);
-	sleep(250);
 	Auton_Drive_Targeted(BACKWARD,160);
 	Auton_Drive_TurnTo(CLOCKWISE,-600);
 	Auton_Drive_Targeted(FORWARD,100);
@@ -37,15 +36,13 @@ void Auton_Blue_AtLoader() {
 	sleep(250);
 	Auton_Drive_Targeted(FORWARD,150);
 	sleep(250);
-	Auton_Lift_Targeted(UP,1100);
-	sleep(250);
+	Auton_Lift_Targeted(UP,700);
 	Auton_Drive_Targeted(BACKWARD,160);
-	Auton_Drive_TurnTo(CLOCKWISE,-600);
-	Auton_Drive(COUNTERCLOCKWISE,127,100);
-	Auton_Drive_Targeted(FORWARD,110);
-	sleep(250);
-	Auton_Lift_Targeted(DOWN,600);
-	//Auton_Lift_Targeted(UP,1500);
+	Auton_Drive_TurnTo(CLOCKWISE,-300);
+	Auton_Lift_Targeted(UP,1200);
+	Auton_Drive_Targeted(FORWARD,160);
+	sleep(125);
+	Auton_Lift_Targeted(DOWN,600,63);
 	Auton_Drive_Targeted(BACKWARD,100);
 	startTask(LiftToAutoloader);
 }
