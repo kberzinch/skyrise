@@ -6,7 +6,7 @@ task autonomous {
 			Auton_Blue_AtLoader();
 			break;
 		case false:
-			//Auton_Blue_Freedom();
+			Auton_Blue_Freedom();
 			break;
 		}
 		break;
