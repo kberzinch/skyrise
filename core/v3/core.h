@@ -4,6 +4,8 @@
 #pragma competitionControl(Competition)
 #if defined(_DEBUG)
 #pragma DebuggerWindows("debugStream")
+#pragma DebuggerWindows("LCD")
+#pragma DebuggerWindows("RemoteLCD")
 #endif
 #ifndef NoLCD
 #define LCD_NotUsing_Prompt
@@ -136,21 +138,29 @@ void Auton_Drive_Targeted(tDirection Direction, int Distance = 0, tSpeed Speed =
 	const int StartTime = nSysTime;
 	ResetDriveEncoders();
 	Auton_Drive(Direction, Speed, 0, LeftMult);
+#if defined(_DEBUG)
 	writeDebugStreamLine("Multiplier is %i", -Auton_GetMultiplier(Direction,DriveRearRight));
+#endif
 	switch(-Auton_GetMultiplier(Direction,DriveRearRight)) {
 	case -1:
+#if defined(_DEBUG)
 		writeDebugStreamLine("Current encoder reading is %i, wanting less than %i", SensorValue[DriveEncoder], Distance);
+#endif
 		while(SensorValue[DriveEncoder] > -Auton_GetMultiplier(Direction,DriveRearRight) * Distance && (nSysTime - StartTime) < Timeout) {}
 		break;
 	case 1:
+#if defined(_DEBUG)
 		writeDebugStreamLine("Current encoder reading is %i, wanting greater than %i", SensorValue[DriveEncoder], Distance);
+#endif
 		while(SensorValue[DriveEncoder] < -Auton_GetMultiplier(Direction,DriveRearRight) * Distance && (nSysTime - StartTime) < Timeout) {}
 		break;
 	}
 	Auton_Drive();
+#if defined(_DEBUG)
 	if(!((nSysTime - StartTime) < Timeout)) {
 		writeDebugStreamLine("**WARNING: Drive to distance %i timed out after %i ms (encoder reading %i)", Distance, Timeout, SensorValue[DriveEncoder]);
 	}
+#endif
 }
 
 #ifndef NoLCD
@@ -283,40 +293,58 @@ void Auton_Lift(tVertical Direction = VSTOP, tSpeed Speed = 127, int Time = 0) {
 // if sensorvalue == newposition nothing will happen
 void Auton_Lift_Targeted(tVertical Direction, int NewPosition = 0, tSpeed Speed = 127, int Timeout = 4000) {
 	const int StartTime = nSysTime;
+#if defined(_DEBUG)
 	writeDebugStreamLine("Request to move lift to position %i at speed %i",NewPosition,Speed);
+#endif
 	if(NewPosition == 0) {
+#if defined(_DEBUG)
 		writeDebugStreamLine("Running down to 0 at speed %i", Speed);
+#endif
 		Auton_Lift(DOWN, Speed);
 		while(!Lift_TrippedMin() && vexRT[Btn6U] != 1 && vexRT[Btn6D] != 1 && (nSysTime - StartTime) < Timeout) {
 			Auton_Lift(DOWN, Speed);
 		}
+#if defined(_DEBUG)
 		writeDebugStreamLine("Stopping lift");
+#endif
 		Auton_Lift();
+#if defined(_DEBUG)
 		writeDebugStreamLine("Done");
+#endif
 		return;
 	}
+	Auton_Lift(Direction, Speed);
 	if(Direction == UP) {
+#if defined(_DEBUG)
 		writeDebugStreamLine("Running UP");
-		Auton_Lift(Direction, Speed);
-		writeDebugStreamLine("**DEBUG Motors set");
+#endif
 		while(-SensorValue[LiftEncoder] < NewPosition && !Lift_TrippedMax() && vexRT[Btn6U] != 1 && vexRT[Btn6D] != 1 && (nSysTime - StartTime) < Timeout) {
 			Auton_Lift(Direction, Speed);
 		}
+#if defined(_DEBUG)
 		writeDebugStreamLine("Stopping lift");
+#endif
 		Auton_Lift();
+#if defined(_DEBUG)
 		writeDebugStreamLine("Done");
+#endif
 		} else if(Direction == DOWN) {
+#if defined(_DEBUG)
 		writeDebugStreamLine("Running DOWN");
-		Auton_Lift(Direction, Speed);
+#endif
 		while(-SensorValue[LiftEncoder] > NewPosition && !Lift_TrippedMin() && vexRT[Btn6U] != 1 && vexRT[Btn6D] != 1 && (nSysTime - StartTime) < Timeout) {
 			Auton_Lift(Direction, Speed);
 		}
+#if defined(_DEBUG)
 		writeDebugStreamLine("Stopping lift");
+#endif
 		Auton_Lift();
+#if defined(_DEBUG)
 		writeDebugStreamLine("Done");
 		if(!((nSysTime - StartTime) < Timeout)) {
 			writeDebugStreamLine("**WARNING: Lift to position %i timed out after %i ms", NewPosition, Timeout);
 		}
+#endif
 	}
 }
 
