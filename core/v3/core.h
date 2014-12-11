@@ -108,11 +108,13 @@ int Auton_GetMultiplier(tDirection Direction, tMotor WhichMotor) {
 	return 0;
 }
 
-void Auton_Drive(tDirection Direction = STOP, tSpeed Speed = 127, int Time = 0, float LeftMult = 1) {
-	motor[DriveFrontLeft] = Speed * Auton_GetMultiplier(Direction,DriveFrontLeft);
-	motor[DriveFrontRight] = Speed * LeftMult * Auton_GetMultiplier(Direction,DriveFrontRight);
-	motor[DriveRearLeft] = Speed * Auton_GetMultiplier(Direction,DriveRearLeft);
-	motor[DriveRearRight] = Speed * LeftMult * Auton_GetMultiplier(Direction,DriveRearRight);
+void Auton_Drive(tDirection Direction = STOP, tSpeed Speed = 127, int Time = 0, int LeftSpeed = 0) {
+	if(LeftSpeed == 0)
+		LeftSpeed = Speed;
+	motor[DriveFrontLeft] = LeftSpeed * Auton_GetMultiplier(Direction,DriveFrontLeft);
+	motor[DriveFrontRight] = Speed * Auton_GetMultiplier(Direction,DriveFrontRight);
+	motor[DriveRearLeft] = LeftSpeed * Auton_GetMultiplier(Direction,DriveRearLeft);
+	motor[DriveRearRight] = Speed * Auton_GetMultiplier(Direction,DriveRearRight);
 	if(Time > 0) {
 		sleep(Time);
 		Auton_Drive();
@@ -135,10 +137,10 @@ void Auton_Drive_TurnTo(tDirection Direction, int Heading = 0, tSpeed Speed = 12
 }
 #endif
 
-void Auton_Drive_Targeted(tDirection Direction, int Distance = 0, tSpeed Speed = 127, int Timeout = 2000, float LeftMult = 1) {
+void Auton_Drive_Targeted(tDirection Direction, int Distance = 0, tSpeed Speed = 127, int Timeout = 2000, int LeftSpeed = Speed) {
 	const int StartTime = nSysTime;
 	ResetDriveEncoders();
-	Auton_Drive(Direction, Speed, 0, LeftMult);
+	Auton_Drive(Direction, Speed, 0, LeftSpeed);
 #if defined(_DEBUG)
 	writeDebugStreamLine("Multiplier is %i", -Auton_GetMultiplier(Direction,DriveRearRight));
 #endif
@@ -225,6 +227,13 @@ void pre_auton() {
 #endif
 	clearLCDLine(0);
 	clearLCDLine(1);
+#ifndef NoPowerExpander
+	displayLCDCenteredString(0, "Bad Battery B");
+	displayLCDCenteredString(1, "Need to replace");
+	while(((float)SensorValue[PowerExpander] / (float)280) < 7) {}
+	clearLCDLine(0);
+	clearLCDLine(1);
+#endif
 	init();
 	if(!bIfiRobotDisabled) {
 #if defined(_DEBUG)
@@ -355,4 +364,24 @@ bool Lift_TrippedMin() {
 
 bool Lift_TrippedMax() {
 	return SensorValue[LiftLimitMaxA] == 0 || SensorValue[LiftLimitMaxB] == 1;
+}
+
+void FollowLine(tDirection Direction, int Distance = 0) {
+	LCD.Display.Paused = true;
+	clearLCDLine(0);
+	clearLCDLine(1);
+	const int threshold = 1600;
+	int error, pwm;
+	while(true) {
+		error = (SensorValue[LineFollowerCenter] - SensorValue[LineFollowerLeft]) - (SensorValue[LineFollowerCenter] - SensorValue[LineFollowerRight]);
+		pwm = error / 80;
+		clearLCDLine(0);
+		clearLCDLine(1);
+		displayLCDNumber(0, 0, error);
+		displayLCDNumber(1, 0, pwm);
+		Auton_Drive(BACKWARD,63 + pwm,0,63 - pwm);
+		sleep(100);
+		// condition ? return if true : return if false
+		//Auton_Drive(BACKWARD,
+	}
 }

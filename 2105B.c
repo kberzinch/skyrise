@@ -47,10 +47,10 @@ task usercontrol {
 		} else {
 			multiplier = 1;
 		}
-		motor[DriveFrontLeft] = (vexRT[Ch3] + vexRT[Ch4]) * multiplier;
-		motor[DriveFrontRight] = (vexRT[Ch3] - vexRT[Ch4]) * multiplier;
-		motor[DriveRearLeft] = (vexRT[Ch3] + vexRT[Ch4]) * multiplier;
-		motor[DriveRearRight] = (vexRT[Ch3] - vexRT[Ch4]) * multiplier;
+		motor[DriveFrontLeft] = (-vexRT[Ch3] + vexRT[Ch4]) * multiplier;
+		motor[DriveFrontRight] = (-vexRT[Ch3] - vexRT[Ch4]) * multiplier;
+		motor[DriveRearLeft] = (-vexRT[Ch3] + vexRT[Ch4]) * multiplier;
+		motor[DriveRearRight] = (-vexRT[Ch3] - vexRT[Ch4]) * multiplier;
 
 		// LIFT
 		if(vexRT[Btn6D] == 1) {
@@ -71,13 +71,12 @@ task usercontrol {
 		}
 
 		// COLLECTION
-		if(vexRT[Btn5D] == 1) {
+
+
+		if(vexRT[Btn5U] == 1) {
 			motor[CollectionA] = 127;
 			motor[CollectionB] = 127;
-			} else if(vexRT[Btn5U] == 1) {
-			motor[CollectionA] = -127;
-			motor[CollectionB] = -127;
-			} else {
+
 			motor[CollectionA] = 0;
 			motor[CollectionB] = 0;
 		}
