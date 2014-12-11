@@ -4,8 +4,9 @@
 #pragma competitionControl(Competition)
 #if defined(_DEBUG)
 #pragma DebuggerWindows("debugStream")
-#pragma DebuggerWindows("LCD")
-#pragma DebuggerWindows("RemoteLCD")
+#ifndef NoLCD
+#pragma DebuggerWindows("VexLCD")
+#endif
 #endif
 #ifndef NoLCD
 #define LCD_NotUsing_Prompt
