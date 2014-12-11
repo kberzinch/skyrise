@@ -4,6 +4,8 @@
 task usercontrol_liftpresets;
 int preset_triggered = false;
 float drivemultiplier = 1;
+int dval = 0;
+int deadband = 20;
 
 task usercontrol {
 	startTask(usercontrol_liftpresets);
@@ -14,10 +16,14 @@ task usercontrol {
 		} else {
 			drivemultiplier = 1;
 		}
-		motor[DriveRearLeft]   =  vexRT[Ch1] - vexRT[Ch2] - vexRT[Ch4] * drivemultiplier;
-		motor[DriveFrontLeft]  = -vexRT[Ch1] - vexRT[Ch2] - vexRT[Ch4] * drivemultiplier;
-		motor[DriveRearRight]  =  vexRT[Ch1] + vexRT[Ch2] - vexRT[Ch4] * drivemultiplier;
-		motor[DriveFrontRight] = -vexRT[Ch1] + vexRT[Ch2] - vexRT[Ch4] * drivemultiplier;
+		dval = vexRT[Ch1] - vexRT[Ch2] - vexRT[Ch4] * drivemultiplier;
+		motor[DriveRearLeft]   = dval < deadband && dval > -deadband ? 0 : dval;
+		dval = -vexRT[Ch1] - vexRT[Ch2] - vexRT[Ch4] * drivemultiplier;
+		motor[DriveFrontLeft]  = dval < deadband && dval > -deadband ? 0 : dval;
+		dval =  vexRT[Ch1] + vexRT[Ch2] - vexRT[Ch4] * drivemultiplier;
+		motor[DriveRearRight]  = dval < deadband && dval > -deadband ? 0 : dval;
+		dval = -vexRT[Ch1] + vexRT[Ch2] - vexRT[Ch4] * drivemultiplier;
+		motor[DriveFrontRight] = dval < deadband && dval > -deadband ? 0 : dval;
 
 		// PRESET RESET
 		if(Lift_TrippedMin()) {

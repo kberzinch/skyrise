@@ -19,10 +19,10 @@
 /* for any consequences.                                */
 /********************************************************/
 
-const char LCD_SizeOfMenu = 6; // MUST be at least 1 to prevent crash
+const char LCD_SizeOfMenu = 7; // MUST be at least 1 to prevent crash
 
 #undef LCD_NotUsing_Menu       // Clear any statements against compiling LCD_Menu.
-                               // If you don't want it, why would you include it?
+// If you don't want it, why would you include it?
 
 typedef struct {
 	bool IsBlue;
@@ -55,7 +55,12 @@ void LCD_Menu_Define()
 	LCD.Menu[1].Title = LCD.Menu[0].Title;
 	LCD.Menu[1].Text = "Blue";
 	LCD.Menu[1].SelectIndex = 2;
-	LCD.Menu[1].NextIndex = 1;
+	LCD.Menu[1].NextIndex = 6;
+
+	LCD.Menu[6].Title = "Program Skills";
+	LCD.Menu[6].Text = "Blue Autoload";
+	LCD.Menu[6].PrevIndex = 1;
+	LCD.Menu[6].NextIndex = 6;
 
 	LCD.Menu[2].Title = "Start Point";
 	LCD.Menu[2].Text = "Autoloader";
@@ -83,28 +88,31 @@ bool LCD_Menu_Execute()
 	case 0:
 		Competition.IsBlue = false;
 #if defined(_DEBUG)
-writeDebugStreamLine("Set as red");
+		writeDebugStreamLine("Set as red");
 #endif
 		break;
 	case 1:
 		Competition.IsBlue = true;
-writeDebugStreamLine("Set as blue");
+		writeDebugStreamLine("Set as blue");
 		break;
 	case 2:
 		Competition.AtLoader = true;
-writeDebugStreamLine("Set as autoloader");
+		writeDebugStreamLine("Set as autoloader");
 		break;
 	case 3:
 		Competition.AtLoader = false;
-writeDebugStreamLine("Set as freedom spot");
+		writeDebugStreamLine("Set as freedom spot");
 		break;
 	case 4:
 		Competition.Auton = 1;
-writeDebugStreamLine("Set as Numero Uno");
+		writeDebugStreamLine("Set as Numero Uno");
 		break;
 	case 5:
 		Competition.Auton = 2;
-writeDebugStreamLine("Set as Numero Dos");
+		writeDebugStreamLine("Set as Numero Dos");
+		break;
+	case 6:
+		Competition.Auton = 3;
 		break;
 	}
 	if (LCD.Menu[LCD.Index].SelectIndex == -1)

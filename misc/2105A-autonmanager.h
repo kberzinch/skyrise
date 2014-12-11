@@ -1,4 +1,7 @@
 task autonomous {
+	if(Competition.Auton == 3) {
+	Auton_Progskills();
+}
 	switch(Competition.IsBlue) {
 	case true:
 		switch(Competition.AtLoader) {
