@@ -19,7 +19,8 @@
 
 void pre_auton() {}
 
-int leftspeed = 84;
+int leftspeed = 127;
+int rightspeed = 90;
 
 task autonomous {
 	motor[CollectionA] = 127;
@@ -58,33 +59,37 @@ task usercontrol {
 		motor[DriveFrontRight] = (vexRT[Ch3] - vexRT[Ch4]) * multiplier;
 		motor[DriveRearLeft] = (vexRT[Ch3] + vexRT[Ch4]) * multiplier;
 		motor[DriveRearRight] = (vexRT[Ch3] - vexRT[Ch4]) * multiplier;
-
-		pwm = (SensorValue[LiftEncoderLeft] - SensorValue[LiftEncoderRight]) * 5;
+//*
+		pwm = (SensorValue[LiftEncoderLeft] - SensorValue[LiftEncoderRight]) * 0.5;
+		if(pwm < -127) {
+			pwm = -127;
+		}
+		if(pwm > 127) {
+			pwm = 127;
+		}
 		if(vexRT[Btn8U] == 1) {
 			pwm = 0;
 		}
-		writeDebugStreamLine("PWM adjustment: %i",pwm);
-
+		//writeDebugStreamLine("PWM adjustment: %i",pwm);
+		//*/
 		// LIFT
 		if(vexRT[Btn6D] == 1) {
-			motor[LiftLeftA] = leftspeed + pwm;
-			motor[LiftLeftB] = leftspeed + pwm;
-			motor[LiftRightA] = 127 - pwm;
-			motor[LiftRightB] = 127 - pwm;
+			motor[LiftLeftA] = leftspeed - pwm;
+			motor[LiftLeftB] = leftspeed - pwm;
+			motor[LiftRightA] = rightspeed + pwm;
+			motor[LiftRightB] = rightspeed + pwm;
 			} else if(vexRT[Btn6U] == 1) {
 			if(SensorValue[LiftLimitLeft] == 0) {
-				motor[LiftLeftA] = -127 - pwm;
-				motor[LiftLeftB] = -127 - pwm;
+				motor[LiftLeftA] = -leftspeed - pwm;
+				motor[LiftLeftB] = -leftspeed - pwm;
 				} else {
-				SensorValue[LiftEncoderLeft] = 0;
 				motor[LiftLeftA] = 0;
 				motor[LiftLeftB] = 0;
 			}
 			if(SensorValue[LiftLimitRight] == 0) {
-				motor[LiftRightA] = -leftspeed + pwm;
-				motor[LiftRightB] = -leftspeed + pwm;
+				motor[LiftRightA] = -rightspeed + pwm;
+				motor[LiftRightB] = -rightspeed + pwm;
 				} else {
-				SensorValue[LiftEncoderRight] = 0;
 				motor[LiftRightA] = 0;
 				motor[LiftRightB] = 0;
 			}
@@ -93,6 +98,11 @@ task usercontrol {
 			motor[LiftLeftB] = 0;
 			motor[LiftRightA] = 0;
 			motor[LiftRightB] = 0;
+		}
+
+		if(SensorValue[LiftLimitRight] == 1 && SensorValue[LiftLimitLeft] == 1) {
+			SensorValue[LiftEncoderLeft] = 0;
+			SensorValue[LiftEncoderRight] = 0;
 		}
 
 		// COLLECTION
