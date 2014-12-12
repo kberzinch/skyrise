@@ -1,17 +1,12 @@
 void Auton_Red_Freedom() {
-	Auton_Lift_Targeted(UP,1200);
-	Auton_Drive_TurnTo(CLOCKWISE,-350,63);
-	sleep(1000);
-	Auton_Drive_Targeted(FORWARD,80);
-	Auton_Lift_Targeted(DOWN,550);
-	//Auton_Drive_Targeted(BACKWARD,-60);
-	Auton_Lift_Targeted(DOWN,100);
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE,850);
-	Auton_Drive_Targeted(FORWARD,1500);
-	Auton_Lift_Targeted(UP,1800);
-	Auton_Drive_TurnTo(CLOCKWISE,200);
-	Auton_Drive_Targeted(FORWARD,25);
-	Auton_Lift_Targeted(DOWN,1400);
-	sleep(500);
-	Auton_Drive_Targeted(BACKWARD,-200);
+	Auton_Lift_Targeted(UP,800);
+	Auton_Drive_Targeted(FORWARD,100);
+	Auton_Drive_Targeted(BACKWARD,200);
+	Auton_Lift_Targeted(DOWN,0);
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE,1300);
+	Auton_Drive_Targeted(FORWARD,300);
+	Auton_Lift_Targeted(UP,300);
+	Auton_Drive_Targeted(FORWARD,250);
+	Auton_Lift_Targeted(UP,1600);
+	Auton_Drive_TurnTo(CLOCKWISE,450);
 }
