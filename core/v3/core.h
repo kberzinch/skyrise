@@ -23,12 +23,6 @@
 #error("This program must be compiled using ROBOTC.")
 #endif
 
-#ifndef ProgrammingSkills
-#ifndef NoProgrammingSkills
-#warn("Programming skills not included - if intentional add #define NoProgrammingSkills")
-#endif
-#endif
-
 // Type Definitions
 
 typedef byte tSpeed;
