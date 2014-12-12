@@ -20,7 +20,7 @@ void Auton_Red_AtLoader() {
 	Auton_Drive_Targeted(BACKWARD,50);
 	startTask(LiftTo0);
 	Auton_Drive_Targeted(LEFT,230);
-	Auton_Drive_Targeted(BACKWARD,200);
+	Auton_Drive_Targeted(BACKWARD,200,127,500);
 	Auton_Drive(COUNTERCLOCKWISE,127,30);
 	sleep(1000);
 	Auton_Drive_Targeted(FORWARD,400);
