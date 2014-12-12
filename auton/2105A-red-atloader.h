@@ -30,8 +30,12 @@ void Auton_Red_AtLoader() {
 	stopTask(LiftTo800);
 	Auton_Lift_Targeted(UP,800);
 	Auton_Drive_Targeted(CLOCKWISE,220);
-	Auton_Drive_Targeted(FORWARD,100);
+	Auton_Drive_Targeted(FORWARD,100,63);
+	sleep(1000);
 	Auton_Drive_Targeted(BACKWARD,50);
 	Auton_Lift_Targeted(DOWN,0);
-	Auton_Drive_Targeted(BACKWARD,150);
+	Auton_Drive_Targeted(BACKWARD,800);
+Auton_Drive_Targeted(RIGHT,250);
+Auton_Drive_Targeted(FORWARD,250);
+Auton_Drive_Targeted(BACKWARD,300);
 }

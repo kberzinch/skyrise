@@ -1,5 +1,6 @@
 #pragma config(UART_Usage, UART2, uartNotUsed, baudRate4800, IOPins, None, None)
-#pragma config(Sensor, dgtl1,  LiftLimit,      sensorTouch)
+#pragma config(Sensor, dgtl1,  LiftLimitLeft,  sensorTouch)
+#pragma config(Sensor, dgtl2,  LiftLimitRight, sensorTouch)
 #pragma config(Motor,  port1,           DriveFrontLeft, tmotorVex393_HBridge, openLoop, driveLeft)
 #pragma config(Motor,  port2,           DriveFrontRight, tmotorVex393_MC29, openLoop, driveLeft)
 #pragma config(Motor,  port3,           DriveRearLeft, tmotorVex393_MC29, openLoop, reversed, driveRight)
@@ -44,13 +45,13 @@ task usercontrol {
 	while(true) {
 		if(vexRT[Btn8D] == 1) {
 			multiplier = 0.2;
-		} else {
+			} else {
 			multiplier = 1;
 		}
-		motor[DriveFrontLeft] = (-vexRT[Ch3] + vexRT[Ch4]) * multiplier;
-		motor[DriveFrontRight] = (-vexRT[Ch3] - vexRT[Ch4]) * multiplier;
-		motor[DriveRearLeft] = (-vexRT[Ch3] + vexRT[Ch4]) * multiplier;
-		motor[DriveRearRight] = (-vexRT[Ch3] - vexRT[Ch4]) * multiplier;
+		motor[DriveFrontLeft] = (vexRT[Ch3] + vexRT[Ch4]) * multiplier;
+		motor[DriveFrontRight] = (vexRT[Ch3] - vexRT[Ch4]) * multiplier;
+		motor[DriveRearLeft] = (vexRT[Ch3] + vexRT[Ch4]) * multiplier;
+		motor[DriveRearRight] = (vexRT[Ch3] - vexRT[Ch4]) * multiplier;
 
 		// LIFT
 		if(vexRT[Btn6D] == 1) {
@@ -58,11 +59,21 @@ task usercontrol {
 			motor[LiftLeftB] = 127;
 			motor[LiftRightA] = 127;
 			motor[LiftRightB] = 127;
-			} else if(vexRT[Btn6U] == 1 && SensorValue[LiftLimit] == 0) {
-			motor[LiftLeftA] = -127;
-			motor[LiftLeftB] = -127;
-			motor[LiftRightA] = -127;
-			motor[LiftRightB] = -127;
+			} else if(vexRT[Btn6U] == 1) {
+			if(SensorValue[LiftLimitLeft] == 0) {
+				motor[LiftLeftA] = -127;
+				motor[LiftLeftB] = -127;
+				} else {
+				motor[LiftLeftA] = 0;
+				motor[LiftLeftB] = 0;
+			}
+			if(SensorValue[LiftLimitRight] == 0) {
+				motor[LiftRightA] = -127;
+				motor[LiftRightB] = -127;
+				} else {
+				motor[LiftRightA] = 0;
+				motor[LiftRightB] = 0;
+			}
 			} else {
 			motor[LiftLeftA] = 0;
 			motor[LiftLeftB] = 0;
@@ -71,12 +82,13 @@ task usercontrol {
 		}
 
 		// COLLECTION
-
-
 		if(vexRT[Btn5U] == 1) {
 			motor[CollectionA] = 127;
 			motor[CollectionB] = 127;
-
+			} else if(vexRT[Btn5D] == 1) {
+			motor[CollectionA] = -127;
+			motor[CollectionB] = -127;
+			} else {
 			motor[CollectionA] = 0;
 			motor[CollectionB] = 0;
 		}

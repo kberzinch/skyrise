@@ -1,6 +1,7 @@
 task autonomous {
 	if(Competition.Auton == 3) {
 	Auton_Progskills();
+stopTask(autonomous);
 }
 	switch(Competition.IsBlue) {
 	case true:
