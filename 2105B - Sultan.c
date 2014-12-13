@@ -20,27 +20,51 @@
 void pre_auton() {}
 
 int leftspeed = 127;
-int rightspeed = 90;
+int rightspeed = 85;
 
 task autonomous {
-	motor[CollectionA] = 127;
-	motor[CollectionB] = 127;
 	motor[LiftLeftA] = -127;
 	motor[LiftLeftB] = -127;
-	motor[LiftRightA] = -127;
-	motor[LiftRightB] = -127;
-	wait1Msec(1000);
+	motor[LiftRightA] = -80;
+	motor[LiftRightB] = -80;
+	wait1Msec(1200);
 	motor[LiftLeftA] = 0;
 	motor[LiftLeftB] = 0;
 	motor[LiftRightA] = 0;
 	motor[LiftRightB] = 0;
-	motor[CollectionA] = 0;
-	motor[CollectionB] = 0;
+
+	motor[DriveFrontLeft] = 127;
+	motor[DriveRearLeft] = 127;
+	motor[DriveFrontRight] = 127;
+	motor[DriveRearRight] = 127;
+	wait1Msec(2100);
+	motor[DriveFrontLeft] = -127;
+	motor[DriveRearLeft] = -127;
+	motor[DriveFrontRight] = 127;
+	motor[DriveRearRight] = 127;
+	wait1Msec(400);
 	motor[DriveFrontLeft] = -127;
 	motor[DriveRearLeft] = -127;
 	motor[DriveFrontRight] = -127;
 	motor[DriveRearRight] = -127;
-	wait1Msec(1000);
+	wait1Msec(600);
+	motor[DriveFrontLeft] = 127;
+	motor[DriveRearLeft] = 127;
+	motor[DriveFrontRight] = -127;
+	motor[DriveRearRight] = -127;
+	wait1Msec(400);
+
+	motor[DriveFrontLeft] = -127;
+	motor[DriveRearLeft] = -127;
+	motor[DriveFrontRight] = -127;
+	motor[DriveRearRight] = -127;
+	wait1Msec(1200);
+
+	motor[DriveFrontLeft] = 127;
+	motor[DriveRearLeft] = 127;
+	motor[DriveFrontRight] = 127;
+	motor[DriveRearRight] = 127;
+	wait1Msec(600);
 	allMotorsOff();
 }
 
