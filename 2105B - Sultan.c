@@ -20,7 +20,7 @@
 void pre_auton() {}
 
 int leftspeed = 127;
-int rightspeed = 85;
+int rightspeed = 127;
 
 task autonomous {
 	motor[LiftLeftA] = -127;
@@ -83,7 +83,7 @@ task usercontrol {
 		motor[DriveFrontRight] = (vexRT[Ch3] - vexRT[Ch4]) * multiplier;
 		motor[DriveRearLeft] = (vexRT[Ch3] + vexRT[Ch4]) * multiplier;
 		motor[DriveRearRight] = (vexRT[Ch3] - vexRT[Ch4]) * multiplier;
-//*
+		//*
 		pwm = (SensorValue[LiftEncoderLeft] - SensorValue[LiftEncoderRight]) * 0.5;
 		if(pwm < -127) {
 			pwm = -127;
@@ -97,31 +97,45 @@ task usercontrol {
 		//writeDebugStreamLine("PWM adjustment: %i",pwm);
 		//*/
 		// LIFT
-		if(vexRT[Btn6D] == 1) {
-			motor[LiftLeftA] = leftspeed - pwm;
-			motor[LiftLeftB] = leftspeed - pwm;
-			motor[LiftRightA] = rightspeed + pwm;
-			motor[LiftRightB] = rightspeed + pwm;
-			} else if(vexRT[Btn6U] == 1) {
-			if(SensorValue[LiftLimitLeft] == 0) {
-				motor[LiftLeftA] = -leftspeed - pwm;
-				motor[LiftLeftB] = -leftspeed - pwm;
+		if(vexRT[Btn8R] == 1) {
+			motor[LiftRightA] = 127;
+			motor[LiftRightB] = 127;
+			} else if(vexRT[Btn8L] == 1) {
+			motor[LiftLeftA] = 127;
+			motor[LiftLeftB] = 127;
+			} else {
+
+			if(vexRT[Btn6D] == 1) {
+				/*
+				motor[LiftLeftA] = leftspeed - pwm;
+				motor[LiftLeftB] = leftspeed - pwm;
+				motor[LiftRightA] = rightspeed + pwm;
+				motor[LiftRightB] = rightspeed + pwm;//*/
+				motor[LiftLeftA] = 127;
+				motor[LiftLeftB] = 127;
+				motor[LiftRightA] = 70;
+				motor[LiftRightB] = 70;
+				} else if(vexRT[Btn6U] == 1) {
+				if(SensorValue[LiftLimitLeft] == 0) {
+					motor[LiftLeftA] = -leftspeed - pwm;
+					motor[LiftLeftB] = -leftspeed - pwm;
+					} else {
+					motor[LiftLeftA] = 0;
+					motor[LiftLeftB] = 0;
+				}
+				if(SensorValue[LiftLimitRight] == 0) {
+					motor[LiftRightA] = -rightspeed + pwm;
+					motor[LiftRightB] = -rightspeed + pwm;
+					} else {
+					motor[LiftRightA] = 0;
+					motor[LiftRightB] = 0;
+				}
 				} else {
 				motor[LiftLeftA] = 0;
 				motor[LiftLeftB] = 0;
-			}
-			if(SensorValue[LiftLimitRight] == 0) {
-				motor[LiftRightA] = -rightspeed + pwm;
-				motor[LiftRightB] = -rightspeed + pwm;
-				} else {
 				motor[LiftRightA] = 0;
 				motor[LiftRightB] = 0;
 			}
-			} else {
-			motor[LiftLeftA] = 0;
-			motor[LiftLeftB] = 0;
-			motor[LiftRightA] = 0;
-			motor[LiftRightB] = 0;
 		}
 
 		if(SensorValue[LiftLimitRight] == 1 && SensorValue[LiftLimitLeft] == 1) {
@@ -131,11 +145,11 @@ task usercontrol {
 
 		// COLLECTION
 		if(vexRT[Btn5U] == 1) {
-			motor[CollectionA] = 127;
-			motor[CollectionB] = 127;
+			motor[CollectionA] = 127 * 0.5;
+			motor[CollectionB] = 127 * 0.5;
 			} else if(vexRT[Btn5D] == 1) {
-			motor[CollectionA] = -127;
-			motor[CollectionB] = -127;
+			motor[CollectionA] = -127 * 0.5;
+			motor[CollectionB] = -127 * 0.5;
 			} else {
 			motor[CollectionA] = 0;
 			motor[CollectionB] = 0;
