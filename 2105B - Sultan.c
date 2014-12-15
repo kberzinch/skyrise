@@ -145,11 +145,11 @@ task usercontrol {
 
 		// COLLECTION
 		if(vexRT[Btn5U] == 1) {
-			motor[CollectionA] = 127 * 0.5;
-			motor[CollectionB] = 127 * 0.5;
+			motor[CollectionA] = 127;
+			motor[CollectionB] = 127;
 			} else if(vexRT[Btn5D] == 1) {
-			motor[CollectionA] = -127 * 0.5;
-			motor[CollectionB] = -127 * 0.5;
+			motor[CollectionA] = -127;
+			motor[CollectionB] = -127;
 			} else {
 			motor[CollectionA] = 0;
 			motor[CollectionB] = 0;

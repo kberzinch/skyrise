@@ -1,8 +1,8 @@
 task autonomous {
 	if(Competition.Auton == 3) {
-	Auton_Progskills();
-stopTask(autonomous);
-}
+		Auton_Progskills();
+		stopTask(autonomous);
+	}
 	switch(Competition.IsBlue) {
 	case true:
 		switch(Competition.AtLoader) {
