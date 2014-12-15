@@ -8,6 +8,7 @@ int dval = 0;
 int deadband = 20;
 
 task usercontrol {
+	startTask(LCD_Display);
 	startTask(usercontrol_liftpresets);
 	while(true) {
 		// DRIVE

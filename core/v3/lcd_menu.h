@@ -93,26 +93,39 @@ bool LCD_Menu_Execute()
 		break;
 	case 1:
 		Competition.IsBlue = true;
+#if defined(_DEBUG)
 		writeDebugStreamLine("Set as blue");
+#endif
 		break;
 	case 2:
 		Competition.AtLoader = true;
+#if defined(_DEBUG)
 		writeDebugStreamLine("Set as autoloader");
+#endif
 		break;
 	case 3:
 		Competition.AtLoader = false;
+#if defined(_DEBUG)
 		writeDebugStreamLine("Set as freedom spot");
+#endif
 		break;
 	case 4:
 		Competition.Auton = 1;
+#if defined(_DEBUG)
 		writeDebugStreamLine("Set as Numero Uno");
+#endif
 		break;
 	case 5:
 		Competition.Auton = 2;
+#if defined(_DEBUG)
 		writeDebugStreamLine("Set as Numero Dos");
+#endif
 		break;
 	case 6:
 		Competition.Auton = 3;
+#if defined(_DEBUG)
+		writeDebugStreamLine("Set as programming skills");
+#endif
 		break;
 	}
 	if (LCD.Menu[LCD.Index].SelectIndex == -1)
