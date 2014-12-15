@@ -55,15 +55,6 @@ tSensors DriveEncoder, LiftEncoder, LiftLimitMinA, LiftLimitMinB, LiftLimitMax;
 
 // Function definitions
 
-// Use __LINE__ as the parameter
-void Halt(int Line) {
-#if defined(_DEBUG)
-	writeDebugStreamLine("Halt command sent from line %i",Line);
-#endif
-	allMotorsOff();
-	stopAllTasks();
-}
-
 int Auton_GetMultiplier(tDirection Direction, tMotor WhichMotor) {
 	switch(Direction) {
 	case STOP:
@@ -171,21 +162,26 @@ void Auton_WaitForKeyPress(int Sleep = 0) {
 #endif
 
 void pre_auton() {
+	/* TODO: POST
+	- Check that min lift limit switches are both triggered
+	- Check that max lift limit switches are NOT triggered
+	- Test gyroscope
+	- init
+	- Calibrate
+	- Test calibration
+	- Ready message
+	*/
 	bStopTasksBetweenModes = true;
 #ifndef NoLCD
 	clearLCDLine(0);
 	clearLCDLine(1);
 	bLCDBacklight = true;
-	displayLCDCenteredString(0, "Starting up");
+	displayLCDCenteredString(0, "POST IN PROGRESS");
 	displayLCDCenteredString(1, "Please stand by");
 #endif
 #if defined(_DEBUG)
 	clearDebugStream();
-	writeDebugStream(FILE);
-	writeDebugStream(" compiled on ");
-	writeDebugStream(DATE);
-	writeDebugStream(" at ");
-	writeDebugStreamLine(TIME);
+	writeDebugStreamLine(FILE);
 	writeDebugStreamLine(" - Debug			 ON");
 #ifdef ProgrammingSkills
 	writeDebugStreamLine(" - Progskill	 ON");
@@ -219,16 +215,6 @@ void pre_auton() {
 #endif
 	LCD.Display.Backup = true;
 #endif
-	clearLCDLine(0);
-	clearLCDLine(1);
-#ifndef NoPowerExpander
-	displayLCDCenteredString(0, "Bad Battery B");
-	displayLCDCenteredString(1, "Need to replace");
-	while(((float)SensorValue[PowerExpander] / (float)280) < 7) {}
-	clearLCDLine(0);
-	clearLCDLine(1);
-#endif
-	init();
 	if(!bIfiRobotDisabled) {
 #if defined(_DEBUG)
 		writeDebugStreamLine("Not disabled: exiting");
@@ -240,6 +226,64 @@ void pre_auton() {
 #endif
 		return;
 	}
+
+	// POWER ON SELF-TEST
+	while(((float)BackupBatteryLevel / (float)1000) < 2 && nLCDButtons == 0 && !bIfiRobotDisabled) {
+		displayLCDCenteredString(0, "POST ERROR");
+		displayLCDCenteredString(1, "9V not connected");
+	}
+	while(nLCDButtons != 0) {}
+	while(((float)BackupBatteryLevel / (float)1000) < 8 && nLCDButtons == 0 && !bIfiRobotDisabled) {
+		displayLCDCenteredString(0, "POST ERROR");
+		displayLCDCenteredString(1, "9V battery low");
+	}
+	while(nLCDButtons != 0) {}
+	while(((float)nImmediateBatteryLevel / (float)1000) < 2 && nLCDButtons == 0 && !bIfiRobotDisabled) {
+		displayLCDCenteredString(0, "POST ERROR");
+		displayLCDCenteredString(1, "No Cortex power");
+	}
+	while(nLCDButtons != 0) {}
+	while(((float)nImmediateBatteryLevel / (float)1000) < 7 && nLCDButtons == 0 && !bIfiRobotDisabled) {
+		displayLCDCenteredString(0, "POST ERROR");
+		displayLCDCenteredString(1, "Cortex batt low");
+	}
+	while(nLCDButtons != 0) {}
+#ifndef NoPowerExpander
+	while(((float)SensorValue[PowerExpander] / (float)280) < 2 && nLCDButtons == 0 && !bIfiRobotDisabled) {
+		displayLCDCenteredString(0, "POST ERROR");
+		displayLCDCenteredString(1, "No batt B power");
+	}
+	while(nLCDButtons != 0) {}
+	while(((float)SensorValue[PowerExpander] / (float)280) < 7 && nLCDButtons == 0 && !bIfiRobotDisabled) {
+		displayLCDCenteredString(0, "POST ERROR");
+		displayLCDCenteredString(1, "Battery B low");
+	}
+	while(nLCDButtons != 0) {}
+#endif
+	while(!Lift_TrippedMin() || Lift_TrippedMax() && nLCDButtons == 0 && !bIfiRobotDisabled) {
+		displayLCDCenteredString(0, "POST ERROR");
+		displayLCDCenteredString(1, "Check lift limits");
+	}
+	while(nLCDButtons != 0) {}
+	SensorValue[LiftEncoder] = 0;
+	SensorValue[DriveEncoder] = 0;
+	SensorValue[Gyroscope] = 0;
+	sleep(500);
+	while(SensorValue[DriveEncoder] != 0 && nLCDButtons == 0 && !bIfiRobotDisabled) {
+		displayLCDCenteredString(0, "POST ERROR");
+		displayLCDCenteredString(1, "Check drive enc");
+	}
+	while(nLCDButtons != 0) {}
+	while(SensorValue[DriveEncoder] != 0 && nLCDButtons == 0 && !bIfiRobotDisabled) {
+		displayLCDCenteredString(0, "POST ERROR");
+		displayLCDCenteredString(1, "Check lift enc");
+	}
+	while(nLCDButtons != 0) {}
+	while(SensorValue[Gyroscope] != 0 && nLCDButtons == 0 && !bIfiRobotDisabled) {
+		displayLCDCenteredString(0, "POST ERROR");
+		displayLCDCenteredString(1, "Gyro problem");
+	}
+	while(nLCDButtons != 0) {}
 #ifndef NoLCD
 #if defined(_DEBUG)
 	writeDebugStreamLine("Menu launched");
@@ -358,24 +402,4 @@ bool Lift_TrippedMin() {
 
 bool Lift_TrippedMax() {
 	return SensorValue[LiftLimitMaxA] == 0 || SensorValue[LiftLimitMaxB] == 1;
-}
-
-void FollowLine(tDirection Direction, int Distance = 0) {
-	LCD.Display.Paused = true;
-	clearLCDLine(0);
-	clearLCDLine(1);
-	const int threshold = 1600;
-	int error, pwm;
-	while(true) {
-		error = (SensorValue[LineFollowerCenter] - SensorValue[LineFollowerLeft]) - (SensorValue[LineFollowerCenter] - SensorValue[LineFollowerRight]);
-		pwm = error / 80;
-		clearLCDLine(0);
-		clearLCDLine(1);
-		displayLCDNumber(0, 0, error);
-		displayLCDNumber(1, 0, pwm);
-		Auton_Drive(BACKWARD,63 + pwm,0,63 - pwm);
-		sleep(100);
-		// condition ? return if true : return if false
-		//Auton_Drive(BACKWARD,
-	}
 }

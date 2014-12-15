@@ -25,6 +25,7 @@ task autonomous {
 		}
 		break;
 	}
+#if defined(_DEBUG)
 	writeDebugStreamLine("Autonomous finished");
 	writeDebugStreamLine(" - Total time: %i:%i",LCD_Timer_Mins(0),LCD_Timer_Secs(0,true));
 	writeDebugStreamLine(" - Batt A   %1.2fv", (float)nImmediateBatteryLevel / (float)1000);
@@ -34,4 +35,5 @@ task autonomous {
 	writeDebugStreamLine(" - Backup   %1.2fv", (float)BackupBatteryLevel / (float)1000);
 	LCD.Display.Paused = true;
 	ResetDriveEncoders();
+#endif
 }
