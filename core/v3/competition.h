@@ -108,4 +108,7 @@ void allTasksStop() {
 	stopTask(18);
 	stopTask(19);
 #endif
+#ifndef NoLCD
+	startTask(LCD_Display);
+#endif
 }

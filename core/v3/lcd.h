@@ -129,7 +129,7 @@ void LCD_Menu() {
 	clearLCDLine(0);
 	clearLCDLine(1);
 	bLCDBacklight = true;
-	while(true)	{
+	while(bIfiRobotDisabled)	{
 		if(nLCDButtons != 0 || LCD.IsFirstLoop == true) {
 			LCD.IsFirstLoop = false;
 			if(nLCDButtons == 1) {LCD_Menu_Increment(-1);}
@@ -258,11 +258,11 @@ task LCD_Display {
 				displayLCDString(0,1,"F");
 			}
 			if (bIfiRobotDisabled) {
-				displayLCDString(0, 3, "Disabled");
+				displayLCDString(0, 3, "Disabled    ");
 				Competition.Status = 0;
 				}	else {
 				if (bIfiAutonomousMode) {
-					displayLCDString(0, 3, "Auton");
+					displayLCDString(0, 3, "Auton     ");
 					Competition.Status = 1;
 					} else {
 					displayLCDString(0, 3, "Driver    ");
