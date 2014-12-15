@@ -8,7 +8,7 @@ void Auton_Progskills() {
 	Auton_Lift_Targeted(UP,700);
 	// PICKED UP FIRST PYLON
 	Auton_Drive_Targeted(BACKWARD,160);
-	Auton_Drive_TurnTo(CLOCKWISE,-600);
+	Auton_Drive_TurnTo(CLOCKWISE,-650);
 	Auton_Drive_Targeted(FORWARD,90);
 	sleep(1000);
 	Auton_Lift_Targeted(DOWN,0,63);
@@ -17,14 +17,14 @@ void Auton_Progskills() {
 	startTask(LiftToAutoloader);
 	Auton_Drive_Targeted(BACKWARD,70);
 	sleep(100);
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE,-130);
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE,-200);
 	sleep(500);
 	Auton_Drive_Targeted(FORWARD,200);
 	// PICKED UP SECOND PYLON
 	sleep(250);
 	Auton_Lift_Targeted(UP,750);
 	Auton_Drive_Targeted(BACKWARD,160);
-	Auton_Drive_TurnTo(CLOCKWISE,-600);
+	Auton_Drive_TurnTo(CLOCKWISE,-700);
 	Auton_Drive_Targeted(FORWARD,100);
 	sleep(250);
 	Auton_Lift_Targeted(DOWN,200);
@@ -34,12 +34,12 @@ void Auton_Progskills() {
 	Auton_Drive_Targeted(BACKWARD,100);
 	Auton_Drive_TurnTo(COUNTERCLOCKWISE,-200);
 	sleep(250);
-	Auton_Drive_Targeted(FORWARD,170);
+	Auton_Drive_Targeted(FORWARD,200);
 	sleep(250);
 	Auton_Lift_Targeted(UP,700);
 	// PICKED UP THIRD PYLON
 	Auton_Drive_Targeted(BACKWARD,160);
-	Auton_Drive_TurnTo(CLOCKWISE,-300);
+	Auton_Drive_TurnTo(CLOCKWISE,-350);
 	Auton_Lift_Targeted(UP,1200);
 	Auton_Drive_Targeted(FORWARD,160);
 	sleep(1000);
