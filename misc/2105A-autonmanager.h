@@ -10,7 +10,7 @@ task autonomous {
 			Auton_Blue_AtLoader();
 			break;
 		case false:
-			Auton_Blue_Freedom();
+			//Auton_Blue_Freedom();
 			break;
 		}
 		break;
@@ -20,7 +20,7 @@ task autonomous {
 			Auton_Red_AtLoader();
 			break;
 		case false:
-			Auton_Red_Freedom();
+			//Auton_Red_Freedom();
 			break;
 		}
 		break;
