@@ -246,7 +246,7 @@ void pre_auton() {
 		displayLCDCenteredString(1, "9V not connected");
 	}
 	selftest_passed("9V voltage: ");
-	while(((float)BackupBatteryLevel / (float)1000) < 8 && nLCDButtons == 0 && bIfiRobotDisabled) {
+	while(((float)BackupBatteryLevel / (float)1000) < 8.7 && nLCDButtons == 0 && bIfiRobotDisabled) {
 		displayLCDCenteredString(0, "POST ERROR");
 		displayLCDCenteredString(1, "9V battery low");
 	}
@@ -256,7 +256,7 @@ void pre_auton() {
 		displayLCDCenteredString(1, "No Cortex power");
 	}
 	selftest_passed("Cortex voltage: ");
-	while(((float)nImmediateBatteryLevel / (float)1000) < 7 && nLCDButtons == 0 && bIfiRobotDisabled) {
+	while(((float)nImmediateBatteryLevel / (float)1000) < 7.5 && nLCDButtons == 0 && bIfiRobotDisabled) {
 		displayLCDCenteredString(0, "POST ERROR");
 		displayLCDCenteredString(1, "Cortex batt low");
 	}
@@ -267,7 +267,7 @@ void pre_auton() {
 		displayLCDCenteredString(1, "No batt B power");
 	}
 	selftest_passed("Power expander voltage: ");
-	while(((float)SensorValue[PowerExpander] / (float)280) < 7 && nLCDButtons == 0 && bIfiRobotDisabled) {
+	while(((float)SensorValue[PowerExpander] / (float)280) < 7.5 && nLCDButtons == 0 && bIfiRobotDisabled) {
 		displayLCDCenteredString(0, "POST ERROR");
 		displayLCDCenteredString(1, "Battery B low");
 	}
