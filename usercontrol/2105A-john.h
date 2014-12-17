@@ -13,17 +13,17 @@ task usercontrol {
 		// DRIVE
 		if(vexRT[Btn5D] == 1) {
 			drivemultiplier = 0.5;
-		} else {
+			} else {
 			drivemultiplier = 1;
 		}
 		dval = vexRT[Ch1] - vexRT[Ch2] - vexRT[Ch4] * drivemultiplier;
-		motor[DriveRearLeft]   = dval < deadband && dval > -deadband ? 0 : dval;
+	motor[DriveRearLeft]   = dval < deadband && dval > -deadband ? 0 : dval;
 		dval = -vexRT[Ch1] - vexRT[Ch2] - vexRT[Ch4] * drivemultiplier;
-		motor[DriveFrontLeft]  = dval < deadband && dval > -deadband ? 0 : dval;
+	motor[DriveFrontLeft]  = dval < deadband && dval > -deadband ? 0 : dval;
 		dval =  vexRT[Ch1] + vexRT[Ch2] - vexRT[Ch4] * drivemultiplier;
-		motor[DriveRearRight]  = dval < deadband && dval > -deadband ? 0 : dval;
+	motor[DriveRearRight]  = dval < deadband && dval > -deadband ? 0 : dval;
 		dval = -vexRT[Ch1] + vexRT[Ch2] - vexRT[Ch4] * drivemultiplier;
-		motor[DriveFrontRight] = dval < deadband && dval > -deadband ? 0 : dval;
+	motor[DriveFrontRight] = dval < deadband && dval > -deadband ? 0 : dval;
 
 		// PRESET RESET
 		if(Lift_TrippedMin()) {
