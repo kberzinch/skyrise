@@ -429,5 +429,5 @@ bool Lift_TrippedMin() {
 }
 
 bool Lift_TrippedMax() {
-	return SensorValue[LiftLimitMaxA] == 0 || SensorValue[LiftLimitMaxB] == 1;
+	return SensorValue[LiftEncoder] < -2000;
 }
