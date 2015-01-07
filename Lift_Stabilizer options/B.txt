@@ -1,0 +1,64 @@
+task Lift_Stabilizer() {
+	int A_Position_Current = 0;
+	int A_Position_Target = 0;
+	int A_Error_Current = 0;
+	int A_Error_Previous = 0;
+	bool A_Target_Update_Required = false;
+	float A_Motor_Speed = 0;
+	float A_Integral = 0;
+	float A_Derivative = 0;
+	const float A_Kp = 0.07;
+	const float A_Kd = 0.001;
+	const float A_Ki = 0;//.00001;
+	while (true) {
+		while(SensorValue[LiftLimit] == 1) {
+			if (vexRT[Btn6U] == 1) {
+				motor[LiftLeft] = -127;
+				motor[LiftRight] = 127;
+				} else {
+				motor[LiftLeft] = 0;
+				motor[LiftRight] = 0;
+			}
+			nMotorEncoder[LiftLeft] = 0;
+			A_Error_Current = 0;
+			A_Error_Previous = 0;
+			A_Motor_Speed = 0;
+			A_Integral = 0;
+			A_Derivative = 0;
+		}
+		while (vexRT[Btn6U] == 1 && nMotorEncoder[LiftLeft] < 1900) {
+			motor[LiftLeft] = -127;
+			motor[LiftRight] = 127;
+			A_Target_Update_Required = true;
+		}
+		while (vexRT[Btn6D] == 1 && SensorValue[LiftLimit] == 0) {
+			motor[LiftLeft] = 127;
+			motor[LiftRight] = -127;
+			A_Target_Update_Required = true;
+		}
+		while (Auton_Using_Lift) {
+			A_Target_Update_Required = true;
+		}
+		if (A_Target_Update_Required) {
+			A_Position_Target = nMotorEncoder[LiftLeft];
+			A_Target_Update_Required = false;
+		}
+		A_Position_Current = nMotorEncoder[LiftLeft];
+		A_Error_Current = A_Position_Target - A_Position_Current;
+		A_Integral = A_Integral + A_Error_Current;
+		if (abs(A_Error_Current) > 50) {
+			A_Integral = 0;
+		}
+		A_Derivative = (A_Error_Current - A_Error_Previous);
+		A_Error_Previous = A_Error_Current;
+		A_Motor_Speed = (A_Kp * A_Error_Current) + (A_Ki * A_Integral) + (A_Kd * A_Derivative);
+		if (A_Motor_Speed < -30) {
+			A_Motor_Speed = -30;
+		}
+		if (A_Motor_Speed > 30) {
+			A_Motor_Speed = 30;
+		}
+		motor[LiftLeft] = -A_Motor_Speed;
+		motor[LiftRight] = A_Motor_Speed;
+	}
+}
