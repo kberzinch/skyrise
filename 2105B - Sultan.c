@@ -114,8 +114,8 @@ task usercontrol {
 				motor[LiftRightB] = rightspeed + pwm;//*/
 				motor[LiftLeftA] = 127;
 				motor[LiftLeftB] = 127;
-				motor[LiftRightA] = 70;
-				motor[LiftRightB] = 70;
+				motor[LiftRightA] = 127;
+				motor[LiftRightB] = 127;
 				} else if(vexRT[Btn6U] == 1) {
 				if(SensorValue[LiftLimitLeft] == 0) {
 					motor[LiftLeftA] = -leftspeed - pwm;
