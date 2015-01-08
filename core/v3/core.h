@@ -52,6 +52,7 @@ bool Lift_TrippedMax();
 bool Lift_TrippedMin();
 
 tSensors DriveEncoder, LiftEncoder, LiftLimitMinA, LiftLimitMinB, LiftLimitMax;
+tMotor LiftLeftA, LiftLeftB, LiftLeftC, LiftRightA, LiftRightB, LiftRightC;
 
 // Function definitions
 
@@ -291,7 +292,9 @@ void pre_auton() {
 	sleep(1000);
 	SensorValue[LiftEncoder] = 0;
 	SensorValue[DriveEncoder] = 0;
+#ifdef HasGyro
 	SensorValue[Gyroscope] = 0;
+#endif
 	sleep(500);
 	while(SensorValue[DriveEncoder] != 0 && nLCDButtons == 0 && bIfiRobotDisabled) {
 		displayLCDCenteredString(0, "POST ERROR");
@@ -302,11 +305,13 @@ void pre_auton() {
 		displayLCDCenteredString(0, "POST ERROR");
 		displayLCDCenteredString(1, "Check lift enc");
 	}
+#ifdef HasGyro
 	selftest_passed("Gyroscope: ");
 	while(SensorValue[Gyroscope] != 0 && nLCDButtons == 0 && bIfiRobotDisabled) {
 		displayLCDCenteredString(0, "POST ERROR");
 		displayLCDCenteredString(1, "Gyro problem");
 	}
+#endif
 #if defined(_DEBUG)
 	writeDebugStreamLine("PASSED");
 #endif
