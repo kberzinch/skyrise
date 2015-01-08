@@ -1,16 +1,12 @@
 task autonomous {
-	/*if(Competition.Auton == 3) {
-		Auton_Progskills();
-		stopTask(autonomous);
-	}*/
 	switch(Competition.IsBlue) {
 	case true:
 		switch(Competition.AtLoader) {
 		case true:
-			Auton_Blue_AtLoader();
+			//Auton_Blue_AtLoader();
 			break;
 		case false:
-			//Auton_Blue_Freedom();
+			Auton_Blue_Freedom();
 			break;
 		}
 		break;
@@ -25,6 +21,7 @@ task autonomous {
 		}
 		break;
 	}
+	allMotorsOff();
 #if defined(_DEBUG)
 	writeDebugStreamLine("Autonomous finished");
 	writeDebugStreamLine(" - Total time: %i:%i",LCD_Timer_Mins(0),LCD_Timer_Secs(0,true));

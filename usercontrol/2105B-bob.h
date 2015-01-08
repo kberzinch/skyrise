@@ -4,9 +4,9 @@
 task usercontrol {
 	while(true) {
 		// DRIVE
-		motor[DriveFrontLeft] = (vexRT[Ch3] + vexRT[Ch4]);
+		motor[DriveFrontLeft] = -(vexRT[Ch3] + vexRT[Ch4]);
 		motor[DriveFrontRight] = (vexRT[Ch3] - vexRT[Ch4]);
-		motor[DriveRearLeft] = (vexRT[Ch3] + vexRT[Ch4]);
+		motor[DriveRearLeft] = -(vexRT[Ch3] + vexRT[Ch4]);
 		motor[DriveRearRight] = (vexRT[Ch3] - vexRT[Ch4]);
 
 		// LIFT
