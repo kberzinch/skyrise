@@ -1,57 +1,47 @@
 // ROBOT:  2015A
 // DRIVER: Bob
 
-task usercontrol_liftpresets;
-int preset_triggered = false;
-float drivemultiplier = 1;
-
 task usercontrol {
-	startTask(usercontrol_liftpresets);
 	while(true) {
 		// DRIVE
-		if(vexRT[Btn5D] == 1) {
-			drivemultiplier = 0.5;
-		} else {
-			drivemultiplier = 1;
-		}
-		motor[DriveRearLeft]   = ( vexRT[Ch1] - vexRT[Ch3] - vexRT[Ch4]) * drivemultiplier;
-		motor[DriveFrontLeft]  = (-vexRT[Ch1] - vexRT[Ch3] - vexRT[Ch4]) * drivemultiplier;
-		motor[DriveRearRight]  = ( vexRT[Ch1] + vexRT[Ch3] - vexRT[Ch4]) * drivemultiplier;
-		motor[DriveFrontRight] = (-vexRT[Ch1] + vexRT[Ch3] - vexRT[Ch4]) * drivemultiplier;
+		motor[DriveFrontLeft] = (vexRT[Ch3] + vexRT[Ch4]);
+		motor[DriveFrontRight] = (vexRT[Ch3] - vexRT[Ch4]);
+		motor[DriveRearLeft] = (vexRT[Ch3] + vexRT[Ch4]);
+		motor[DriveRearRight] = (vexRT[Ch3] - vexRT[Ch4]);
 
-		// PRESET RESET
-		if(Lift_TrippedMin()) {
-			SensorValue[LiftEncoder] = 0;
+		// LIFT
+		if(vexRT[Btn6U] == 1) {
+			stopTask(Lift_Stabilizer_Left);
+			stopTask(Lift_Stabilizer_Right);
+			Set_Lift_Target();
+			motor[LiftLeftA] = 127;
+			motor[LiftLeftB] = 127;
+			motor[LiftRightA] = 127;
+			motor[LiftRightB] = 127;
+			} else if(vexRT[Btn6D] == 1) {
+			stopTask(Lift_Stabilizer_Left);
+			stopTask(Lift_Stabilizer_Right);
+			Set_Lift_Target();
+			motor[LiftLeftA] = -127;
+			motor[LiftLeftB] = -127;
+			motor[LiftRightA] = -127;
+			motor[LiftRightB] = -127;
+			} else {
+			startTask(Lift_Stabilizer_Left);
+			startTask(Lift_Stabilizer_Right);
 		}
 
-		// LIFT MANUAL
-		if(!preset_triggered) {
-			if(vexRT[Btn6U] == 1 && !Lift_TrippedMax()) {
-				Auton_Lift(UP);
-				} else if(vexRT[Btn6D] == 1 && !Lift_TrippedMin()) {
-				Auton_Lift(DOWN);
-				} else {
-				Auton_Lift();
-			}
+		// COLLECTION
+		if(vexRT[Btn5U] == 1) {
+			motor[CollectionA] = 127;
+			motor[CollectionB] = 127;
+			} else if(vexRT[Btn5D] == 1) {
+			motor[CollectionA] = -127;
+			motor[CollectionB] = -127;
+			} else {
+			motor[CollectionA] = 0;
+			motor[CollectionB] = 0;
 		}
-	}
-}
-
-task usercontrol_liftpresets {
-	while(true) {
-		if(vexRT[Btn7D] ==  1 && !Lift_TrippedMin()) {
-			preset_triggered = true;
-			Auton_Lift_Targeted(DOWN,0);
-		}
-		if(vexRT[Btn7R] == 1) {
-			preset_triggered = true;
-			if(SensorValue[LiftEncoder] < -400) {
-				Auton_Lift_Targeted(DOWN,400);
-				Auton_Lift(UP,63,100);
-				} else {
-				Auton_Lift_Targeted(UP,250);
-			}
-		}
-		preset_triggered = false;
+		// DONE
 	}
 }
