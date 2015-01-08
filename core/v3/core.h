@@ -235,7 +235,6 @@ void pre_auton() {
 #endif
 		return;
 	}
-
 #if defined(_DEBUG)
 	writeDebugStreamLine("POST started");
 	writeDebugStream("9v connection: ");
@@ -273,11 +272,13 @@ void pre_auton() {
 		displayLCDCenteredString(1, "Battery B low");
 	}
 #endif
+#ifndef NoLiftLimits
 	selftest_passed("Lift limits: ");
 	while(!Lift_TrippedMin() || Lift_TrippedMax() && nLCDButtons == 0 && bIfiRobotDisabled) {
 		displayLCDCenteredString(0, "POST ERROR");
 		displayLCDCenteredString(1, "Check lift limits");
 	}
+#endif
 	selftest_passed("VEXnet link: ");
 	while(!bVEXNETActive && nLCDButtons == 0 && bIfiRobotDisabled) {
 		displayLCDCenteredString(0, "POST ERROR");
@@ -289,22 +290,28 @@ void pre_auton() {
 	bLCDBacklight = true;
 	displayLCDCenteredString(0, "POST IN PROGRESS");
 	displayLCDCenteredString(1, "Please stand by");
+#ifndef NoDriveEncoder
 	sleep(1000);
 	SensorValue[LiftEncoder] = 0;
 	SensorValue[DriveEncoder] = 0;
+#endif
 #ifdef HasGyro
 	SensorValue[Gyroscope] = 0;
 #endif
+#ifndef NoDriveEncoder
 	sleep(500);
 	while(SensorValue[DriveEncoder] != 0 && nLCDButtons == 0 && bIfiRobotDisabled) {
 		displayLCDCenteredString(0, "POST ERROR");
 		displayLCDCenteredString(1, "Check drive enc");
 	}
+#endif
+#ifndef OneLiftEncoder
 	selftest_passed("Lift encoder: ");
-	while(SensorValue[DriveEncoder] != 0 && nLCDButtons == 0 && bIfiRobotDisabled) {
+	while(SensorValue[LiftEncoder] != 0 && nLCDButtons == 0 && bIfiRobotDisabled) {
 		displayLCDCenteredString(0, "POST ERROR");
 		displayLCDCenteredString(1, "Check lift enc");
 	}
+#endif
 #ifdef HasGyro
 	selftest_passed("Gyroscope: ");
 	while(SensorValue[Gyroscope] != 0 && nLCDButtons == 0 && bIfiRobotDisabled) {
