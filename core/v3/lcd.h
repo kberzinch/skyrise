@@ -209,6 +209,7 @@ task LCD_Display {
 	bLCDBacklight = true;
 	while (true) {
 		for (i = 0; i < (strlen(Text[0]) + strlen(Text[1]) + strlen(Text[2])); i++) {
+			while (nLCDButtons != 0) {}
 			setLCDPosition(1, 0);
 			for (j = 0; j < 16; j++) {
 				if (LCD.Display.BattA) {
@@ -277,7 +278,6 @@ task LCD_Display {
 				displayLCDNumber(0, 14, LCD_Timer_Secs(0,true), -2);
 			}
 			LastProcessedStatus = Competition.Status;
-			while (nLCDButtons != 0) {}
 			sleep(200);
 		}
 	}
