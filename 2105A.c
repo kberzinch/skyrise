@@ -11,6 +11,7 @@
 #pragma config(Sensor, dgtl1,  LiftEncoder,    sensorQuadEncoder)
 #pragma config(Sensor, dgtl3,  DriveEncoder,   sensorQuadEncoder)
 #pragma config(Sensor, dgtl5,  LiftLimitMaxB,  sensorTouch)
+#pragma config(Sensor, dgtl6,  DriveEncoderLeft, sensorQuadEncoder)
 #pragma config(Motor,  port1,           LiftLeftA,     tmotorVex393_HBridge, openLoop, encoderPort, dgtl1)
 #pragma config(Motor,  port2,           LiftRightA,    tmotorVex393_MC29, openLoop, encoderPort, dgtl1)
 #pragma config(Motor,  port3,           LiftLeftB,     tmotorVex393_MC29, openLoop, reversed, encoderPort, dgtl1)
@@ -30,6 +31,7 @@ const string FILE = __FILE__;
 #include "core\v3\core.h"
 #include "usercontrol\2105A-john.h"
 #include "auton\2105A-blue-atloader.h"
+#include "auton\2105A-red-atloader-2pylons.h"
 #include "misc\2105A-autonmanager.h"
 
 void ResetDriveEncoders() {

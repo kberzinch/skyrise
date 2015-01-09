@@ -55,12 +55,12 @@ void LCD_Menu_Define()
 	LCD.Menu[1].Title = LCD.Menu[0].Title;
 	LCD.Menu[1].Text = "Blue";
 	LCD.Menu[1].SelectIndex = 2;
-	LCD.Menu[1].NextIndex = 6;
-
+	LCD.Menu[1].NextIndex = 1;
+/*
 	LCD.Menu[6].Title = "Program Skills";
 	LCD.Menu[6].Text = "Blue Autoload";
 	LCD.Menu[6].PrevIndex = 1;
-	LCD.Menu[6].NextIndex = 6;
+	LCD.Menu[6].NextIndex = 6;*/
 
 	LCD.Menu[2].Title = "Start Point";
 	LCD.Menu[2].Text = "Autoloader";
