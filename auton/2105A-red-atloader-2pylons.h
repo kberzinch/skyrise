@@ -18,7 +18,7 @@ void Auton_Red_AtLoader() {
 	sleep(500);
 	Auton_Lift_Targeted(DOWN,1);
 	Auton_Drive_Targeted(BACKWARD,70);
-	Auton_Drive_TurnTo(CLOCKWISE, 400);
+	Auton_Drive_TurnTo(CLOCKWISE, 500);
 	Auton_Lift_Targeted(UP,400);
 	Auton_Drive_Targeted(FORWARD,110);
 	sleep(250);
@@ -37,7 +37,7 @@ void Auton_Red_AtLoader() {
 	Auton_Drive_Targeted(BACKWARD,160);
 	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 700);
 	Auton_Drive_Targeted(FORWARD,180);
-	sleep(500);
+	sleep(1000);
 	Auton_Lift_Targeted(DOWN,200);
 	Auton_Drive_Targeted(BACKWARD,70);
 	Auton_Drive_TurnTo(CLOCKWISE, 500);
