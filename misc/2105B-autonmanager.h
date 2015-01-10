@@ -16,7 +16,7 @@ task autonomous {
 			//Auton_Red_AtLoader();
 			break;
 		case false:
-			//Auton_Red_Freedom();
+			Auton_Red_Freedom();
 			break;
 		}
 		break;

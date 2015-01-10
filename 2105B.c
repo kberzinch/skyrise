@@ -1,5 +1,6 @@
 #pragma config(Sensor, dgtl1,  EncoderLiftLeft, sensorQuadEncoder)
 #pragma config(Sensor, dgtl3,  EncoderLiftRight, sensorQuadEncoder)
+#pragma config(Sensor, dgtl5,  DriveEncoder,   sensorQuadEncoder)
 #pragma config(Motor,  port1,           DriveFrontLeft, tmotorVex393_HBridge, openLoop, reversed, driveLeft)
 #pragma config(Motor,  port2,           DriveFrontRight, tmotorVex393_MC29, openLoop, driveRight)
 #pragma config(Motor,  port3,           DriveRearLeft, tmotorVex393_MC29, openLoop, driveLeft)
@@ -14,7 +15,6 @@
 
 #define NoPowerExpander
 #define NoLiftLimits
-#define NoDriveEncoder
 #define OneLiftEncoder
 #if defined(_DEBUG)
 const string FILE = __FILE__;
@@ -29,9 +29,12 @@ void Collection(tSpeed speed = 0) {
 #include "misc\2105B-stabilizers.h"
 #include "usercontrol\2105B-bob.h"
 #include "auton\2105B-blue-freedom.h"
+#include "auton\2105B-red-freedom.h"
 #include "misc\2105B-autonmanager.h"
 
-void ResetDriveEncoders() {}
+void ResetDriveEncoders() {
+	SensorValue[DriveEncoder] = 0;
+}
 
 void init() {
 	SensorValue[EncoderLiftLeft] = 0;
