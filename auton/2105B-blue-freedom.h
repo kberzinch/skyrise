@@ -35,4 +35,5 @@ void Auton_Blue_Freedom() {
 	sleep(1000);
 	Collection(-127);
 	sleep(1000);
+	Auton_Drive(BACKWARD,127,500);
 }
