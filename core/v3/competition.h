@@ -62,9 +62,6 @@ task main() {
 				EndTimeSlice();
 			}
 			allMotorsOff();
-#if defined(_DEBUG)
-			writeDebugStreamLine(RobotDisabled);
-#endif
 			if(bStopTasksBetweenModes)
 				allTasksStop();
 		}
