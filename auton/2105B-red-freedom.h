@@ -1,6 +1,6 @@
 void Auton_Red_Freedom() {
 	Collection(-127);
-	sleep(450);
+	sleep(400);
 	Collection();
 	Auton_Drive_Targeted(FORWARD,350);
 	Collection(127);
@@ -27,12 +27,12 @@ void Auton_Red_Freedom() {
 	Auton_Drive_Targeted(BACKWARD,400);
 	Auton_Drive(COUNTERCLOCKWISE);
 	ResetDriveEncoders();
-	while(SensorValue[DriveEncoder] < 350) {}
+	while(SensorValue[DriveEncoder] < 340) {}
 	Auton_Drive();
 	Lift_Target = 90;
 	Auton_Drive_Targeted(FORWARD,280); // increase probably
 	sleep(1000);
 	Collection(-127);
 	sleep(1000);
-	Auton_Drive_Targeted(BACKWARD,100);
+	Auton_Drive(BACKWARD,127,500);
 }
