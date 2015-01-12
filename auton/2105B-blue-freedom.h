@@ -1,13 +1,12 @@
 void Auton_Blue_Freedom() {
 	Collection(-127);
-	sleep(400);
+	sleep(450);
 	Collection();
-	Auton_Drive_Targeted(FORWARD,350);
+	Auton_Drive_Targeted(FORWARD,300);
 	Collection(127);
-	Auton_Drive_Targeted(FORWARD,200);
-	sleep(500);
+	sleep(700);
 	Collection();
-	Auton_Drive_Targeted(BACKWARD,450);
+	Auton_Drive_Targeted(BACKWARD,250);
 	Auton_Drive(COUNTERCLOCKWISE);
 	ResetDriveEncoders();
 	while(SensorValue[DriveEncoder] < 150) {}
