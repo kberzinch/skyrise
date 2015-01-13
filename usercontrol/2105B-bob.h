@@ -11,24 +11,35 @@ task usercontrol {
 
 		// LIFT
 		if(vexRT[Btn6U] == 1) {
-			stopTask(Lift_Stabilizer_Left);
-			stopTask(Lift_Stabilizer_Right);
+			IsStabilizerRunning = false;
 			Set_Lift_Target();
 			motor[LiftLeftA] = 127;
 			motor[LiftLeftB] = 127;
 			motor[LiftRightA] = 127;
 			motor[LiftRightB] = 127;
 			} else if(vexRT[Btn6D] == 1) {
-			stopTask(Lift_Stabilizer_Left);
-			stopTask(Lift_Stabilizer_Right);
+			IsStabilizerRunning = false;
 			Set_Lift_Target();
 			motor[LiftLeftA] = -127;
 			motor[LiftLeftB] = -127;
 			motor[LiftRightA] = -127;
 			motor[LiftRightB] = -127;
 			} else {
-			startTask(Lift_Stabilizer_Left);
-			startTask(Lift_Stabilizer_Right);
+			if(!IsStabilizerRunning) {
+				startTask(Lift_Stabilizer_Left);
+				startTask(Lift_Stabilizer_Right);
+			}
+		}
+
+		// LIFT PRESETS
+		if(vexRT[Btn8D] == 1) {
+			Lift_Target = 50; // low
+			} else if(vexRT[Btn8U] == 1) {
+			Lift_Target = 123;
+			} else if(vexRT[Btn8L] == 1) {
+			Lift_Target = 100; // med
+			} else if(vexRT[Btn8R] == 1) {
+			Lift_Target = 0; // 0
 		}
 
 		// COLLECTION
@@ -42,6 +53,5 @@ task usercontrol {
 			motor[CollectionA] = 0;
 			motor[CollectionB] = 0;
 		}
-		// DONE
 	}
 }

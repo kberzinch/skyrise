@@ -234,6 +234,7 @@ void pre_auton() {
 #ifndef NoLCD
 		clearLCDLine(0);
 		clearLCDLine(1);
+		init();
 		startTask(LCD_Display);
 #endif
 		return;
