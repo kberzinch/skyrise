@@ -33,13 +33,13 @@ task usercontrol {
 
 		// LIFT PRESETS
 		if(vexRT[Btn8D] == 1) {
-			Lift_Target = 50; // low
+			Lift_Target = 0; // down
 			} else if(vexRT[Btn8U] == 1) {
-			Lift_Target = 123;
+			Lift_Target = 90; // med
 			} else if(vexRT[Btn8L] == 1) {
-			Lift_Target = 100; // med
+			Lift_Target = 55; // low
 			} else if(vexRT[Btn8R] == 1) {
-			Lift_Target = 0; // 0
+			Lift_Target = 123; // high
 		}
 
 		// COLLECTION
