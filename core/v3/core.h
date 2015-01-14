@@ -44,6 +44,11 @@ typedef enum tVertical {
 	VSTOP = 0
 };
 
+typedef enum ClawPosition {
+	OPEN = 0,
+	CLOSE = 1
+};
+
 // Must be defined per robot
 void init();
 void ResetDriveEncoders();
@@ -447,3 +452,10 @@ bool Lift_TrippedMin() {
 bool Lift_TrippedMax() {
 	return SensorValue[LiftEncoder] < -2000;
 }
+
+#ifdef Pneumatics
+void Claw(ClawPosition Position) {
+	SensorValue[SolenoidA] = Position;
+	SensorValue[SolenoidB] = Position;
+}
+#endif
