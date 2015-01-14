@@ -32,13 +32,20 @@ task usercontrol {
 
 		// LIFT MANUAL
 		if(!preset_triggered) {
-			if(vexRT[Btn6U] == 1 && !Lift_TrippedMax()) {
+			if(vexRT[Btn5U] == 1 && !Lift_TrippedMax()) {
 				Auton_Lift(UP);
-				} else if(vexRT[Btn6D] == 1 && !Lift_TrippedMin()) {
+				} else if(vexRT[Btn5D] == 1 && !Lift_TrippedMin()) {
 				Auton_Lift(DOWN);
 				} else {
 				Auton_Lift();
 			}
+		}
+
+		// PNEUMATICS
+		if(vexRT[Btn6D] == 1) {
+			Claw(OPEN);
+			} else if(vexRT[Btn6U] == 1) {
+			Claw(CLOSE);
 		}
 	}
 }
