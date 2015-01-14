@@ -7,7 +7,6 @@
 #pragma config(Sensor, in5,    LineFollowerRight, sensorLineFollower)
 #pragma config(Sensor, in6,    LiftLimitMinA,  sensorAnalog)
 #pragma config(Sensor, in7,    LiftLimitMinB,  sensorAnalog)
-#pragma config(Sensor, in8,    LiftLimitMaxA,  sensorAnalog)
 #pragma config(Sensor, dgtl1,  LiftEncoder,    sensorQuadEncoder)
 #pragma config(Sensor, dgtl3,  DriveEncoder,   sensorQuadEncoder)
 #pragma config(Sensor, dgtl5,  DriveEncoderLeft, sensorQuadEncoder)
