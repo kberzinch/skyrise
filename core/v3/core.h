@@ -457,5 +457,16 @@ bool Lift_TrippedMax() {
 void Claw(ClawPosition Position) {
 	SensorValue[SolenoidA] = Position;
 	SensorValue[SolenoidB] = Position;
+	if(LastPosition != Position) {
+		LastPosition = Position;
+		if(Position == OPEN) {
+			NumberOfOpens++;
+			TimeClosed += LastSwitched - nSysTime;
+		} else {
+			NumberOfCloses++;
+			TimeOpen += LastSwitched - nSysTime;
+		}
+		LastSwitched = nSysTime;
+	}
 }
 #endif
