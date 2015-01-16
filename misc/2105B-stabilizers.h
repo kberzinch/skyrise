@@ -22,6 +22,11 @@ task Lift_Stabilizer_Left {
 	const tSensors sensor = EncoderLiftLeft;
 	int error, previous_error, speed, derivative;
 	while(IsStabilizerRunning) {
+		if(SensorValue[sensor] > 120) {
+			motor[LiftLeftA] = 0;
+			motor[LiftLeftB] = 0;
+			continue;
+		}
 		error = Lift_Target - SensorValue[sensor];
 		derivative = error - previous_error;
 		previous_error = error;
@@ -37,6 +42,11 @@ task Lift_Stabilizer_Right {
 	const tSensors sensor = EncoderLiftRight;
 	int error, previous_error, speed, derivative;
 	while(IsStabilizerRunning) {
+		if(SensorValue[sensor] > 120) {
+			motor[LiftRightA] = 0;
+			motor[LiftRightB] = 0;
+			continue;
+		}
 		error = Lift_Target - SensorValue[sensor];
 		derivative = error - previous_error;
 		previous_error = error;

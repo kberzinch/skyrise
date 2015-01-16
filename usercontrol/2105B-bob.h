@@ -3,6 +3,15 @@
 
 task usercontrol {
 	while(true) {
+
+		// NOT-BREAK-LIFT PREVENTION
+		if(SensorValue[EncoderLiftRight] > 120) {
+			motor[LiftLeftA] = 0;
+			motor[LiftLeftB] = 0;
+			motor[LiftRightA] = 0;
+			motor[LiftRightB] = 0;
+		}
+
 		// DRIVE
 		motor[DriveFrontLeft] = -(vexRT[Ch3] + vexRT[Ch4]);
 		motor[DriveFrontRight] = (vexRT[Ch3] - vexRT[Ch4]);

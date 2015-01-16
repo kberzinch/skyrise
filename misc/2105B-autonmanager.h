@@ -22,15 +22,5 @@ task autonomous {
 		break;
 	}
 	allMotorsOff();
-#if defined(_DEBUG)
-	writeDebugStreamLine("Autonomous finished");
-	writeDebugStreamLine(" - Total time: %i:%i",LCD_Timer_Mins(0),LCD_Timer_Secs(0,true));
-	writeDebugStreamLine(" - Batt A   %1.2fv", (float)nImmediateBatteryLevel / (float)1000);
-#ifndef NoPowerExpander
-	writeDebugStreamLine(" - Batt B   %1.2fv", (float)SensorValue[PowerExpander] / (float)280); // TBD: Verify magic number
-#endif
-	writeDebugStreamLine(" - Backup   %1.2fv", (float)BackupBatteryLevel / (float)1000);
-	LCD.Display.Paused = true;
-	ResetDriveEncoders();
-#endif
+	AutonDataDump();
 }
