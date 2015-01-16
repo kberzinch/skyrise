@@ -265,7 +265,7 @@ void pre_auton() {
 		displayLCDCenteredString(1, "No Cortex power");
 	}
 	selftest("Cortex voltage: ");
-	while(((float)nImmediateBatteryLevel / (float)1000) < 7.5 && nLCDButtons == 0 && bIfiRobotDisabled) {
+	while(((float)nImmediateBatteryLevel / (float)1000) < 8.5 && nLCDButtons == 0 && bIfiRobotDisabled) {
 		displayLCDCenteredString(0, "POST ERROR");
 		displayLCDCenteredString(1, "Cortex batt low");
 	}
@@ -276,7 +276,7 @@ void pre_auton() {
 		displayLCDCenteredString(1, "No batt B power");
 	}
 	selftest("Power expander voltage: ");
-	while(((float)SensorValue[PowerExpander] / (float)280) < 7.5 && nLCDButtons == 0 && bIfiRobotDisabled) {
+	while(((float)SensorValue[PowerExpander] / (float)280) < 8.5 && nLCDButtons == 0 && bIfiRobotDisabled) {
 		displayLCDCenteredString(0, "POST ERROR");
 		displayLCDCenteredString(1, "Battery B low");
 	}
@@ -470,3 +470,17 @@ void Claw(ClawPosition Position) {
 	}
 }
 #endif
+
+void AutonDataDump() {
+#if defined(_DEBUG)
+	writeDebugStreamLine("Autonomous finished");
+	writeDebugStreamLine(" - Total time (estimated): %i:%i",LCD_Timer_Mins(0),LCD_Timer_Secs(0,true) + 1);
+	writeDebugStreamLine(" - Batt A   %1.2fv", (float)nImmediateBatteryLevel / (float)1000);
+#ifndef NoPowerExpander
+	writeDebugStreamLine(" - Batt B   %1.2fv", (float)SensorValue[PowerExpander] / (float)280);
+#endif
+	writeDebugStreamLine(" - Backup   %1.2fv", (float)BackupBatteryLevel / (float)1000);
+	LCD.Display.Paused = true;
+	ResetDriveEncoders();
+#endif
+}
