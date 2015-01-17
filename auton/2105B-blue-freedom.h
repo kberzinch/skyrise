@@ -1,11 +1,8 @@
 void Auton_Blue_Freedom() {
-	Collection(-127);
-	sleep(450);
-	Collection();
+	// COLLECTION
+	return;
 	Auton_Drive_Targeted(FORWARD,300);
-	Collection(127);
-	sleep(700);
-	Collection();
+	// COLLECTION
 	Auton_Drive_Targeted(BACKWARD,250);
 	Auton_Drive(COUNTERCLOCKWISE);
 	ResetDriveEncoders();
@@ -21,9 +18,7 @@ void Auton_Blue_Freedom() {
 	startTask(Lift_Stabilizer_Right);
 	sleep(1000);
 	Auton_Drive_Targeted(FORWARD,220);
-	Collection(-127);
-	sleep(500);
-	Collection();
+	// COLLECTION
 	Auton_Drive_Targeted(BACKWARD,400);
 	Auton_Drive(CLOCKWISE);
 	ResetDriveEncoders();
@@ -32,7 +27,6 @@ void Auton_Blue_Freedom() {
 	Lift_Target = 90;
 	Auton_Drive_Targeted(FORWARD,340); // increase probably
 	sleep(1000);
-	Collection(-127);
-	sleep(1000);
+	// COLLECTION
 	Auton_Drive(BACKWARD,127,500);
 }
