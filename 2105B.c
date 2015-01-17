@@ -1,6 +1,6 @@
 #pragma config(Sensor, in1,    Gyroscope,      sensorGyro)
-#pragma config(Sensor, dgtl1,  EncoderLiftLeft, sensorQuadEncoder)
-#pragma config(Sensor, dgtl3,  EncoderLiftRight, sensorQuadEncoder)
+#pragma config(Sensor, dgtl1,  EncoderLiftRight, sensorQuadEncoder)
+#pragma config(Sensor, dgtl3,  EncoderLiftLeft, sensorQuadEncoder)
 #pragma config(Sensor, dgtl5,  CollectionEncoder, sensorQuadEncoder)
 #pragma config(Sensor, dgtl7,  DriveEncoder,   sensorQuadEncoder)
 #pragma config(Motor,  port1,           DriveFrontLeft, tmotorVex393_HBridge, openLoop, reversed, driveLeft)
@@ -24,9 +24,20 @@ const string FILE = __FILE__;
 #endif
 #include "core\v3\core.h"
 
-void Collection(tSpeed speed = 0) {
-	motor[CollectionA] = speed;
-	motor[CollectionB] = speed;
+void Collection(int Position) {
+	if(SensorValue[CollectionEncoder] > Position) {
+		while(SensorValue[CollectionEncoder] > Position) {
+			motor[CollectionA] = 127;
+			motor[CollectionB] = 127;
+		}
+		} else if(SensorValue[CollectionEncoder] < Position) {
+		while(SensorValue[CollectionEncoder] < Position) {
+			motor[CollectionA] = -127;
+			motor[CollectionB] = -127;
+		}
+	}
+	motor[CollectionA] = 0;
+	motor[CollectionB] = 0;
 }
 
 #include "misc\2105B-stabilizers.h"
@@ -43,4 +54,5 @@ void init() {
 	SensorValue[EncoderLiftLeft] = 0;
 	SensorValue[EncoderLiftRight] = 0;
 	SensorValue[Gyroscope] = 0;
+	SensorValue[CollectionEncoder] = 0;
 }

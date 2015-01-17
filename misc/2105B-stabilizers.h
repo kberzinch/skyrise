@@ -27,7 +27,7 @@ task Lift_Stabilizer_Left {
 			motor[LiftLeftB] = 0;
 			continue;
 		}
-		error = Lift_Target - SensorValue[sensor];
+		error = (Lift_Target - SensorValue[sensor]);
 		derivative = error - previous_error;
 		previous_error = error;
 		speed = Kp * error + Kd * derivative;
@@ -47,7 +47,7 @@ task Lift_Stabilizer_Right {
 			motor[LiftRightB] = 0;
 			continue;
 		}
-		error = Lift_Target - SensorValue[sensor];
+		error = (Lift_Target - SensorValue[sensor]);
 		derivative = error - previous_error;
 		previous_error = error;
 		speed = Kp * error + Kd * derivative;
