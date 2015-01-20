@@ -45,6 +45,7 @@ const string FILE = __FILE__;
 
 void ResetDriveEncoders() {
 	SensorValue[DriveEncoder] = 0;
+	SensorValue[DriveEncoderLeft] = 0;
 }
 
 void init() {
