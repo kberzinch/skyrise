@@ -79,6 +79,12 @@ int Auton_GetMultiplier(tDirection Direction, tMotor WhichMotor) {
 	case BACKWARD:
 		return -Auton_GetMultiplier(FORWARD, WhichMotor);
 	case LEFT:
+#if defined(_DEBUG)
+#ifdef MultiDriveEncoders
+		writeDebugStreamLine("***ATTENTION: Crawling does not work with multiple encoders b/c I didn't feel like making exceptions.");
+		return 0;
+#endif
+#endif
 		switch(WhichMotor) {
 		case DriveFrontLeft:
 			return 1;
@@ -90,6 +96,11 @@ int Auton_GetMultiplier(tDirection Direction, tMotor WhichMotor) {
 			return -1;
 		}
 	case RIGHT:
+#if defined(_DEBUG)
+#ifdef MultiDriveEncoders
+		writeDebugStreamLine("***ATTENTION: Crawling does not work with multiple encoders b/c I didn't feel like making exceptions.");
+#endif
+#endif
 		return -Auton_GetMultiplier(LEFT, WhichMotor);
 	case CLOCKWISE:
 		return -1;
@@ -140,13 +151,21 @@ void Auton_Drive_Targeted(tDirection Direction, int Distance = 0, tSpeed Speed =
 #if defined(_DEBUG)
 		writeDebugStreamLine("Current encoder reading is %i, wanting less than %i", SensorValue[DriveEncoder], Distance);
 #endif
+#ifdef MultiDriveEncoders
+		while(((SensorValue[DriveEncoder] + SensorValue[DriveEncoderLeft]) / 2) > -Auton_GetMultiplier(Direction,DriveRearRight) * Distance && (nSysTime - StartTime) < Timeout) {}
+#else
 		while(SensorValue[DriveEncoder] > -Auton_GetMultiplier(Direction,DriveRearRight) * Distance && (nSysTime - StartTime) < Timeout) {}
+#endif
 		break;
 	case 1:
 #if defined(_DEBUG)
 		writeDebugStreamLine("Current encoder reading is %i, wanting greater than %i", SensorValue[DriveEncoder], Distance);
 #endif
+#ifdef MultiDriveEncoders
+		while(((SensorValue[DriveEncoder] + SensorValue[DriveEncoderLeft]) / 2) < -Auton_GetMultiplier(Direction,DriveRearRight) * Distance && (nSysTime - StartTime) < Timeout) {}
+#else
 		while(SensorValue[DriveEncoder] < -Auton_GetMultiplier(Direction,DriveRearRight) * Distance && (nSysTime - StartTime) < Timeout) {}
+#endif
 		break;
 	}
 	Auton_Drive();
@@ -176,15 +195,6 @@ void selftest(const string nexttest) {
 }
 
 void pre_auton() {
-	/* TODO: POST
-	- Check that min lift limit switches are both triggered
-	- Check that max lift limit switches are NOT triggered
-	- Test gyroscope
-	- init
-	- Calibrate
-	- Test calibration
-	- Ready message
-	*/
 	bStopTasksBetweenModes = true;
 #ifndef NoLCD
 	clearLCDLine(0);
@@ -455,14 +465,13 @@ bool Lift_TrippedMax() {
 
 #ifdef Pneumatics
 void Claw(ClawPosition Position) {
-	SensorValue[SolenoidA] = Position;
-	SensorValue[SolenoidB] = Position;
+	SensorValue[Solenoid] = Position;
 	if(LastPosition != Position) {
 		LastPosition = Position;
 		if(Position == OPEN) {
 			NumberOfOpens++;
 			TimeClosed += LastSwitched - nSysTime;
-		} else {
+			} else {
 			NumberOfCloses++;
 			TimeOpen += LastSwitched - nSysTime;
 		}
@@ -471,8 +480,8 @@ void Claw(ClawPosition Position) {
 }
 #endif
 
-void AutonDataDump() {
 #if defined(_DEBUG)
+void AutonDataDump() {
 	writeDebugStreamLine("Autonomous finished");
 	writeDebugStreamLine(" - Total time (estimated): %i:%i.%i",LCD_Timer_Mins(0),LCD_Timer_Secs(0,true),LCD_Timer_Msecs(0,true));
 	writeDebugStreamLine(" - Batt A   %1.2fv", (float)nImmediateBatteryLevel / (float)1000);
@@ -482,5 +491,5 @@ void AutonDataDump() {
 	writeDebugStreamLine(" - Backup   %1.2fv", (float)BackupBatteryLevel / (float)1000);
 	LCD.Display.Paused = true;
 	ResetDriveEncoders();
-#endif
 }
+#endif

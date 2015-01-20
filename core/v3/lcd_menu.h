@@ -19,7 +19,7 @@
 /* for any consequences.                                */
 /********************************************************/
 
-const char LCD_SizeOfMenu = 7; // MUST be at least 1 to prevent crash
+const char LCD_SizeOfMenu = 2; // MUST be at least 1 to prevent crash
 
 #undef LCD_NotUsing_Menu       // Clear any statements against compiling LCD_Menu.
 // If you don't want it, why would you include it?
@@ -50,35 +50,16 @@ void LCD_Menu_Define()
 	LCD.Menu[0].Title = "Color";
 	LCD.Menu[0].Text = "Red";
 	LCD.Menu[0].PrevIndex = 0;
-	LCD.Menu[0].SelectIndex = 2;
 
 	LCD.Menu[1].Title = LCD.Menu[0].Title;
 	LCD.Menu[1].Text = "Blue";
-	LCD.Menu[1].SelectIndex = 2;
 	LCD.Menu[1].NextIndex = 1;
-/*
+
+	/*
 	LCD.Menu[6].Title = "Program Skills";
 	LCD.Menu[6].Text = "Blue Autoload";
 	LCD.Menu[6].PrevIndex = 1;
 	LCD.Menu[6].NextIndex = 6;*/
-
-	LCD.Menu[2].Title = "Start Point";
-	LCD.Menu[2].Text = "Autoloader";
-	//LCD.Menu[2].SelectIndex = 4; // UNCOMMENT TO ENABLE NEXT MENU LEVEL
-	LCD.Menu[2].PrevIndex = 2;
-
-	LCD.Menu[3].Title = LCD.Menu[2].Title;
-	LCD.Menu[3].Text = "Freedom";
-	//LCD.Menu[3].SelectIndex = 4; // UNCOMMENT TO ENABLE NEXT MENU LEVEL
-	LCD.Menu[3].NextIndex = 3;
-
-	LCD.Menu[4].Title = "Auton Mode";
-	LCD.Menu[4].Text = "Numero Uno";
-	LCD.Menu[4].PrevIndex = 4;
-
-	LCD.Menu[5].Title = "Auton Mode";
-	LCD.Menu[5].Text = "Numero Dos";
-	LCD.Menu[5].NextIndex = 5;
 }
 
 bool LCD_Menu_Execute()
