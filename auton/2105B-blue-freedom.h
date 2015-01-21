@@ -1,32 +1,37 @@
 void Auton_Blue_Freedom() {
-	// COLLECTION
-	return;
-	Auton_Drive_Targeted(FORWARD,300);
-	// COLLECTION
-	Auton_Drive_Targeted(BACKWARD,250);
-	Auton_Drive(COUNTERCLOCKWISE);
-	ResetDriveEncoders();
-	while(SensorValue[DriveEncoder] < 150) {}
-	Auton_Drive();
-	Auton_Drive_Targeted(FORWARD,400);
-	Auton_Drive(CLOCKWISE);
-	ResetDriveEncoders();
-	while(SensorValue[DriveEncoder] > -670) {}
-	Auton_Drive();
-	Lift_Target = 50;
 	startTask(Lift_Stabilizer_Left);
 	startTask(Lift_Stabilizer_Right);
-	sleep(1000);
-	Auton_Drive_Targeted(FORWARD,220);
-	// COLLECTION
-	Auton_Drive_Targeted(BACKWARD,400);
-	Auton_Drive(CLOCKWISE);
-	ResetDriveEncoders();
-	while(SensorValue[DriveEncoder] > -200) {}
-	Auton_Drive();
-	Lift_Target = 90;
-	Auton_Drive_Targeted(FORWARD,340); // increase probably
-	sleep(1000);
-	// COLLECTION
-	Auton_Drive(BACKWARD,127,500);
+	Auton_Drive_Targeted(BACKWARD, 85);
+	Collection(200);
+	Lift_Target = 45; // low post
+	while(SensorValue[EncoderLiftLeft] < 30){}
+	Collection(600);
+	Auton_Drive_Targeted(BACKWARD, 410);
+	Lift_Target = 0;
+	while(SensorValue[EncoderLiftLeft] > 10) {} // LIFT DOWN AFTER 1st cube
+	Auton_Drive_TurnTo(CLOCKWISE, -250); // 2nd cube turn
+	Auton_Drive_Targeted(FORWARD, 110);
+	Collection(200);
+	Auton_Drive_TurnTo(CLOCKWISE, -600); // TURN TOWARDS 2nd Pole
+	Lift_Target = 85;
+	Auton_Drive_Targeted(BACKWARD, 10);
+	while(SensorValue[EncoderLiftLeft] < 70) {}
+	Auton_Drive_Targeted(FORWARD, 80);
+	Collection(600);
+	Auton_Drive_Targeted(BACKWARD, 100);
+	Auton_Drive_TurnTo(CLOCKWISE, -1320); // WAS 1290
+	Lift_Target = 0;
+	Collection(1100);
+	sleep(100);
+	Auton_Drive_Targeted(FORWARD,1220,127,4000); // AFTER 2nd cube
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, -652); // whacko 700
+	Auton_Drive_Targeted(FORWARD,10);
+	Collection(700);
+	Auton_Drive_Targeted(BACKWARD,50);
+	Lift_Target = 45;
+	while(SensorValue[EncoderLiftLeft] < 35) {}
+	Auton_Drive_Targeted(FORWARD,20);
+	Collection(900);
+	writeDebugStreamLine("Dropped cube at %i:%2i.%3i",LCD_Timer_Mins(0),LCD_Timer_Secs(0,true),LCD_Timer_Msecs(0,true));
+	Auton_Drive_Targeted(BACKWARD,300);
 }
