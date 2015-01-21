@@ -18,17 +18,18 @@ void Auton_Red_Freedom() {
 	Auton_Drive_Targeted(FORWARD,20);
 	Collection(600);
 	Auton_Drive_Targeted(BACKWARD,100);
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 1290); // WAS 1300
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 1249); // WAS 1290
 	Lift_Target = 0;
 	Collection(1100);
+	sleep(500);
 	Auton_Drive_Targeted(FORWARD,1270,127,4000); // AFTER 2nd cube
-	Auton_Drive_TurnTo(CLOCKWISE,700); // whacko
-	Auton_Drive_Targeted(FORWARD,65);
+	Auton_Drive_TurnTo(CLOCKWISE,652); // whacko 700
+	Auton_Drive_Targeted(FORWARD,63);
 	Collection(700);
 	Auton_Drive_Targeted(BACKWARD,80);
 	Lift_Target = 55;
 	while(SensorValue[EncoderLiftLeft] < 35) {}
-	Auton_Drive_Targeted(FORWARD,50);
+	Auton_Drive_Targeted(FORWARD,40);
 	Collection(900);
 	Auton_Drive_Targeted(BACKWARD,300);
 }
