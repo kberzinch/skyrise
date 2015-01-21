@@ -483,7 +483,7 @@ void Claw(ClawPosition Position) {
 #if defined(_DEBUG)
 void AutonDataDump() {
 	writeDebugStreamLine("Autonomous finished");
-	writeDebugStreamLine(" - Total time (estimated): %i:%i.%i",LCD_Timer_Mins(0),LCD_Timer_Secs(0,true),LCD_Timer_Msecs(0,true));
+	writeDebugStreamLine(" - Total time (estimated): %i:%2i.%3i",LCD_Timer_Mins(0),LCD_Timer_Secs(0,true),LCD_Timer_Msecs(0,true));
 	writeDebugStreamLine(" - Batt A   %1.2fv", (float)nImmediateBatteryLevel / (float)1000);
 #ifndef NoPowerExpander
 	writeDebugStreamLine(" - Batt B   %1.2fv", (float)SensorValue[PowerExpander] / (float)280);
