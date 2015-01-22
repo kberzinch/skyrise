@@ -193,6 +193,9 @@ void LCD_Timer_WaitUntil(const char Timer, const float Value) {
 
 #ifndef LCD_NotUsing_Display
 task LCD_Display {
+#ifdef BatteryIndicators
+	startTask(BatteryIndicate);
+#endif
 	LCD_Timer_Set(0,0);
 	LCD.Display.Paused = false;
 	char Char;
@@ -209,7 +212,7 @@ task LCD_Display {
 	bLCDBacklight = true;
 	while (true) {
 		for (i = 0; i < (strlen(Text[0]) + strlen(Text[1]) + strlen(Text[2])); i++) {
-			while (nLCDButtons != 0) {}
+				while (nLCDButtons != 0) {}
 			setLCDPosition(1, 0);
 			for (j = 0; j < 16; j++) {
 				if (LCD.Display.BattA) {

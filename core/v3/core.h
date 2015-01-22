@@ -56,7 +56,7 @@ void ResetLiftEncoders();
 bool Lift_TrippedMax();
 bool Lift_TrippedMin();
 
-tSensors DriveEncoder, LiftEncoder, LiftLimitMinA, LiftLimitMinB, LiftLimitMax;
+tSensors DriveEncoder, LiftEncoder, LiftLimitMinA, LiftLimitMinB;
 tMotor LiftLeftA, LiftLeftB, LiftLeftC, LiftRightA, LiftRightB, LiftRightC;
 
 // Function definitions
@@ -110,12 +110,10 @@ int Auton_GetMultiplier(tDirection Direction, tMotor WhichMotor) {
 	return 0;
 }
 
-void Auton_Drive(tDirection Direction = STOP, tSpeed Speed = 127, int Time = 0, int LeftSpeed = 0) {
-	if(LeftSpeed == 0)
-		LeftSpeed = Speed;
-	motor[DriveFrontLeft] = LeftSpeed * Auton_GetMultiplier(Direction,DriveFrontLeft);
+void Auton_Drive(tDirection Direction = STOP, tSpeed Speed = 127, int Time = 0) {
+	motor[DriveFrontLeft] = Speed * Auton_GetMultiplier(Direction,DriveFrontLeft);
 	motor[DriveFrontRight] = Speed * Auton_GetMultiplier(Direction,DriveFrontRight);
-	motor[DriveRearLeft] = LeftSpeed * Auton_GetMultiplier(Direction,DriveRearLeft);
+	motor[DriveRearLeft] = Speed * Auton_GetMultiplier(Direction,DriveRearLeft);
 	motor[DriveRearRight] = Speed * Auton_GetMultiplier(Direction,DriveRearRight);
 	if(Time > 0) {
 		sleep(Time);
@@ -125,6 +123,7 @@ void Auton_Drive(tDirection Direction = STOP, tSpeed Speed = 127, int Time = 0, 
 
 #ifdef HasGyro
 void Auton_Drive_TurnTo(tDirection Direction, int Heading = 0, tSpeed Speed = 127) {
+	writeDebugStreamLine("Request to turn to heading %i", Heading);
 	Auton_Drive(Direction, Speed);
 	if(Direction == CLOCKWISE) {
 		while(SensorValue[Gyroscope] > Heading) {
@@ -142,7 +141,7 @@ void Auton_Drive_TurnTo(tDirection Direction, int Heading = 0, tSpeed Speed = 12
 void Auton_Drive_Targeted(tDirection Direction, int Distance = 0, tSpeed Speed = 127, int Timeout = 2000, int LeftSpeed = Speed) {
 	const int StartTime = nSysTime;
 	ResetDriveEncoders();
-	Auton_Drive(Direction, Speed, 0, LeftSpeed);
+	Auton_Drive(Direction, Speed, 0);
 #if defined(_DEBUG)
 	writeDebugStreamLine("Multiplier is %i", -Auton_GetMultiplier(Direction,DriveRearRight));
 #endif
@@ -256,9 +255,15 @@ void pre_auton() {
 	}
 #if defined(_DEBUG)
 	writeDebugStreamLine("POST started");
+#endif
+#ifdef BatteryIndicators
+	writeDebugStreamLine("Testing indicators...");
+	TestIndicators();
+	startTask(BatteryIndicate);
+#endif
+#if defined(_DEBUG)
 	writeDebugStream("9v connection: ");
 #endif
-
 	// POWER ON SELF-TEST
 	while(((float)BackupBatteryLevel / (float)1000) < 2 && nLCDButtons == 0 && bIfiRobotDisabled) {
 		displayLCDCenteredString(0, "POST ERROR");
@@ -303,6 +308,12 @@ void pre_auton() {
 		displayLCDCenteredString(0, "POST ERROR");
 		displayLCDCenteredString(1, "VEXnet link");
 	}
+#ifdef Pneumatics
+	selftest("Pneumatics: ");
+	SensorValue[Solenoid] = 1;
+	sleep(1000);
+	SensorValue[Solenoid] = 0;
+#endif
 	selftest("Drive encoder: ");
 	clearLCDLine(0);
 	clearLCDLine(1);
