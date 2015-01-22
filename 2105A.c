@@ -12,6 +12,10 @@
 #pragma config(Sensor, dgtl3,  DriveEncoder,   sensorQuadEncoder)
 #pragma config(Sensor, dgtl5,  DriveEncoderLeft, sensorQuadEncoder)
 #pragma config(Sensor, dgtl7,  Solenoid,       sensorDigitalOut)
+#pragma config(Sensor, dgtl8,  IndicatorBattA, sensorLEDtoVCC)
+#pragma config(Sensor, dgtl9,  IndicatorBattB, sensorLEDtoVCC)
+#pragma config(Sensor, dgtl10, DONOTUSE,       sensorNone)
+#pragma config(Sensor, dgtl11, IndicatorBackup, sensorLEDtoVCC)
 #pragma config(Motor,  port1,           LiftLeftA,     tmotorVex393_HBridge, openLoop, encoderPort, dgtl1)
 #pragma config(Motor,  port2,           LiftRightA,    tmotorVex393_MC29, openLoop, encoderPort, dgtl1)
 #pragma config(Motor,  port3,           LiftLeftB,     tmotorVex393_MC29, openLoop, reversed, encoderPort, dgtl1)
@@ -37,6 +41,7 @@ long LastSwitched = nSysTime;
 #if defined(_DEBUG)
 const string FILE = __FILE__;
 #endif
+#include "core\v3\batteryindicators.h"
 #include "core\v3\core.h"
 #include "usercontrol\2105A-john.h"
 #include "auton\2105A-blue-atloader.h"
