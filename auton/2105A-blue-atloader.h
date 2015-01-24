@@ -25,7 +25,7 @@ void Auton_Blue_AtLoader() {
 	startTask(LiftToAutoloader);
 	Auton_Drive_Targeted(BACKWARD,100);
 	Auton_Drive_TurnTo(COUNTERCLOCKWISE,-100);
-	Auton_Drive_Targeted(FORWARD,100,127,500);
+	Auton_Drive_Targeted(FORWARD,150,127,500);
 	Claw(CLOSE);
 	Auton_Lift_Targeted(UP,800);
 	// SECOND PYLON COLLECTED
@@ -68,6 +68,7 @@ void Auton_Blue_AtLoader() {
 	Auton_Drive_Targeted(BACKWARD,160);
 	Auton_Drive_TurnTo(CLOCKWISE,-500);
 	Auton_Lift_Targeted(UP,1400);
+	return;
 	Auton_Drive(FORWARD);
 	Watchdog = nSysTime;
 	while(SensorValue[AlignBarButton] != 0 && nSysTime - Watchdog < 2000) {}
