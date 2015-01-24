@@ -7,16 +7,16 @@ void Auton_Blue_Freedom() {
 	while(SensorValue[EncoderLiftLeft] < 30){}
 	Collection(600);
 	Lift_Target = 0;
-	Auton_Drive_Targeted(BACKWARD, 240);
+	Auton_Drive_Targeted(BACKWARD, 380);
 	while(SensorValue[EncoderLiftLeft] > 10) {} // LIFT DOWN AFTER 1st cube
-	Auton_Drive_TurnTo(CLOCKWISE, -450); // 2nd cube turn
-	Auton_Drive_Targeted(FORWARD, 50);
+	Auton_Drive_TurnTo(CLOCKWISE, -380); // 2nd cube turn
+	//Auton_Drive_Targeted(FORWARD, 50);
 	Collection(200);
 	Auton_Drive_TurnTo(CLOCKWISE, -775); // TURN TOWARDS 2nd Pole
 	Lift_Target = 90;
-	Auton_Drive_Targeted(BACKWARD, 10);
+	//Auton_Drive_Targeted(BACKWARD, 10);
 	while(SensorValue[EncoderLiftLeft] < 80) {}
-	Auton_Drive_Targeted(FORWARD, 100);
+	Auton_Drive_Targeted(FORWARD, 80);
 	Collection(600);
 	Auton_Drive_Targeted(BACKWARD, 50);
 	Lift_Target = 0;
