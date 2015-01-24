@@ -82,7 +82,6 @@ int Auton_GetMultiplier(tDirection Direction, tMotor WhichMotor) {
 #if defined(_DEBUG)
 #ifdef MultiDriveEncoders
 		writeDebugStreamLine("***ATTENTION: Crawling does not work with multiple encoders b/c I didn't feel like making exceptions.");
-		return 0;
 #endif
 #endif
 		switch(WhichMotor) {

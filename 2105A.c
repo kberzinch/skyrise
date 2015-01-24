@@ -16,6 +16,7 @@
 #pragma config(Sensor, dgtl9,  IndicatorBattB, sensorLEDtoVCC)
 #pragma config(Sensor, dgtl10, DONOTUSE,       sensorNone)
 #pragma config(Sensor, dgtl11, IndicatorBackup, sensorLEDtoVCC)
+#pragma config(Sensor, dgtl12, IndicatorBlinky, sensorLEDtoVCC)
 #pragma config(Motor,  port1,           LiftLeftA,     tmotorVex393_HBridge, openLoop, encoderPort, dgtl1)
 #pragma config(Motor,  port2,           LiftRightA,    tmotorVex393_MC29, openLoop, encoderPort, dgtl1)
 #pragma config(Motor,  port3,           LiftLeftB,     tmotorVex393_MC29, openLoop, reversed, encoderPort, dgtl1)
@@ -46,6 +47,7 @@ const string FILE = __FILE__;
 #include "usercontrol\2105A-john.h"
 #include "auton\2105A-blue-atloader.h"
 #include "auton\2105A-red-atloader.h"
+#include "auton\2105A-ps.h"
 #include "misc\2105A-autonmanager.h"
 
 void ResetDriveEncoders() {
