@@ -46,7 +46,7 @@ void Collection(int Position) {
 
 #include "misc\2105B-stabilizers.h"
 #include "usercontrol\2105B-bob.h"
-#include "auton\2105B-blue-freedom.h"
+#include "auton\2105B-blue-freedom-103.h"
 #include "auton\2105B-red-freedom.h"
 #include "misc\2105B-autonmanager.h"
 
