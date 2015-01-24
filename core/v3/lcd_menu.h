@@ -19,7 +19,7 @@
 /* for any consequences.                                */
 /********************************************************/
 
-const char LCD_SizeOfMenu = 2; // MUST be at least 1 to prevent crash
+const char LCD_SizeOfMenu = 3; // MUST be at least 1 to prevent crash
 
 #undef LCD_NotUsing_Menu       // Clear any statements against compiling LCD_Menu.
 // If you don't want it, why would you include it?
@@ -53,13 +53,10 @@ void LCD_Menu_Define()
 
 	LCD.Menu[1].Title = LCD.Menu[0].Title;
 	LCD.Menu[1].Text = "Blue";
-	LCD.Menu[1].NextIndex = 1;
 
-	/*
-	LCD.Menu[6].Title = "Program Skills";
-	LCD.Menu[6].Text = "Blue Autoload";
-	LCD.Menu[6].PrevIndex = 1;
-	LCD.Menu[6].NextIndex = 6;*/
+	LCD.Menu[2].Title = "Program Skills";
+	LCD.Menu[2].Text = "Red Autoload";
+	LCD.Menu[2].NextIndex = 2;
 }
 
 bool LCD_Menu_Execute()
@@ -78,12 +75,12 @@ bool LCD_Menu_Execute()
 		writeDebugStreamLine("Set as blue");
 #endif
 		break;
-	case 2:
+	/*case 2:
 		Competition.AtLoader = true;
 #if defined(_DEBUG)
 		writeDebugStreamLine("Set as autoloader");
 #endif
-		break;
+		break;*/
 	case 3:
 		Competition.AtLoader = false;
 #if defined(_DEBUG)
@@ -102,7 +99,7 @@ bool LCD_Menu_Execute()
 		writeDebugStreamLine("Set as Numero Dos");
 #endif
 		break;
-	case 6:
+	case 2:
 		Competition.Auton = 3;
 #if defined(_DEBUG)
 		writeDebugStreamLine("Set as programming skills");
