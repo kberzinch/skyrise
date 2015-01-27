@@ -5,7 +5,8 @@
 #pragma config(Sensor, dgtl7,  DriveEncoder,   sensorQuadEncoder)
 #pragma config(Sensor, dgtl9,  IndicatorBattA, sensorLEDtoVCC)
 #pragma config(Sensor, dgtl10, DONOTUSE,       sensorNone)
-#pragma config(Sensor, dgtl11, IndicatorBackup, sensorLEDtoVCC)
+#pragma config(Sensor, dgtl11, SolenoidA,      sensorDigitalOut)
+#pragma config(Sensor, dgtl12, SolenoidB,      sensorDigitalOut)
 #pragma config(Motor,  port1,           DriveFrontLeft, tmotorVex393_HBridge, openLoop, reversed, driveLeft)
 #pragma config(Motor,  port2,           DriveFrontRight, tmotorVex393_MC29, openLoop, driveRight)
 #pragma config(Motor,  port3,           DriveRearLeft, tmotorVex393_MC29, openLoop, driveLeft)
@@ -25,7 +26,7 @@
 #if defined(_DEBUG)
 const string FILE = __FILE__;
 #endif
-#include "core\v3\batteryindicators.h"
+//#include "core\v3\batteryindicators.h"
 #include "core\v3\core.h"
 
 void Collection(int Position) {

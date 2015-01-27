@@ -1,6 +1,9 @@
 // ROBOT:  2015A
 // DRIVER: Bob
 
+int LastLeft = 0;
+int LastRight = 0;
+
 task usercontrol {
 	while(true) {
 
@@ -61,6 +64,20 @@ task usercontrol {
 			} else {
 			motor[CollectionA] = 0;
 			motor[CollectionB] = 0;
+		}
+
+		// PNEUMATICS
+		if(vexRT[Btn7L] == 1 && LastLeft == 0) {
+			SensorValue[SolenoidA] = !SensorValue[SolenoidA];
+			LastLeft = 1;
+		} else if(vexRT[Btn7L] == 0 && LastLeft == 1) {
+			LastLeft = 0;
+		}
+		if(vexRT[Btn7R] == 1 && LastRight == 0) {
+			SensorValue[SolenoidB] = !SensorValue[SolenoidB];
+			LastRight = 1;
+		} else if(vexRT[Btn7R] == 0 && LastRight == 1) {
+			LastRight = 0;
 		}
 	}
 }

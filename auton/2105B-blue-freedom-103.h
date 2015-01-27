@@ -17,21 +17,21 @@ void Auton_Blue_Freedom() {
 	Lift_Target = 85;
 	Auton_Drive_Targeted(BACKWARD, 10);
 	while(SensorValue[EncoderLiftLeft] < 70) {}
-	Auton_Drive_Targeted(FORWARD, 90);
+	Auton_Drive_Targeted(FORWARD, 100);
 	Collection(600);
 	Auton_Drive_Targeted(BACKWARD, 100);
-	Auton_Drive_TurnTo(CLOCKWISE, -1300); // WAS 1290
+	Auton_Drive_TurnTo(CLOCKWISE, -1250); // WAS 1290
 	Lift_Target = 0;
 	Collection(1100);
 	sleep(100);
 	Auton_Drive_Targeted(FORWARD,1220,127,4000); // AFTER 2nd cube
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE, -652); // whacko 700
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, -680); // whacko 700
 	Auton_Drive_Targeted(FORWARD,5);
 	Collection(700);
 	Auton_Drive_Targeted(BACKWARD,50);
 	Lift_Target = 45;
 	while(SensorValue[EncoderLiftLeft] < 35) {}
-	Auton_Drive_Targeted(FORWARD,50);
+	Auton_Drive_Targeted(FORWARD,70);
 	Collection(900);
 	writeDebugStreamLine("Dropped cube at %i:%2i.%3i",LCD_Timer_Mins(0),LCD_Timer_Secs(0,true),LCD_Timer_Msecs(0,true));
 	Auton_Drive_Targeted(BACKWARD,300);
