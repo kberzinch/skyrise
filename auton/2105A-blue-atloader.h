@@ -13,7 +13,7 @@ void Auton_Blue_AtLoader() {
 	Claw(CLOSE);
 	Auton_Lift_Targeted(UP,700);
 	// FIRST PYLON COLLECTED
-	Auton_Drive_Targeted(BACKWARD,130);
+	Auton_Drive_Targeted(BACKWARD,200);
 	Auton_Drive_TurnTo(CLOCKWISE,-600);
 	Auton_Drive(FORWARD);
 	Watchdog = nSysTime;
@@ -29,7 +29,7 @@ void Auton_Blue_AtLoader() {
 	Claw(CLOSE);
 	Auton_Lift_Targeted(UP,800);
 	// SECOND PYLON COLLECTED
-	Auton_Drive_Targeted(BACKWARD,130);
+	Auton_Drive_Targeted(BACKWARD,200);
 	Auton_Drive_TurnTo(CLOCKWISE,-600);
 	Auton_Drive(FORWARD);
 	Watchdog = nSysTime;
@@ -47,7 +47,7 @@ void Auton_Blue_AtLoader() {
 	Auton_Lift_Targeted(UP,700);
 	// THIRD PYLON COLLECTED
 	Auton_Lift(UP);
-	Auton_Drive_Targeted(BACKWARD,160);
+	Auton_Drive_Targeted(BACKWARD,200);
 	Auton_Drive_TurnTo(CLOCKWISE,-600);
 	Auton_Lift_Targeted(UP,1200);
 	Auton_Drive(FORWARD);

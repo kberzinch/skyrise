@@ -1,5 +1,5 @@
 task LiftTo1K {
-	Auton_Lift_Targeted(UP,1100);
+	Auton_Lift_Targeted(UP,1200);
 }
 
 void Auton_Red_AtLoader() {
@@ -19,7 +19,7 @@ void Auton_Red_AtLoader() {
 	Claw(OPEN);
 	// FIRST PYLON SCORED
 	startTask(LiftToAutoloader);
-	Auton_Drive_Targeted(BACKWARD,100);
+	Auton_Drive_Targeted(BACKWARD,50);
 	Auton_Drive_TurnTo(CLOCKWISE,200);
 	Auton_Drive_Targeted(FORWARD,180);
 	Claw(CLOSE);
@@ -38,7 +38,7 @@ void Auton_Red_AtLoader() {
 	startTask(LiftToAutoloaderPlusALittle);
 	Auton_Drive_Targeted(BACKWARD,100);
 	Auton_Drive_TurnTo(CLOCKWISE,200);
-	Auton_Drive_Targeted(FORWARD,180);
+	Auton_Drive_Targeted(FORWARD,250);
 	Claw(CLOSE);
 	Auton_Lift_Targeted(UP,700);
 	startTask(LiftTo1K);
