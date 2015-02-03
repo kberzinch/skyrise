@@ -8,7 +8,8 @@ task usercontrol {
 	while(true) {
 
 		// NOT-BREAK-LIFT PREVENTION
-		if(SensorValue[EncoderLiftRight] > 120) {
+		if(SensorValue[EncoderLiftRight] > 800) {
+			IsStabilizerRunning = false;
 			motor[LiftLeftA] = 0;
 			motor[LiftLeftB] = 0;
 			motor[LiftRightA] = 0;
