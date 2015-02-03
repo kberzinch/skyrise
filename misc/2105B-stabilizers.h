@@ -1,7 +1,7 @@
 int Lift_Target = 0;
 bool IsStabilizerRunning = false;
-const float Kp = 5;
-const float Kd = 1;
+const float Kp = 1;
+const float Kd = 0.2;
 
 int Normalize(int speed) {
 	if(speed > 127) {
@@ -22,7 +22,7 @@ task Lift_Stabilizer_Left {
 	const tSensors sensor = EncoderLiftLeft;
 	int error, previous_error, speed, derivative;
 	while(IsStabilizerRunning) {
-		if(SensorValue[sensor] > 120) {
+		if(SensorValue[sensor] > 800 || SensorValue[sensor] < 100) {
 			motor[LiftLeftA] = 0;
 			motor[LiftLeftB] = 0;
 			continue;
@@ -42,7 +42,7 @@ task Lift_Stabilizer_Right {
 	const tSensors sensor = EncoderLiftRight;
 	int error, previous_error, speed, derivative;
 	while(IsStabilizerRunning) {
-		if(SensorValue[sensor] > 120) {
+		if(SensorValue[sensor] > 800 || SensorValue[sensor] < 100) {
 			motor[LiftRightA] = 0;
 			motor[LiftRightB] = 0;
 			continue;
