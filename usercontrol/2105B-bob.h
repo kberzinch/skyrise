@@ -36,6 +36,13 @@ task usercontrol {
 			motor[LiftLeftB] = -127;
 			motor[LiftRightA] = -127;
 			motor[LiftRightB] = -127;
+			} else if(vexRT[Btn8D] == 1) {
+			IsStabilizerRunning = false;
+			Set_Lift_Target();
+			motor[LiftLeftA] = 0;
+			motor[LiftLeftB] = 0;
+			motor[LiftRightA] = 0;
+			motor[LiftRightB] = 0;
 			} else {
 			if(!IsStabilizerRunning) {
 				startTask(Lift_Stabilizer_Left);
@@ -44,9 +51,9 @@ task usercontrol {
 		}
 
 		// LIFT PRESETS
-		if(vexRT[Btn8D] == 1) {
+		/*if(vexRT[Btn8D] == 1) {
 			Lift_Target = 0; // down
-			} else if(vexRT[Btn8U] == 1) {
+			} else */if(vexRT[Btn8U] == 1) {
 			Lift_Target = 90; // med
 			} else if(vexRT[Btn8L] == 1) {
 			Lift_Target = 55; // low
@@ -70,13 +77,13 @@ task usercontrol {
 		if(vexRT[Btn7L] == 1 && LastLeft == 0) {
 			SensorValue[SolenoidA] = !SensorValue[SolenoidA];
 			LastLeft = 1;
-		} else if(vexRT[Btn7L] == 0 && LastLeft == 1) {
+			} else if(vexRT[Btn7L] == 0 && LastLeft == 1) {
 			LastLeft = 0;
 		}
 		if(vexRT[Btn7R] == 1 && LastRight == 0) {
 			SensorValue[SolenoidB] = !SensorValue[SolenoidB];
 			LastRight = 1;
-		} else if(vexRT[Btn7R] == 0 && LastRight == 1) {
+			} else if(vexRT[Btn7R] == 0 && LastRight == 1) {
 			LastRight = 0;
 		}
 	}
