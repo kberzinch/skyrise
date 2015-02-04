@@ -25,21 +25,21 @@ task usercontrol {
 		// LIFT
 		if(vexRT[Btn6U] == 1) {
 			IsStabilizerRunning = false;
-			Set_Lift_Target();
+			Set_Lift_Target(10);
 			motor[LiftLeftA] = 127;
 			motor[LiftLeftB] = 127;
 			motor[LiftRightA] = 127;
 			motor[LiftRightB] = 127;
 			} else if(vexRT[Btn6D] == 1) {
 			IsStabilizerRunning = false;
-			Set_Lift_Target();
+			Set_Lift_Target(-10);
 			motor[LiftLeftA] = -127;
 			motor[LiftLeftB] = -127;
 			motor[LiftRightA] = -127;
 			motor[LiftRightB] = -127;
 			} else if(vexRT[Btn8D] == 1) {
 			IsStabilizerRunning = false;
-			Set_Lift_Target();
+			Set_Lift_Target(0);
 			motor[LiftLeftA] = 0;
 			motor[LiftLeftB] = 0;
 			motor[LiftRightA] = 0;
