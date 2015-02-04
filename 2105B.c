@@ -51,6 +51,13 @@ void Collection(int Position) {
 #include "auton\2105B-red-freedom.h"
 #include "misc\2105B-autonmanager.h"
 
+task DumpLiftValues {
+	while(true) {
+		writeDebugStreamLine("%i,%i",SensorValue[EncoderLiftLeft],SensorValue[EncoderLiftRight]);
+		sleep(10);
+	}
+}
+
 void ResetDriveEncoders() {
 	SensorValue[DriveEncoder] = 0;
 }

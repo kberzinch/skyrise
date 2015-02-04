@@ -1,6 +1,6 @@
 int Lift_Target = 0;
 bool IsStabilizerRunning = false;
-const float Kp = 1;
+const float Kp = 1.5;
 const float Kd = 0.2;
 
 int Normalize(int speed) {
@@ -13,8 +13,8 @@ int Normalize(int speed) {
 	return speed;
 }
 
-void Set_Lift_Target() {
-	Lift_Target = (SensorValue[EncoderLiftLeft] + SensorValue[EncoderLiftRight]) / 2;
+void Set_Lift_Target(int Adjustment) {
+	Lift_Target = ((SensorValue[EncoderLiftLeft] + SensorValue[EncoderLiftRight]) / 2) + Adjustment;
 }
 
 task Lift_Stabilizer_Left {
