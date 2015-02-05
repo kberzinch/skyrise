@@ -54,12 +54,12 @@ task usercontrol {
 		// LIFT PRESETS
 		/*if(vexRT[Btn8D] == 1) {
 			Lift_Target = 0; // down
-			} else */if(vexRT[Btn8U] == 1) {
-			Lift_Target = 90; // med
-			} else if(vexRT[Btn8L] == 1) {
-			Lift_Target = 55; // low
-			} else if(vexRT[Btn8R] == 1) {
-			Lift_Target = 123; // high
+			} else */if(vexRT[Btn8U] == 1) { // HIGH
+			Lift_Target = 800;
+			} else if(vexRT[Btn8L] == 1) { // MED
+			Lift_Target = 600;
+			} else if(vexRT[Btn8R] == 1) { // LOW
+			Lift_Target = 300;
 		}
 
 		// COLLECTION

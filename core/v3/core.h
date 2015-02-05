@@ -49,6 +49,14 @@ typedef enum ClawPosition {
 	CLOSE = 1
 };
 
+typedef struct {
+	tSensors Sensor;
+	int IntegralLimit;
+	float Kp;
+	float Ki;
+	float Kd;
+} tPID;
+
 // Must be defined per robot
 void init();
 void ResetDriveEncoders();
@@ -58,6 +66,8 @@ bool Lift_TrippedMin();
 
 tSensors DriveEncoder, LiftEncoder, LiftLimitMinA, LiftLimitMinB;
 tMotor LiftLeftA, LiftLeftB, LiftLeftC, LiftRightA, LiftRightB, LiftRightC;
+
+tPID PID_Drive, PID_Drive_TurnTo;
 
 // Function definitions
 
@@ -135,6 +145,41 @@ void Auton_Drive_TurnTo(tDirection Direction, int Heading = 0, tSpeed Speed = 12
 	}
 	Auton_Drive();
 }
+
+void Auton_Drive_TurnTo_PID(tDirection Direction, int Heading = 0, tSpeed MaxSpeed = 127, int RequestedAccuracy = 5, int Timeout = 3000) {
+	writeDebugStreamLine("Request to PID turn to heading %i", Heading);
+	const int StartTime = nSysTime;
+	int Error = 0;
+	int LastError = 0;
+	int Integral = 0;
+	int Derivative = 0;
+	int Speed = 0;
+	while((nSysTime - StartTime) < Timeout) {
+		Error = SensorValue[PID_Drive_TurnTo.Sensor] - Heading;
+		if(PID_Drive_TurnTo.Ki != 0 && abs(Error) < PID_Drive_TurnTo.IntegralLimit) {
+			Integral += Error;
+			} else {
+			Integral = 0;
+		}
+		if(abs(Error) < RequestedAccuracy) {
+			break;
+		}
+		Speed = -Auton_GetMultiplier(Direction,DriveRearRight) * (PID_Drive_TurnTo.Kp * Error) + (Integral * PID_Drive_TurnTo.Ki) + (Derivative * PID_Drive_TurnTo.Kd);
+		if(Speed > MaxSpeed)
+			Speed = MaxSpeed;
+		if(Speed < -MaxSpeed)
+			Speed = -MaxSpeed;
+		Auton_Drive(Direction, Speed);
+		LastError = Error;
+		sleep(25);
+	}
+	Auton_Drive();
+#if defined(_DEBUG)
+	if(!((nSysTime - StartTime) < Timeout)) {
+		writeDebugStreamLine("***WARNING: PID_TurnTo to heading %i timed out after %i ms (gyro reading %i)", Heading, Timeout, SensorValue[PID_Drive_TurnTo.Sensor]);
+	}
+#endif
+}
 #endif
 
 void Auton_Drive_Targeted(tDirection Direction, int Distance = 0, tSpeed Speed = 127, int Timeout = 2000, int LeftSpeed = Speed) {
@@ -170,6 +215,49 @@ void Auton_Drive_Targeted(tDirection Direction, int Distance = 0, tSpeed Speed =
 #if defined(_DEBUG)
 	if(!((nSysTime - StartTime) < Timeout)) {
 		writeDebugStreamLine("**WARNING: Drive to distance %i timed out after %i ms (encoder reading %i)", Distance, Timeout, SensorValue[DriveEncoder]);
+	}
+#endif
+}
+
+void Auton_Drive_Targeted_PID(tDirection Direction, int Distance, tSpeed MaxSpeed = 127, int RequestedAccuracy = 5, int Timeout = 3000) {
+	const int StartTime = nSysTime;
+	ResetDriveEncoders();
+	int Error = 0;
+	int LastError = 0;
+	int Integral = 0;
+	int Derivative = 0;
+	int Speed = 0;
+#if defined(_DEBUG)
+	writeDebugStreamLine("Multiplier is %i", -Auton_GetMultiplier(Direction,DriveRearRight));
+#endif
+	while((nSysTime - StartTime) < Timeout) {
+		writeDebugStreamLine("Sensor=%i",SensorValue[PID_Drive.Sensor]);
+		Error = SensorValue[PID_Drive.Sensor] - (-Auton_GetMultiplier(Direction,DriveRearRight)) * Distance;
+		writeDebugStreamLine("Target=%i",(-Auton_GetMultiplier(Direction,DriveRearRight)) * Distance);
+		writeDebugStreamLine("Error=%i",Error);
+		if(PID_Drive.Ki != 0 && abs(Error) < PID_Drive.IntegralLimit) {
+			Integral += Error;
+			} else {
+			Integral = 0;
+		}
+		if(abs(Error) < RequestedAccuracy) {
+			break;
+		}
+		Speed = (-Auton_GetMultiplier(Direction,DriveRearRight)) * ((PID_Drive.Kp * Error) + (Integral * PID_Drive.Ki) + (Derivative * PID_Drive.Kd));
+		writeDebugStreamLine("Speed=%i",Speed);
+		writeDebugStreamLine("");
+		if(Speed > MaxSpeed)
+			Speed = MaxSpeed;
+		if(Speed < -MaxSpeed)
+			Speed = -MaxSpeed;
+		Auton_Drive(Direction, Speed);
+		LastError = Error;
+		sleep(25);
+	}
+	Auton_Drive();
+#if defined(_DEBUG)
+	if(!((nSysTime - StartTime) < Timeout)) {
+		writeDebugStreamLine("***WARNING: PID_Drive to distance %i timed out after %i ms (encoder reading %i)", Distance, Timeout, SensorValue[DriveEncoder]);
 	}
 #endif
 }

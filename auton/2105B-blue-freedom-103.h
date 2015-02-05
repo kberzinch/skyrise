@@ -1,6 +1,8 @@
 void Auton_Blue_Freedom() {
-	startTask(Lift_Stabilizer_Left);
-	startTask(Lift_Stabilizer_Right);
+	/*startTask(Lift_Stabilizer_Left);
+	startTask(Lift_Stabilizer_Right);*/
+	Auton_Drive_TurnTo_PID(CLOCKWISE,-1000);
+	/*
 	Auton_Drive_Targeted(BACKWARD, 85);
 	Collection(200);
 	Lift_Target = 45; // low post
@@ -35,4 +37,5 @@ void Auton_Blue_Freedom() {
 	Collection(900);
 	writeDebugStreamLine("Dropped cube at %i:%2i.%3i",LCD_Timer_Mins(0),LCD_Timer_Secs(0,true),LCD_Timer_Msecs(0,true));
 	Auton_Drive_Targeted(BACKWARD,300);
+	*/
 }
