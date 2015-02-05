@@ -51,18 +51,21 @@ void Collection(int Position) {
 #include "auton\2105B-red-freedom.h"
 #include "misc\2105B-autonmanager.h"
 
-task DumpLiftValues {
-	while(true) {
-		writeDebugStreamLine("%i,%i",SensorValue[EncoderLiftLeft],SensorValue[EncoderLiftRight]);
-		sleep(10);
-	}
-}
-
 void ResetDriveEncoders() {
 	SensorValue[DriveEncoder] = 0;
 }
 
 void init() {
+	PID_Drive.Sensor = DriveEncoder;
+	PID_Drive.IntegralLimit = 200;
+	PID_Drive.Kp = 0.7;
+	PID_Drive.Ki = 0.001;
+	PID_Drive.Kd = 0.2;
+	PID_Drive_TurnTo.Sensor = Gyroscope;
+	PID_Drive_TurnTo.IntegralLimit = 400;
+	PID_Drive_TurnTo.Kp = 0.7;
+	PID_Drive_TurnTo.Ki = 0.001;
+	PID_Drive_TurnTo.Kd = 0.2;
 	SensorValue[EncoderLiftLeft] = 0;
 	SensorValue[EncoderLiftRight] = 0;
 	SensorValue[Gyroscope] = 0;
