@@ -231,10 +231,10 @@ void Auton_Drive_Targeted_PID(tDirection Direction, int Distance, tSpeed MaxSpee
 	writeDebugStreamLine("Multiplier is %i", -Auton_GetMultiplier(Direction,DriveRearRight));
 #endif
 	while((nSysTime - StartTime) < Timeout) {
-		writeDebugStreamLine("Sensor=%i",SensorValue[PID_Drive.Sensor]);
+	//writeDebugStreamLine("Sensor=%i",SensorValue[PID_Drive.Sensor]);
 		Error = SensorValue[PID_Drive.Sensor] - (-Auton_GetMultiplier(Direction,DriveRearRight)) * Distance;
-		writeDebugStreamLine("Target=%i",(-Auton_GetMultiplier(Direction,DriveRearRight)) * Distance);
-		writeDebugStreamLine("Error=%i",Error);
+		//writeDebugStreamLine("Target=%i",(-Auton_GetMultiplier(Direction,DriveRearRight)) * Distance);
+		//writeDebugStreamLine("Error=%i",Error);
 		if(PID_Drive.Ki != 0 && abs(Error) < PID_Drive.IntegralLimit) {
 			Integral += Error;
 			} else {
@@ -244,8 +244,8 @@ void Auton_Drive_Targeted_PID(tDirection Direction, int Distance, tSpeed MaxSpee
 			break;
 		}
 		Speed = (-Auton_GetMultiplier(Direction,DriveRearRight)) * ((PID_Drive.Kp * Error) + (Integral * PID_Drive.Ki) + (Derivative * PID_Drive.Kd));
-		writeDebugStreamLine("Speed=%i",Speed);
-		writeDebugStreamLine("");
+		//writeDebugStreamLine("Speed=%i",Speed);
+		//writeDebugStreamLine("");
 		if(Speed > MaxSpeed)
 			Speed = MaxSpeed;
 		if(Speed < -MaxSpeed)
@@ -581,7 +581,7 @@ void Claw(ClawPosition Position) {
 #if defined(_DEBUG)
 void AutonDataDump() {
 	writeDebugStreamLine("Autonomous finished");
-	writeDebugStreamLine(" - Total time (estimated): %i:%-2i.%-3i",LCD_Timer_Mins(0),LCD_Timer_Secs(0,true),LCD_Timer_Msecs(0,true));
+	writeDebugStreamLine(" - Total time (estimated): %i:%2i.%-3i",LCD_Timer_Mins(0),LCD_Timer_Secs(0,true),LCD_Timer_Msecs(0,true));
 	writeDebugStreamLine(" - Batt A   %1.2fv", (float)nImmediateBatteryLevel / (float)1000);
 #ifndef NoPowerExpander
 	writeDebugStreamLine(" - Batt B   %1.2fv", (float)SensorValue[PowerExpander] / (float)280);
