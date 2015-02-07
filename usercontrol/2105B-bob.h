@@ -5,6 +5,7 @@ int LastLeft = 0;
 int LastRight = 0;
 
 task usercontrol {
+	allMotorsOff();
 	while(true) {
 
 		// NOT-BREAK-LIFT PREVENTION

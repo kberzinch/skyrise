@@ -47,7 +47,9 @@ void Collection(int Position) {
 
 #include "misc\2105B-stabilizers.h"
 #include "usercontrol\2105B-bob.h"
-#include "auton\2105B-blue-freedom-103.h"
+#include "auton\2105B-blue-atloader.h"
+#include "auton\2105B-red-atload.h"
+#include "auton\2105B-blue-freedom.h"
 #include "auton\2105B-red-freedom.h"
 #include "misc\2105B-autonmanager.h"
 
@@ -70,4 +72,6 @@ void init() {
 	SensorValue[EncoderLiftRight] = 0;
 	SensorValue[Gyroscope] = 0;
 	SensorValue[CollectionEncoder] = 0;
+	SensorValue[SolenoidA] = 0;
+	SensorValue[SolenoidB] = 0;
 }

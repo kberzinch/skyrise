@@ -19,7 +19,7 @@
 /* for any consequences.                                */
 /********************************************************/
 
-const char LCD_SizeOfMenu = 3; // MUST be at least 1 to prevent crash
+const char LCD_SizeOfMenu = 5; // MUST be at least 1 to prevent crash
 
 #undef LCD_NotUsing_Menu       // Clear any statements against compiling LCD_Menu.
 // If you don't want it, why would you include it?
@@ -50,13 +50,24 @@ void LCD_Menu_Define()
 	LCD.Menu[0].Title = "Color";
 	LCD.Menu[0].Text = "Red";
 	LCD.Menu[0].PrevIndex = 0;
+	LCD.Menu[0].SelectIndex = 3;
 
 	LCD.Menu[1].Title = LCD.Menu[0].Title;
 	LCD.Menu[1].Text = "Blue";
+	LCD.Menu[1].SelectIndex = 3;
 
 	LCD.Menu[2].Title = "Program Skills";
-	LCD.Menu[2].Text = "Red Autoload";
+	LCD.Menu[2].Text = "DO NOT SELECT";
 	LCD.Menu[2].NextIndex = 2;
+	LCD.Menu[2].SelectIndex = 3;
+
+	LCD.Menu[3].Title = "Start Point";
+	LCD.Menu[3].Text = "Autoloader";
+	LCD.Menu[3].PrevIndex = 3;
+
+	LCD.Menu[4].Title = "Start Point";
+	LCD.Menu[4].Text = "Freedom";
+	LCD.Menu[4].NextIndex = 4;
 }
 
 bool LCD_Menu_Execute()
@@ -75,19 +86,19 @@ bool LCD_Menu_Execute()
 		writeDebugStreamLine("Set as blue");
 #endif
 		break;
-	/*case 2:
+	case 3:
 		Competition.AtLoader = true;
 #if defined(_DEBUG)
 		writeDebugStreamLine("Set as autoloader");
 #endif
-		break;*/
-	case 3:
+		break;
+	case 4:
 		Competition.AtLoader = false;
 #if defined(_DEBUG)
 		writeDebugStreamLine("Set as freedom spot");
 #endif
 		break;
-	case 4:
+	/*case 4:
 		Competition.Auton = 1;
 #if defined(_DEBUG)
 		writeDebugStreamLine("Set as Numero Uno");
@@ -98,7 +109,7 @@ bool LCD_Menu_Execute()
 #if defined(_DEBUG)
 		writeDebugStreamLine("Set as Numero Dos");
 #endif
-		break;
+		break;*/
 	case 2:
 		Competition.Auton = 3;
 #if defined(_DEBUG)
