@@ -1,22 +1,25 @@
 void Auton_Red_Freedom() {
 	startTask(Lift_Stabilizer_Left);
 	startTask(Lift_Stabilizer_Right);
-	Auton_Drive_Targeted_PID(BACKWARD, -125);
+	Auton_Drive_Targeted_PID(BACKWARD, -125,127,10);
 	Collection(200);
 	Lift_Target = 320; // low post
 	MinOverride = true;
 	while(SensorValue[EncoderLiftLeft] < 310) {}
 	MinOverride = false;
 	Collection(600);
-	Auton_Drive_Targeted_PID(BACKWARD, -500);
+	Auton_Drive_Targeted_PID(BACKWARD, -550);
 	Lift_Target = 0;
 	MinOverride = true;
 	while(SensorValue[EncoderLiftLeft] > 10) {} // LIFT DOWN AFTER 1st cube
 	MinOverride = false;
-	Auton_Drive_TurnTo_PID(COUNTERCLOCKWISE, 450, 127, 5, 1000); // 2nd cube turn
-	Auton_Drive_Targeted(FORWARD, -25); // this doesn't do anything
+	Auton_Drive_TurnTo_PID(COUNTERCLOCKWISE, 425, 127, 5, 1000); // 2nd cube turn
+	ResetDriveEncoders();
+	Auton_Drive(FORWARD, 127, 250);
+	while(SensorValue[DriveEncoder] < 200) {}
 	Collection(200);
-	Auton_Drive_TurnTo_PID(COUNTERCLOCKWISE, 630); // TURN TOWARDS 2nd Pole
+	Auton_Drive_Targeted_PID(BACKWARD, -200, 127, 10);
+	Auton_Drive_TurnTo_PID(COUNTERCLOCKWISE, 580); // TURN TOWARDS 2nd Pole
 	Lift_Target = 640;
 	MinOverride = true;
 	while(SensorValue[EncoderLiftLeft] < 630) {}
