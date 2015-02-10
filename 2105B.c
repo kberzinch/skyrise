@@ -50,7 +50,8 @@ void Collection(int Position) {
 #include "auton\2105B-blue-atloader.h"
 #include "auton\2105B-red-atload.h"
 #include "auton\2105B-blue-freedom.h"
-#include "auton\2105B-red-freedom.h"
+//#include "auton\2105B-red-freedom.h"
+#include "auton\2105B-red-freedom-thingum.h"
 #include "misc\2105B-autonmanager.h"
 
 void ResetDriveEncoders() {
