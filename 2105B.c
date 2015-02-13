@@ -29,20 +29,26 @@ const string FILE = __FILE__;
 //#include "core\v3\batteryindicators.h"
 #include "core\v3\core.h"
 
-void Collection(int Position) {
+void Collection(int Position, int Timeout = 3000) {
+	const int StartTime = nSysTime;
 	if(SensorValue[CollectionEncoder] > Position) {
-		while(SensorValue[CollectionEncoder] > Position) {
+		while(SensorValue[CollectionEncoder] > Position && (nSysTime - StartTime) < Timeout) {
 			motor[CollectionA] = 127;
 			motor[CollectionB] = 127;
 		}
 		} else if(SensorValue[CollectionEncoder] < Position) {
-		while(SensorValue[CollectionEncoder] < Position) {
+		while(SensorValue[CollectionEncoder] < Position && (nSysTime - StartTime) < Timeout) {
 			motor[CollectionA] = -127;
 			motor[CollectionB] = -127;
 		}
 	}
 	motor[CollectionA] = 0;
 	motor[CollectionB] = 0;
+#if defined(_DEBUG)
+	if(!((nSysTime - StartTime) < Timeout)) {
+		writeDebugStreamLine("**WARNING: Collection to position %i timed out after %i ms (encoder reading %i)", Position, Timeout, SensorValue[CollectionEncoder]);
+	}
+#endif
 }
 
 #include "misc\2105B-stabilizers.h"
