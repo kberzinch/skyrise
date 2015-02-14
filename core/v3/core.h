@@ -187,9 +187,9 @@ void Auton_Drive_Targeted(tDirection Direction, int Distance = 0, tSpeed Speed =
 	ResetDriveEncoders();
 	Auton_Drive(Direction, Speed, 0);
 #if defined(_DEBUG)
-	writeDebugStreamLine("Multiplier is %i", -Auton_GetMultiplier(Direction,DriveRearRight));
+	writeDebugStreamLine("Multiplier is %i", -Auton_GetMultiplier(Direction,DriveRearLeft));
 #endif
-	switch(-Auton_GetMultiplier(Direction,DriveRearRight)) {
+	switch(-Auton_GetMultiplier(Direction,DriveRearLeft)) {
 	case -1:
 #if defined(_DEBUG)
 		writeDebugStreamLine("Current encoder reading is %i, wanting less than %i", SensorValue[DriveEncoder], Distance);
@@ -197,7 +197,7 @@ void Auton_Drive_Targeted(tDirection Direction, int Distance = 0, tSpeed Speed =
 #ifdef MultiDriveEncoders
 		while(((SensorValue[DriveEncoder] + SensorValue[DriveEncoderLeft]) / 2) > -Auton_GetMultiplier(Direction,DriveRearRight) * Distance && (nSysTime - StartTime) < Timeout) {}
 #else
-		while(SensorValue[DriveEncoder] > -Auton_GetMultiplier(Direction,DriveRearRight) * Distance && (nSysTime - StartTime) < Timeout) {}
+		while(SensorValue[DriveEncoder] > -Auton_GetMultiplier(Direction,DriveRearLeft) * Distance && (nSysTime - StartTime) < Timeout) {}
 #endif
 		break;
 	case 1:
@@ -207,7 +207,7 @@ void Auton_Drive_Targeted(tDirection Direction, int Distance = 0, tSpeed Speed =
 #ifdef MultiDriveEncoders
 		while(((SensorValue[DriveEncoder] + SensorValue[DriveEncoderLeft]) / 2) < -Auton_GetMultiplier(Direction,DriveRearRight) * Distance && (nSysTime - StartTime) < Timeout) {}
 #else
-		while(SensorValue[DriveEncoder] < -Auton_GetMultiplier(Direction,DriveRearRight) * Distance && (nSysTime - StartTime) < Timeout) {}
+		while(SensorValue[DriveEncoder] < -Auton_GetMultiplier(Direction,DriveRearLeft) * Distance && (nSysTime - StartTime) < Timeout) {}
 #endif
 		break;
 	}
@@ -230,6 +230,7 @@ void Auton_Drive_Targeted_PID(tDirection Direction, int Distance, tSpeed MaxSpee
 #if defined(_DEBUG)
 	writeDebugStreamLine("Multiplier is %i", -Auton_GetMultiplier(Direction,DriveRearRight));
 #endif
+		//writeDebugStreamLine("START-DISTANCE=%i",Distance);
 	while((nSysTime - StartTime) < Timeout) {
 	//writeDebugStreamLine("Sensor=%i",SensorValue[PID_Drive.Sensor]);
 		Error = SensorValue[PID_Drive.Sensor] - (-Auton_GetMultiplier(Direction,DriveRearRight)) * Distance;
@@ -253,7 +254,9 @@ void Auton_Drive_Targeted_PID(tDirection Direction, int Distance, tSpeed MaxSpee
 		Auton_Drive(Direction, Speed);
 		LastError = Error;
 		sleep(25);
+		//writeDebugStreamLine("%i",Speed);
 	}
+	//writeDebugStreamLine("END-DISTANCE=%i",Distance);
 	Auton_Drive();
 #if defined(_DEBUG)
 	if(!((nSysTime - StartTime) < Timeout)) {

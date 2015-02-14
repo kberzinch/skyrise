@@ -2,30 +2,30 @@ void Auton_Red_Freedom() {
 	startTask(Lift_Stabilizer_Left);
 	startTask(Lift_Stabilizer_Right);
 	Collection(200);
-	Auton_Drive_Targeted_PID(FORWARD, -125, 127, 10);
+	Auton_Drive_Targeted_PID(FORWARD, -125);
 	Collection(-150);
-	Lift_Target = 640; // low post
+	Lift_Target = 600; // low post
 	MinOverride = true;
-	while(SensorValue[EncoderLiftLeft] < 630) {}
+	while(((SensorValue[EncoderLiftLeft] + SensorValue[EncoderLiftRight]) / 2) < 590) {}
 	MinOverride = false;
-	Auton_Drive_Targeted_PID(FORWARD, -100, 127, 10);
-	Auton_Drive_TurnTo(CLOCKWISE, -160); // -220, -160 (or thereabouts) works well usually
-	ResetDriveEncoders();
-	Auton_Drive(FORWARD, 127, 150);
-	writeDebugStreamLine("%i",SensorValue[DriveEncoder]);
-	while(SensorValue[DriveEncoder] < 70) {}
-	writeDebugStreamLine("%i",SensorValue[DriveEncoder]);
+	Auton_Drive_Targeted_PID(FORWARD, -94, 127, 10);//100
+	Auton_Drive_TurnTo(CLOCKWISE, -220); // -220, -160 (or thereabouts) works well usually
+	//Auton_Drive(COUNTERCLOCKWISE, 127, 10);
+	Auton_Drive(FORWARD, 80, 100);
+	writeDebugStreamLine("%i", SensorValue[EncoderLiftLeft]);
+	writeDebugStreamLine("%i", SensorValue[EncoderLiftRight]);
+	sleep(500);
 	Collection(1000);
 	Auton_Drive_Targeted_PID(BACKWARD, -100);
 	Auton_Drive_TurnTo(COUNTERCLOCKWISE, -100);
 	Lift_Target = 20; // Lift down
 	MinOverride = true;
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 810);
 	while(SensorValue[EncoderLiftLeft] > 30) {}
 	MinOverride = false;
-	Auton_Drive_Targeted_PID(FORWARD, -600);
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE,830);
-	//Auton_Drive_TurnTo_PID(COUNTERCLOCKWISE, 900, 127, 6, 1000);
-	Auton_Drive_Targeted_PID(FORWARD, -278, 127, 5, 2000);
+	Auton_Drive_Targeted(FORWARD, 360);
 	sleep(500);
-	Collection(500);
+	Collection(700);
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 1750);
+	Collection(400);
 }

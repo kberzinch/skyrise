@@ -66,12 +66,12 @@ void ResetDriveEncoders() {
 
 void init() {
 	PID_Drive.Sensor = DriveEncoder;
-	PID_Drive.IntegralLimit = 200;
+	PID_Drive.IntegralLimit = 100;
 	PID_Drive.Kp = 0.7;
 	PID_Drive.Ki = 0.001;
 	PID_Drive.Kd = 0.2;
 	PID_Drive_TurnTo.Sensor = Gyroscope;
-	PID_Drive_TurnTo.IntegralLimit = 400;
+	PID_Drive_TurnTo.IntegralLimit = 200;
 	PID_Drive_TurnTo.Kp = 0.7;
 	PID_Drive_TurnTo.Ki = 0.001;
 	PID_Drive_TurnTo.Kd = 0.2;
