@@ -1,6 +1,8 @@
 int Lift_Target = 0;
 bool IsStabilizerRunning = false;
 const float Kp = 1.5;
+const float Ki = 0;//.0001;
+const int IntegralLimit = 100;
 const float Kd = 0.2;
 bool MinOverride = false;
 
@@ -21,7 +23,7 @@ void Set_Lift_Target(int Adjustment) {
 task Lift_Stabilizer_Left {
 	IsStabilizerRunning = true;
 	const tSensors sensor = EncoderLiftLeft;
-	int error, previous_error, speed, derivative;
+	int error, previous_error, speed, derivative, integral = 0;
 	while(IsStabilizerRunning) {
 		if(SensorValue[sensor] > 800 || (SensorValue[sensor] < 100 && !MinOverride)) {
 			motor[LiftLeftA] = 0;
@@ -29,9 +31,14 @@ task Lift_Stabilizer_Left {
 			continue;
 		}
 		error = (Lift_Target - SensorValue[sensor]);
+		if(abs(error) < IntegralLimit) {
+			integral += error;
+			} else {
+			integral = 0;
+		}
 		derivative = error - previous_error;
 		previous_error = error;
-		speed = Kp * error + Kd * derivative;
+		speed = Kp * error + Kd * derivative + Ki * integral;
 		motor[LiftLeftA] = Normalize(speed);
 		motor[LiftLeftB] = Normalize(speed);
 		EndTimeSlice();
@@ -41,7 +48,7 @@ task Lift_Stabilizer_Left {
 task Lift_Stabilizer_Right {
 	IsStabilizerRunning = true;
 	const tSensors sensor = EncoderLiftRight;
-	int error, previous_error, speed, derivative;
+	int error, previous_error, speed, derivative, integral = 0;
 	while(IsStabilizerRunning) {
 		if(SensorValue[sensor] > 800 || (SensorValue[sensor] < 100 && !MinOverride)) {
 			motor[LiftRightA] = 0;
@@ -49,9 +56,14 @@ task Lift_Stabilizer_Right {
 			continue;
 		}
 		error = (Lift_Target - SensorValue[sensor]);
+		if(abs(error) < IntegralLimit) {
+			integral += error;
+			} else {
+			integral = 0;
+		}
 		derivative = error - previous_error;
 		previous_error = error;
-		speed = Kp * error + Kd * derivative;
+		speed = Kp * error + Kd * derivative + Ki * integral;
 		motor[LiftRightA] = Normalize(speed);
 		motor[LiftRightB] = Normalize(speed);
 		EndTimeSlice();
