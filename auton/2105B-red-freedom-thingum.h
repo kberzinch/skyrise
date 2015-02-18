@@ -14,7 +14,7 @@ void Auton_Red_Freedom() {
 	Auton_Drive(FORWARD, 80, 100);
 	writeDebugStreamLine("%i", SensorValue[EncoderLiftLeft]);
 	writeDebugStreamLine("%i", SensorValue[EncoderLiftRight]);
-	sleep(500);
+	sleep(1000);
 	Collection(1000);
 	Auton_Drive_Targeted_PID(BACKWARD, -100);
 	Auton_Drive_TurnTo(COUNTERCLOCKWISE, -100);
@@ -23,9 +23,10 @@ void Auton_Red_Freedom() {
 	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 810);
 	while(SensorValue[EncoderLiftLeft] > 30) {}
 	MinOverride = false;
-	Auton_Drive_Targeted(FORWARD, 360);
+	Auton_Drive_Targeted(FORWARD, 350);
 	sleep(500);
 	Collection(700);
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 1750);
-	Collection(400);
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 1720);
+	Auton_Drive_Targeted(FORWARD, 10);
+	Collection(200);
 }
