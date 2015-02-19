@@ -3,7 +3,7 @@ task autonomous {
 	case true:
 		switch(Competition.AtLoader) {
 		case true:
-			Auton_Blue_AtLoader();
+			//Auton_Blue_AtLoader();
 			break;
 		case false:
 			Auton_Blue_Freedom();
@@ -13,7 +13,7 @@ task autonomous {
 	case false:
 		switch(Competition.AtLoader) {
 		case true:
-			Auton_Red_AtLoader();
+			//Auton_Red_AtLoader();
 			break;
 		case false:
 			Auton_Red_Freedom();
