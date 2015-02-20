@@ -3,10 +3,18 @@
 
 int LastLeft = 0;
 int LastRight = 0;
+float Multiplier = 1;
 
 task usercontrol {
 	allMotorsOff();
 	while(true) {
+
+		// SPEED MULTIPLIER
+		if(vexRT[AccelX] > 90) {
+			Multiplier = 0.5;
+		} else {
+			Multiplier = 1;
+		}
 
 		// NOT-BREAK-LIFT PREVENTION
 		if(SensorValue[EncoderLiftRight] > 800) {
@@ -18,26 +26,26 @@ task usercontrol {
 		}
 
 		// DRIVE
-		motor[DriveFrontLeft] = -(vexRT[Ch3] + vexRT[Ch4]);
-		motor[DriveFrontRight] = (vexRT[Ch3] - vexRT[Ch4]);
-		motor[DriveRearLeft] = -(vexRT[Ch3] + vexRT[Ch4]);
-		motor[DriveRearRight] = (vexRT[Ch3] - vexRT[Ch4]);
+		motor[DriveFrontLeft] = -(vexRT[Ch3] + vexRT[Ch4]) * Multiplier;
+		motor[DriveFrontRight] = (vexRT[Ch3] - vexRT[Ch4]) * Multiplier;
+		motor[DriveRearLeft] = -(vexRT[Ch3] + vexRT[Ch4]) * Multiplier;
+		motor[DriveRearRight] = (vexRT[Ch3] - vexRT[Ch4]) * Multiplier;
 
 		// LIFT
 		if(vexRT[Btn6U] == 1) {
 			IsStabilizerRunning = false;
 			Set_Lift_Target(10);
-			motor[LiftLeftA] = 127;
-			motor[LiftLeftB] = 127;
-			motor[LiftRightA] = 127;
-			motor[LiftRightB] = 127;
+			motor[LiftLeftA] = 127 * Multiplier;
+			motor[LiftLeftB] = 127 * Multiplier;
+			motor[LiftRightA] = 127 * Multiplier;
+			motor[LiftRightB] = 127 * Multiplier;
 			} else if(vexRT[Btn6D] == 1) {
 			IsStabilizerRunning = false;
 			Set_Lift_Target(-10);
-			motor[LiftLeftA] = -127;
-			motor[LiftLeftB] = -127;
-			motor[LiftRightA] = -127;
-			motor[LiftRightB] = -127;
+			motor[LiftLeftA] = -127 * Multiplier;
+			motor[LiftLeftB] = -127 * Multiplier;
+			motor[LiftRightA] = -127 * Multiplier;
+			motor[LiftRightB] = -127 * Multiplier;
 			} else if(vexRT[Btn8D] == 1) {
 			IsStabilizerRunning = false;
 			Set_Lift_Target(0);
