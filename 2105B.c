@@ -54,7 +54,7 @@ void Collection(int Position, int Timeout = 3000) {
 #include "misc\2105B-stabilizers.h"
 #include "usercontrol\2105B-bob.h"
 #include "auton\2105B-blue-atloader.h"
-//#include "auton\2105B-red-atload.h"
+#include "auton\2105B-red-atloader.h"
 #include "auton\2105B-blue-freedom.h"
 //#include "auton\2105B-red-freedom.h"
 #include "auton\2105B-red-freedom-thingum.h"
