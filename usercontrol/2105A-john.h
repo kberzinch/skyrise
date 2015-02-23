@@ -3,26 +3,32 @@
 
 task usercontrol_liftpresets;
 int preset_triggered = false;
-float drivemultiplier = 1;
+int drivemultiplier = 1;
 int dval = 0;
 int deadband = 20;
+int LastLeft = 0;
 
 task usercontrol {
 	startTask(usercontrol_liftpresets);
 	while(true) {
-		// DRIVE
-		if(vexRT[Btn5D] == 1) {
-			drivemultiplier = 0.5;
-			} else {
-			drivemultiplier = 1;
+
+		// CONTROL TOGGLE
+		if(vexRT[Btn7D] == 1 && LastLeft == 0) {
+			drivemultiplier = -drivemultiplier;
+			writeDebugStreamLine("toggle to %i", drivemultiplier);
+			LastLeft = 1;
+			} else if(vexRT[Btn7D] == 0 && LastLeft == 1) {
+			LastLeft = 0;
 		}
-		dval = vexRT[Ch1] - vexRT[Ch2] - vexRT[Ch4] * drivemultiplier;
+
+		// DRIVE
+		dval = (-vexRT[Ch2] - vexRT[Ch1] + vexRT[Ch4] * drivemultiplier) * drivemultiplier;
 	motor[DriveRearLeft]   = dval < deadband && dval > -deadband ? 0 : dval;
-		dval = -vexRT[Ch1] - vexRT[Ch2] - vexRT[Ch4] * drivemultiplier;
+		dval = ( vexRT[Ch2] - vexRT[Ch1] + vexRT[Ch4] * drivemultiplier) * drivemultiplier;
 	motor[DriveFrontLeft]  = dval < deadband && dval > -deadband ? 0 : dval;
-		dval =  vexRT[Ch1] + vexRT[Ch2] - vexRT[Ch4] * drivemultiplier;
+		dval = (-vexRT[Ch2] + vexRT[Ch1] + vexRT[Ch4] * drivemultiplier) * drivemultiplier;
 	motor[DriveRearRight]  = dval < deadband && dval > -deadband ? 0 : dval;
-		dval = -vexRT[Ch1] + vexRT[Ch2] - vexRT[Ch4] * drivemultiplier;
+		dval = ( vexRT[Ch2] + vexRT[Ch1] + vexRT[Ch4] * drivemultiplier) * drivemultiplier;
 	motor[DriveFrontRight] = dval < deadband && dval > -deadband ? 0 : dval;
 
 		// PRESET RESET
