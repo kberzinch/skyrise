@@ -132,7 +132,8 @@ void Auton_Drive(tDirection Direction = STOP, tSpeed Speed = 127, int Time = 0) 
 
 #ifdef HasGyro
 void Auton_Drive_TurnTo(tDirection Direction, int Heading = 0, tSpeed Speed = 127) {
-	writeDebugStreamLine("Request to turn to heading %i", Heading);
+	long StartTime = nSysTime;
+	writeDebugStream("Request to turn to heading %i", Heading);
 	Auton_Drive(Direction, Speed);
 	if(Direction == CLOCKWISE) {
 		while(SensorValue[Gyroscope] > Heading) {
@@ -144,6 +145,7 @@ void Auton_Drive_TurnTo(tDirection Direction, int Heading = 0, tSpeed Speed = 12
 		}
 	}
 	Auton_Drive();
+	writeDebugStreamLine(" completed in %ims",(nSysTime - StartTime));
 }
 
 void Auton_Drive_TurnTo_PID(tDirection Direction, int Heading = 0, tSpeed MaxSpeed = 127, int RequestedAccuracy = 5, int Timeout = 3000) {
