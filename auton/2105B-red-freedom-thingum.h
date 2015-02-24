@@ -12,23 +12,24 @@ void Auton_Red_Freedom() {
 	if((nSysTime - StartTime) > 2000)
 		writeDebugStreamLine("timed out");
 	MinOverride = false;
-	Auton_Drive_Targeted_PID(FORWARD, -100, 127, 10);
+	Auton_Drive_Targeted(FORWARD, 90);
+	Collection(800);
+	Auton_Drive_Targeted(BACKWARD, 130); //170
 	Collection(1000);
-	Auton_Drive_Targeted_PID(BACKWARD, -100);
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 20);
 	Lift_Target = 20; // Lift down
 	MinOverride = true;
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 800);
-	Auton_Drive(CLOCKWISE, 100);
+	Auton_Drive_TurnTo_PID(COUNTERCLOCKWISE, 900);
 	while(SensorValue[EncoderLiftLeft] > 30) {}
 	MinOverride = false;
 	Auton_Drive_Targeted(FORWARD, 350);
 	sleep(250);
 	Collection(700);
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 1400);
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 1700);
 	Auton_Drive_Targeted(FORWARD, 5);
 	Collection(300);
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 2450);
-	Auton_Drive_Targeted(FORWARD, 60);
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 2400);
+	Auton_Drive_Targeted(FORWARD, 50);
 	Lift_Target = 350;
 	MinOverride = true;
 	while(((SensorValue[EncoderLiftLeft] + SensorValue[EncoderLiftRight]) / 2) < 340) {}
