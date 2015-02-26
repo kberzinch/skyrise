@@ -2,6 +2,8 @@
 // DRIVER: Bob
 
 int LastLeft = 0;
+int LastRight = 0;
+int LastDown = 0;
 float Multiplier = 1;
 
 task usercontrol {
@@ -83,12 +85,24 @@ task usercontrol {
 		}
 
 		// PNEUMATICS
-		if(vexRT[Btn7D] == 1 && LastLeft == 0) {
+		if(vexRT[Btn7L] == 1 && LastLeft == 0) {
+			SensorValue[SolenoidA] = !SensorValue[SolenoidA];
+			LastLeft = 1;
+			} else if(vexRT[Btn7L] == 0 && LastLeft == 1) {
+			LastLeft = 0;
+		}
+		if(vexRT[Btn7R] == 1 && LastRight == 0) {
+			SensorValue[SolenoidB] = !SensorValue[SolenoidB];
+			LastRight = 1;
+			} else if(vexRT[Btn7R] == 0 && LastRight == 1) {
+			LastRight = 0;
+		}
+		if(vexRT[Btn7D] == 1 && LastDown == 0) {
 			SensorValue[SolenoidA] = !SensorValue[SolenoidA];
 			SensorValue[SolenoidB] = !SensorValue[SolenoidB];
-			LastLeft = 1;
-			} else if(vexRT[Btn7D] == 0 && LastLeft == 1) {
-			LastLeft = 0;
+			LastDown = 1;
+			} else if(vexRT[Btn7D] == 0 && LastDown == 1) {
+			LastDown = 0;
 		}
 	}
 }

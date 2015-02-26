@@ -22,13 +22,13 @@ task usercontrol {
 		}
 
 		// DRIVE
-		dval = (-vexRT[Ch2] - vexRT[Ch1] + vexRT[Ch4] * drivemultiplier) * drivemultiplier;
-	motor[DriveRearLeft]   = dval < deadband && dval > -deadband ? 0 : dval;
-		dval = ( vexRT[Ch2] - vexRT[Ch1] + vexRT[Ch4] * drivemultiplier) * drivemultiplier;
-	motor[DriveFrontLeft]  = dval < deadband && dval > -deadband ? 0 : dval;
-		dval = (-vexRT[Ch2] + vexRT[Ch1] + vexRT[Ch4] * drivemultiplier) * drivemultiplier;
+		dval = (-vexRT[Ch2] - vexRT[Ch1] - vexRT[Ch4] * drivemultiplier) * drivemultiplier;
+	motor[DriveFrontLeft]   = dval < deadband && dval > -deadband ? 0 : dval;
+		dval = ( vexRT[Ch2] + vexRT[Ch1] - vexRT[Ch4] * drivemultiplier) * drivemultiplier;
 	motor[DriveRearRight]  = dval < deadband && dval > -deadband ? 0 : dval;
-		dval = ( vexRT[Ch2] + vexRT[Ch1] + vexRT[Ch4] * drivemultiplier) * drivemultiplier;
+		dval = (-vexRT[Ch2] + vexRT[Ch1] - vexRT[Ch4] * drivemultiplier) * drivemultiplier;
+	motor[DriveRearLeft]  = dval < deadband && dval > -deadband ? 0 : dval;
+		dval = ( vexRT[Ch2] - vexRT[Ch1] - vexRT[Ch4] * drivemultiplier) * drivemultiplier;
 	motor[DriveFrontRight] = dval < deadband && dval > -deadband ? 0 : dval;
 
 		// PRESET RESET
@@ -49,13 +49,18 @@ task usercontrol {
 
 		// PNEUMATICS
 		if(vexRT[Btn6D] == 1) {
-			Claw(OPEN);
+			SensorValue[SolenoidB] = 0;
 			} else if(vexRT[Btn6U] == 1) {
+			SensorValue[SolenoidB] = 1;
+		}
+		if(vexRT[Btn8L] == 1) {
+			Claw(OPEN);
+			} else if(vexRT[Btn8R] == 1) {
 			Claw(CLOSE);
 		}
 	}
 }
-
+/*
 task usercontrol_liftpresets {
 	while(true) {
 		if(vexRT[Btn8D] ==  1 && !Lift_TrippedMin()) {
@@ -74,3 +79,4 @@ task usercontrol_liftpresets {
 		preset_triggered = false;
 	}
 }
+*/

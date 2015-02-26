@@ -25,7 +25,7 @@ task Lift_Stabilizer_Left {
 	const tSensors sensor = EncoderLiftLeft;
 	int error, previous_error, speed, derivative, integral = 0;
 	while(IsStabilizerRunning) {
-		if(SensorValue[sensor] > 800 || (SensorValue[sensor] < 100 && !MinOverride)) {
+		if(SensorValue[sensor] > 1000 || (SensorValue[sensor] < 100 && !MinOverride)) {
 			motor[LiftLeftA] = 0;
 			motor[LiftLeftB] = 0;
 			continue;
@@ -50,7 +50,7 @@ task Lift_Stabilizer_Right {
 	const tSensors sensor = EncoderLiftRight;
 	int error, previous_error, speed, derivative, integral = 0;
 	while(IsStabilizerRunning) {
-		if(SensorValue[sensor] > 800 || (SensorValue[sensor] < 100 && !MinOverride)) {
+		if(SensorValue[sensor] > 1000 || (SensorValue[sensor] < 100 && !MinOverride)) {
 			motor[LiftRightA] = 0;
 			motor[LiftRightB] = 0;
 			continue;
