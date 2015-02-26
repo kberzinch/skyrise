@@ -404,7 +404,8 @@ void pre_auton() {
 	//selftest("Pneumatics: ");
 	//SensorValue[Solenoid] = 1;
 	//sleep(1000);
-	SensorValue[Solenoid] = 0;
+	SensorValue[SolenoidA] = 0;
+	SensorValue[SolenoidB] = 0;
 #endif
 	selftest("Drive encoder: ");
 	clearLCDLine(0);
@@ -559,7 +560,7 @@ void Auton_Lift_Targeted(tVertical Direction, int NewPosition = 0, tSpeed Speed 
 }
 
 bool Lift_TrippedMin() {
-	return SensorValue[LiftLimitMinA] == 0 || SensorValue[LiftLimitMinB] == 0;
+	return SensorValue[LiftLimitMinA] == 0;
 }
 
 bool Lift_TrippedMax() {
@@ -568,7 +569,7 @@ bool Lift_TrippedMax() {
 
 #ifdef Pneumatics
 void Claw(ClawPosition Position) {
-	SensorValue[Solenoid] = Position;
+	SensorValue[SolenoidA] = Position;
 	if(LastPosition != Position) {
 		LastPosition = Position;
 		if(Position == OPEN) {
