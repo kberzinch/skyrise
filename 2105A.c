@@ -3,18 +3,18 @@
 #pragma config(Sensor, in1,    PowerExpander,  sensorAnalog)
 #pragma config(Sensor, in2,    Gyroscope,      sensorGyro)
 #pragma config(Sensor, in3,    LiftLimitMinA,  sensorAnalog)
-#pragma config(Sensor, dgtl1,  LiftEncoder,    sensorQuadEncoder)
+#pragma config(Sensor, dgtl1,  DriveEncoderLeft, sensorQuadEncoder)
 #pragma config(Sensor, dgtl3,  DriveEncoder,   sensorQuadEncoder)
-#pragma config(Sensor, dgtl5,  DriveEncoderLeft, sensorQuadEncoder)
+#pragma config(Sensor, dgtl5,  LiftEncoder,    sensorQuadEncoder)
 #pragma config(Sensor, dgtl7,  SolenoidA,      sensorDigitalOut)
 #pragma config(Sensor, dgtl8,  AlignButton,    sensorTouch)
 #pragma config(Motor,  port1,           LiftLeftA,     tmotorVex393_HBridge, openLoop, reversed, encoderPort, dgtl1)
 #pragma config(Motor,  port2,           LiftRightA,    tmotorVex393_MC29, openLoop, encoderPort, dgtl1)
 #pragma config(Motor,  port3,           LiftLeftB,     tmotorVex393_MC29, openLoop, encoderPort, dgtl1)
-#pragma config(Motor,  port4,           DriveFrontRight, tmotorVex393_MC29, openLoop, reversed, driveLeft, encoderPort, dgtl3)
-#pragma config(Motor,  port5,           DriveRearRight, tmotorVex393_MC29, openLoop, reversed, driveRight, encoderPort, dgtl3)
-#pragma config(Motor,  port6,           DriveFrontLeft, tmotorVex393_MC29, openLoop, reversed, driveLeft, encoderPort, dgtl3)
-#pragma config(Motor,  port7,           DriveRearLeft, tmotorVex393_MC29, openLoop, reversed, driveRight, encoderPort, dgtl3)
+#pragma config(Motor,  port4,           DriveFrontRight, tmotorVex393_MC29, openLoop, driveLeft, encoderPort, dgtl3)
+#pragma config(Motor,  port5,           DriveRearRight, tmotorVex393_MC29, openLoop, driveRight, encoderPort, dgtl3)
+#pragma config(Motor,  port6,           DriveFrontLeft, tmotorVex393_MC29, openLoop, driveLeft, encoderPort, dgtl3)
+#pragma config(Motor,  port7,           DriveRearLeft, tmotorVex393_MC29, openLoop, driveRight, encoderPort, dgtl3)
 #pragma config(Motor,  port8,           LiftRightB,    tmotorVex393_MC29, openLoop, reversed, encoderPort, dgtl1)
 #pragma config(Motor,  port9,           LiftLeftC,     tmotorVex393_MC29, openLoop, reversed, encoderPort, dgtl1)
 #pragma config(Motor,  port10,          LiftRightC,    tmotorVex393_HBridge, openLoop, encoderPort, dgtl1)
@@ -34,7 +34,7 @@ long LastSwitched = nSysTime;
 const string FILE = __FILE__;
 #endif
 //#include "core\v3\batteryindicators.h"
-#include "core\v3\core.h"
+#include "core\v3\acore.h"
 #include "usercontrol\2105A-john.h"
 #include "auton\2105A-blue-atloader.h"
 #include "auton\2105A-red-atloader.h"
