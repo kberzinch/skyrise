@@ -7,7 +7,7 @@
 #pragma config(Sensor, dgtl3,  DriveEncoder,   sensorQuadEncoder)
 #pragma config(Sensor, dgtl5,  DriveEncoderLeft, sensorQuadEncoder)
 #pragma config(Sensor, dgtl7,  SolenoidA,      sensorDigitalOut)
-#pragma config(Sensor, dgtl8,  SolenoidB,      sensorDigitalOut)
+#pragma config(Sensor, dgtl8,  AlignButton,    sensorTouch)
 #pragma config(Motor,  port1,           LiftLeftA,     tmotorVex393_HBridge, openLoop, reversed, encoderPort, dgtl1)
 #pragma config(Motor,  port2,           LiftRightA,    tmotorVex393_MC29, openLoop, encoderPort, dgtl1)
 #pragma config(Motor,  port3,           LiftLeftB,     tmotorVex393_MC29, openLoop, encoderPort, dgtl1)

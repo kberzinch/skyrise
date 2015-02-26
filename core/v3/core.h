@@ -405,7 +405,6 @@ void pre_auton() {
 	//SensorValue[Solenoid] = 1;
 	//sleep(1000);
 	SensorValue[SolenoidA] = 0;
-	SensorValue[SolenoidB] = 0;
 #endif
 	selftest("Drive encoder: ");
 	clearLCDLine(0);
