@@ -1,15 +1,13 @@
 // ROBOT:  2015A
-// DRIVER: John
-
-task usercontrol_liftpresets;
+// DRIVER: John\
 int preset_triggered = false;
-int drivemultiplier = 1;
+int drivemultiplier = -1;
 int dval = 0;
 int deadband = 20;
 int LastLeft = 0;
 
 task usercontrol {
-	startTask(usercontrol_liftpresets);
+	//startTask(usercontrol_liftpresets);*/
 	while(true) {
 
 		// CONTROL TOGGLE
@@ -48,14 +46,14 @@ task usercontrol {
 		}
 
 		// PNEUMATICS
-		if(vexRT[Btn6D] == 1) {
+		/*if(vexRT[Btn6D] == 1) {
 			SensorValue[SolenoidB] = 0;
 			} else if(vexRT[Btn6U] == 1) {
 			SensorValue[SolenoidB] = 1;
-		}
-		if(vexRT[Btn8L] == 1) {
+		}*/
+		if(vexRT[Btn6U] == 1) {
 			Claw(OPEN);
-			} else if(vexRT[Btn8R] == 1) {
+			} else if(vexRT[Btn6D] == 1) {
 			Claw(CLOSE);
 		}
 	}

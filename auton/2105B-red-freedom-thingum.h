@@ -19,22 +19,22 @@ void Auton_Red_Freedom() {
 	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 20);
 	Lift_Target = 20; // Lift down
 	MinOverride = true;
-	Auton_Drive_TurnTo_PID(COUNTERCLOCKWISE, 900);
+	Auton_Drive_TurnTo_PID(COUNTERCLOCKWISE, 1025, 127, 5, 1000);
 	while(SensorValue[EncoderLiftLeft] > 30) {}
 	MinOverride = false;
-	Auton_Drive_Targeted(FORWARD, 350);
+	Auton_Drive_Targeted(FORWARD, 380);
 	sleep(250);
 	Collection(700);
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 1700);
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 1400);
 	Auton_Drive_Targeted(FORWARD, 5);
 	Collection(300);
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 2400);
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 2425);
 	Auton_Drive_Targeted(FORWARD, 50);
 	Lift_Target = 350;
 	MinOverride = true;
 	while(((SensorValue[EncoderLiftLeft] + SensorValue[EncoderLiftRight]) / 2) < 340) {}
 	MinOverride = false;
-	Auton_Drive_Targeted(FORWARD, 20);
+	Auton_Drive_Targeted(FORWARD, 50);
 	Collection(1000);
 	writeDebugStreamLine("Cubes scored: %i:%2i.%-3i",LCD_Timer_Mins(0),LCD_Timer_Secs(0,true),LCD_Timer_Msecs(0,true));
 	Auton_Drive_Targeted(BACKWARD, 50);

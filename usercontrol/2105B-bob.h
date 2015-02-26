@@ -1,6 +1,18 @@
 // ROBOT:  2015A
 // DRIVER: Bob
 
+bool taskinprogress = false;
+
+task collectionthingum {
+	taskinprogress = true;
+	writeDebugStreamLine("task started");
+	while(vexRT[Btn7U] == 1) {}
+	Collection(200);
+	Collection(-200);
+	writeDebugStreamLine("done");
+	taskinprogress = false;
+}
+
 int LastLeft = 0;
 int LastRight = 0;
 int LastDown = 0;
@@ -62,12 +74,11 @@ task usercontrol {
 		}
 
 		// LIFT PRESETS
-		/*if(vexRT[Btn8D] == 1) {
-			Lift_Target = 0; // down
-			} else */if(vexRT[Btn8U] == 1) { // HIGH
+		if(vexRT[Btn8U] == 1) { // HIGH
 			Lift_Target = 800;
 			} else if(vexRT[Btn8L] == 1) { // MED
-			Lift_Target = 600;
+			MinOverride = true;
+			Lift_Target = 180;
 			} else if(vexRT[Btn8R] == 1) { // LOW
 			Lift_Target = 300;
 		}
@@ -79,7 +90,7 @@ task usercontrol {
 			} else if(vexRT[Btn5D] == 1) {
 			motor[CollectionA] = -127;
 			motor[CollectionB] = -127;
-			} else {
+			} else if(!taskinprogress) {
 			motor[CollectionA] = 0;
 			motor[CollectionB] = 0;
 		}
@@ -103,6 +114,11 @@ task usercontrol {
 			LastDown = 1;
 			} else if(vexRT[Btn7D] == 0 && LastDown == 1) {
 			LastDown = 0;
+		}
+
+		// COLLECTION FIX
+		if(vexRT[Btn7U] == 1 && !taskinprogress) {
+			startTask(collectionthingum);
 		}
 	}
 }

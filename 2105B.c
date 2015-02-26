@@ -32,12 +32,12 @@ const string FILE = __FILE__;
 void Collection(int Position, int Timeout = 3000) {
 	const int StartTime = nSysTime;
 	if(SensorValue[CollectionEncoder] > Position) {
-		while(SensorValue[CollectionEncoder] > Position && (nSysTime - StartTime) < Timeout) {
+		while(SensorValue[CollectionEncoder] > Position && (nSysTime - StartTime) < Timeout && vexRT[Btn5U] == 0 && vexRT[Btn5D] == 0) {
 			motor[CollectionA] = 127;
 			motor[CollectionB] = 127;
 		}
 		} else if(SensorValue[CollectionEncoder] < Position) {
-		while(SensorValue[CollectionEncoder] < Position && (nSysTime - StartTime) < Timeout) {
+		while(SensorValue[CollectionEncoder] < Position && (nSysTime - StartTime) < Timeout && vexRT[Btn5U] == 0 && vexRT[Btn5D] == 0) {
 			motor[CollectionA] = -127;
 			motor[CollectionB] = -127;
 		}
