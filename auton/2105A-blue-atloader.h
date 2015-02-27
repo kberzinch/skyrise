@@ -26,6 +26,8 @@ void Auton_Blue_AtLoader() {
 		sleep(750 + lift);
 		Auton_Lift_Targeted(DOWN,450);
 		lift += 250;
+#if defined(_DEBUG)
 		AutonDataDump();
+#endif
 	}
 }

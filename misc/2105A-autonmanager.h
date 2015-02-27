@@ -1,7 +1,9 @@
 task autonomous {
 	if(Competition.Auton == 3) {
 	Auton_Progskills();
-	AutonDataDump();
+#if defined(_DEBUG)
+		AutonDataDump();
+#endif
 	stopTask(autonomous);
 	}
 	switch(Competition.IsBlue) {
@@ -12,5 +14,7 @@ task autonomous {
 		Auton_Red_AtLoader();
 		break;
 	}
-	AutonDataDump();
+#if defined(_DEBUG)
+		AutonDataDump();
+#endif
 }
