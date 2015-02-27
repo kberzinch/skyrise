@@ -37,7 +37,7 @@ const string FILE = __FILE__;
 #include "core\v3\acore.h"
 #include "usercontrol\2105A-john.h"
 #include "auton\2105A-blue-atloader.h"
-#include "auton\2105A-red-atloader.h"
+#include "auton\2105A-red-atloader-legacy.h"
 #include "auton\2105A-ps.h"
 #include "misc\2105A-autonmanager.h"
 
