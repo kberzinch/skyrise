@@ -30,7 +30,7 @@ task Lift_Stabilizer_Left {
 			motor[LiftLeftB] = 0;
 			continue;
 		}
-		error = (Lift_Target - SensorValue[sensor]);
+		error = (Lift_Target - (SensorValue[sensor] + 25));
 		if(abs(error) < IntegralLimit) {
 			integral += error;
 			} else {
