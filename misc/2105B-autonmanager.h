@@ -1,7 +1,9 @@
 task autonomous {
 	if(Competition.Auton == 3) {
 		Auton_Progskills();
+#if defined(_DEBUG)
 		AutonDataDump();
+#endif
 		stopTask(autonomous);
 	}
 	switch(Competition.IsBlue) {
@@ -27,5 +29,7 @@ task autonomous {
 		break;
 	}
 	allMotorsOff();
+#if defined(_DEBUG)
 	AutonDataDump();
+#endif
 }
