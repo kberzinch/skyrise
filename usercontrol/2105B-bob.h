@@ -16,21 +16,29 @@ task collectionthingum {
 int LastLeft = 0;
 int LastRight = 0;
 int LastDown = 0;
+int LastUp = 0;
 float Multiplier = 1;
+bool TiltyAllowed = false;
 
 task usercontrol {
 	allMotorsOff();
 	while(true) {
 
 		// SPEED MULTIPLIER
-		if(vexRT[AccelY] > -5) {
+		if(vexRT[Btn8U] == 1/* && TiltyAllowed*/) {
 			Multiplier = 0.5;
 		} else {
 			Multiplier = 1;
 		}
+		/*if(vexRT[Btn8U] == 1 && LastUp == 0) {
+			TiltyAllowed = !TiltyAllowed;
+			LastLeft = 1;
+			} else if(vexRT[Btn8U] == 0 && LastUp == 1) {
+			LastLeft = 0;
+		}*/
 
 		// NOT-BREAK-LIFT PREVENTION
-		if(SensorValue[EncoderLiftRight] > 800) {
+		if(SensorValue[EncoderLiftRight] > 1000) {
 			IsStabilizerRunning = false;
 			motor[LiftLeftA] = 0;
 			motor[LiftLeftB] = 0;
@@ -74,9 +82,9 @@ task usercontrol {
 		}
 
 		// LIFT PRESETS
-		if(vexRT[Btn8U] == 1) { // HIGH
+		/*if(vexRT[Btn8U] == 1) { // HIGH
 			Lift_Target = 800;
-			} else if(vexRT[Btn8L] == 1) { // MED
+			} else */if(vexRT[Btn8L] == 1) { // MED
 			MinOverride = true;
 			Lift_Target = 180;
 			} else if(vexRT[Btn8R] == 1) { // LOW

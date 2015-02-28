@@ -66,6 +66,7 @@ bool Lift_TrippedMin();
 
 tSensors DriveEncoder, LiftEncoder, LiftLimitMinA, LiftLimitMinB;
 tMotor LiftLeftA, LiftLeftB, LiftLeftC, LiftRightA, LiftRightB, LiftRightC;
+string POSTErrorText;
 
 tPID PID_Drive, PID_Drive_TurnTo;
 
@@ -363,8 +364,9 @@ void pre_auton() {
 	}
 	selftest("9V voltage: ");
 	while(((float)BackupBatteryLevel / (float)1000) < 8.7 && nLCDButtons == 0 && bIfiRobotDisabled) {
-		displayLCDCenteredString(0, "POST ERROR");
-		displayLCDCenteredString(1, "9V battery low");
+		displayLCDCenteredString(0, "POST WARNING");
+		sprintf(POSTErrorText, "9v batt: %1.2fv", ((float)BackupBatteryLevel / (float)1000));
+		displayLCDCenteredString(1, POSTErrorText);
 	}
 	selftest("Cortex connected: ");
 	while(((float)nImmediateBatteryLevel / (float)1000) < 2 && nLCDButtons == 0 && bIfiRobotDisabled) {
@@ -373,8 +375,9 @@ void pre_auton() {
 	}
 	selftest("Cortex voltage: ");
 	while(((float)nImmediateBatteryLevel / (float)1000) < 8.5 && nLCDButtons == 0 && bIfiRobotDisabled) {
-		displayLCDCenteredString(0, "POST ERROR");
-		displayLCDCenteredString(1, "Cortex batt low");
+		displayLCDCenteredString(0, "POST WARNING");
+		sprintf(POSTErrorText, "A batt: %1.2fv", ((float)nImmediateBatteryLevel / (float)1000));
+		displayLCDCenteredString(1, POSTErrorText);
 	}
 #ifndef NoPowerExpander
 	selftest("Power expander connected: ");
@@ -384,8 +387,9 @@ void pre_auton() {
 	}
 	selftest("Power expander voltage: ");
 	while(((float)SensorValue[PowerExpander] / (float)280) < 8.5 && nLCDButtons == 0 && bIfiRobotDisabled) {
-		displayLCDCenteredString(0, "POST ERROR");
-		displayLCDCenteredString(1, "Battery B low");
+		displayLCDCenteredString(0, "POST WARNING");
+		sprintf(POSTErrorText, "B batt: %1.2fv", ((float)SensorValue[PowerExpander] / (float)280));
+		displayLCDCenteredString(1, POSTErrorText);
 	}
 #endif
 #ifndef NoLiftLimits
@@ -438,7 +442,8 @@ void pre_auton() {
 	selftest("Gyroscope: ");
 	while(SensorValue[Gyroscope] != 0 && nLCDButtons == 0 && bIfiRobotDisabled) {
 		displayLCDCenteredString(0, "POST ERROR");
-		displayLCDCenteredString(1, "Gyro problem");
+		sprintf(POSTErrorText, "Gyro: %i", SensorValue[Gyroscope]);
+		displayLCDCenteredString(1, POSTErrorText);
 	}
 #endif
 #if defined(_DEBUG)

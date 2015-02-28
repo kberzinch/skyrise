@@ -3,8 +3,6 @@
 #pragma config(Sensor, dgtl3,  EncoderLiftLeft, sensorQuadEncoder)
 #pragma config(Sensor, dgtl5,  CollectionEncoder, sensorQuadEncoder)
 #pragma config(Sensor, dgtl7,  DriveEncoder,   sensorQuadEncoder)
-#pragma config(Sensor, dgtl9,  IndicatorBattA, sensorLEDtoVCC)
-#pragma config(Sensor, dgtl10, DONOTUSE,       sensorNone)
 #pragma config(Sensor, dgtl11, SolenoidB,      sensorDigitalOut)
 #pragma config(Sensor, dgtl12, SolenoidA,      sensorDigitalOut)
 #pragma config(Motor,  port1,           DriveFrontLeft, tmotorVex393_HBridge, openLoop, reversed, driveLeft)
