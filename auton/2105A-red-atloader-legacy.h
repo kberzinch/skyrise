@@ -3,11 +3,12 @@ void Auton_Red_AtLoader() {
 	long Watchdog;
 	Auton_Lift_Targeted(UP, 725);
 	Auton_Drive_Targeted(FORWARD, 50);
-	Auton_Drive_TurnTo(CLOCKWISE, -600);
+	Auton_Drive_TurnTo(CLOCKWISE, -550);
 	Auton_Drive_Targeted(BACKWARD, 80);
 	sleep(500);
 	Auton_Lift_Targeted(DOWN, 450);
 	// START FIRST PYLON
+	Auton_Drive_Targeted(FORWARD, 20, 127, 500);
 	sleep(500);
 	Claw(CLOSE);
 	Auton_Lift_Targeted(UP, 600 + lift);
@@ -21,11 +22,13 @@ void Auton_Red_AtLoader() {
 	Claw(OPEN);
 	Auton_Drive_Targeted(BACKWARD,30);
 	Auton_Lift_Targeted(UP,650);
-	Auton_Drive_TurnTo(CLOCKWISE, -200);
+	Auton_Drive_TurnTo(CLOCKWISE, -550);
+	Auton_Drive_Targeted(BACKWARD, 80);
 	sleep(500 + lift);
 	Auton_Lift_Targeted(DOWN,450);
 	lift += 250;
 	// START SECOND PYLON
+	Auton_Drive_Targeted(FORWARD, 20, 127, 500);
 	sleep(500);
 	Claw(CLOSE);
 	Auton_Lift_Targeted(UP, 600 + lift);

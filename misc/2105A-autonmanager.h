@@ -1,20 +1,25 @@
 task autonomous {
-	if(Competition.Auton == 3) {
+	/*if(Competition.Auton == 3) {
 	Auton_Progskills();
 #if defined(_DEBUG)
-		AutonDataDump();
+	AutonDataDump();
 #endif
 	stopTask(autonomous);
-	}
-	switch(Competition.IsBlue) {
+	}*/
+	switch(Competition.AtLoader) {
 	case true:
-		Auton_Blue_AtLoader();
-		break;
+		switch(Competition.IsBlue) {
+		case true:
+			Auton_Blue_AtLoader();
+			break;
+		case false:
+			Auton_Red_AtLoader();
+			break;
+		}
 	case false:
-		Auton_Red_AtLoader();
-		break;
+		Auton_Freedom();
 	}
 #if defined(_DEBUG)
-		AutonDataDump();
+	AutonDataDump();
 #endif
 }
