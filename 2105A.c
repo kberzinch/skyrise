@@ -39,7 +39,7 @@ const string FILE = __FILE__;
 #include "auton\2105A-blue-atloader.h"
 #include "auton\2105A-freedom.h"
 #include "auton\2105A-red-atloader-legacy.h"
-//#include "auton\2105A-ps.h"
+#include "auton\2105A-ps.h"
 #include "misc\2105A-autonmanager.h"
 
 void ResetDriveEncoders() {
