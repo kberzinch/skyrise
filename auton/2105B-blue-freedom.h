@@ -4,10 +4,10 @@ void Auton_Blue_Freedom() {
 	Collection(200);
 	Auton_Drive_Targeted(FORWARD, 80, 80);
 	writeDebugStreamLine("%i",SensorValue[DriveEncoder]);
-	while(SensorValue[DriveEncoder] < 125) {}
+	while(SensorValue[DriveEncoder] < 121) {}
 	writeDebugStreamLine("%i",SensorValue[DriveEncoder]);
 	Collection(-150);
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 120);
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 70);
 	Lift_Target = 575;
 	MinOverride = true;
 	long StartTime = nSysTime;
@@ -24,14 +24,15 @@ void Auton_Blue_Freedom() {
 	while(SensorValue[EncoderLiftLeft] > 30) {}
 	MinOverride = false;
 	Collection(1000);
-	Auton_Drive_TurnTo(CLOCKWISE, -750); // reduced for battery?
-	Auton_Drive_Targeted(FORWARD, 300);
-	sleep(250);
+	// WORKS TILL HERE
+	Auton_Drive_TurnTo(CLOCKWISE, -670); // Turn for 1st cube
+	Auton_Drive_Targeted(FORWARD, 390);
+	sleep(300);
 	Collection(700);
-	Auton_Drive_TurnTo(CLOCKWISE, -1850); //-1750
-	Auton_Drive_Targeted(FORWARD, 100);
+	Auton_Drive_TurnTo(CLOCKWISE, -1500); // Turn for 2nd
+	Auton_Drive_Targeted(FORWARD, 20);
 	Collection(300);
-	Auton_Drive_TurnTo(CLOCKWISE, -2375);
+	Auton_Drive_TurnTo(CLOCKWISE, -2250); // Turn for pole
 	Auton_Drive_Targeted(FORWARD, 60);
 	Lift_Target = 350;
 	MinOverride = true;

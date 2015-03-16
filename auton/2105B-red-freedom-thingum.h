@@ -4,7 +4,7 @@ void Auton_Red_Freedom() {
 	Collection(200);
 	Auton_Drive_Targeted_PID(FORWARD, -125);
 	Collection(-150);
-	Auton_Drive_TurnTo(CLOCKWISE, -80);
+	Auton_Drive_TurnTo(CLOCKWISE, -250); // Needs to be lower
 	Lift_Target = 575;
 	MinOverride = true;
 	long StartTime = nSysTime;
@@ -25,10 +25,10 @@ void Auton_Red_Freedom() {
 	Auton_Drive_Targeted(FORWARD, 380);
 	sleep(250);
 	Collection(700);
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 1400);
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 1250); // Needs to be higher
 	Auton_Drive_Targeted(FORWARD, 5);
 	Collection(300);
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 2425);
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 2375); // Lower
 	Auton_Drive_Targeted(FORWARD, 50);
 	Lift_Target = 350;
 	MinOverride = true;
