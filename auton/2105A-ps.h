@@ -1,5 +1,5 @@
 void Auton_Progskills() {
-	/*int lift = 0;
+	int lift = 0;
 	long Watchdog;
 	Auton_Lift_Targeted(UP, 450);
 	for(int pylon = 1; pylon < 7; pylon++) {
@@ -13,6 +13,9 @@ void Auton_Progskills() {
 		while(SensorValue[AlignButton] == 0 && nSysTime - Watchdog < 1000) {}
 		Auton_Drive();
 		sleep(lift / 2);
+		if(pylon == 4) {
+			sleep(1000);
+		}
 		if(pylon > 3)
 			Auton_Lift_Targeted(DOWN,0 + lift, 63);
 		else
@@ -20,7 +23,7 @@ void Auton_Progskills() {
 		Claw(OPEN);
 		Auton_Drive_Targeted(BACKWARD,100);
 		if(pylon == 6)
-			return;
+			break;
 		if(pylon == 3) {
 			Auton_Lift_Targeted(DOWN,450);
 			} else {
@@ -34,7 +37,9 @@ void Auton_Progskills() {
 		while(!Lift_TrippedMin()) {}
 		while(Lift_TrippedMin()) {}
 		sleep(200);
-	}*/
+	}
+	Auton_Lift_Targeted(DOWN,0);
+	Auton_WaitForKeyPress();
 	Auton_Drive_Targeted(FORWARD, 200);
 	Claw(CLOSE);
 	Auton_Drive(COUNTERCLOCKWISE, 127, 500);
