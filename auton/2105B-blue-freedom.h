@@ -25,14 +25,14 @@ void Auton_Blue_Freedom() {
 	MinOverride = false;
 	Collection(1000);
 	// WORKS TILL HERE
-	Auton_Drive_TurnTo(CLOCKWISE, -670); // Turn for 1st cube
+	Auton_Drive_TurnTo(CLOCKWISE, -700); // Turn for 1st cube
 	Auton_Drive_Targeted(FORWARD, 390);
 	sleep(300);
 	Collection(700);
 	Auton_Drive_TurnTo(CLOCKWISE, -1500); // Turn for 2nd
-	Auton_Drive_Targeted(FORWARD, 20);
+	Auton_Drive_Targeted(FORWARD, 60);
 	Collection(300);
-	Auton_Drive_TurnTo(CLOCKWISE, -2250); // Turn for pole
+	Auton_Drive_TurnTo(CLOCKWISE, -2400); // Turn for pole
 	Auton_Drive_Targeted(FORWARD, 60);
 	Lift_Target = 350;
 	MinOverride = true;
