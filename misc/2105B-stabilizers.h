@@ -16,8 +16,8 @@ int Normalize(int speed) {
 	return speed;
 }
 
-void Set_Lift_Target(int Adjustment) {
-	Lift_Target = ((SensorValue[EncoderLiftLeft] + SensorValue[EncoderLiftRight]) / 2) + Adjustment;
+void Set_Lift_Target(int Adjustment = 0) {
+	Lift_Target = ((SensorValue[EncoderLiftLeft] + (SensorValue[EncoderLiftRight])) / 2) + Adjustment;
 }
 
 task Lift_Stabilizer_Left {
