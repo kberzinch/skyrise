@@ -16,21 +16,32 @@ void Auton_Progskills() {
 		if(pylon == 4) {
 			sleep(1000);
 		}
-		if(pylon > 3)
-			Auton_Lift_Targeted(DOWN,0 + lift, 63);
-		else
+		if(pylon > 3) {
+			//Auton_Drive(COUNTERCLOCKWISE, 63, 100);
+			sleep(100);
+			if(pylon == 4) {
+				Auton_Lift_Targeted(DOWN,0 + lift, 50);
+				} else {
+				Auton_Lift_Targeted(DOWN,0 + lift, 63);
+			}
+			} else {
 			Auton_Lift_Targeted(DOWN,0 + lift);
+		}
 		Claw(OPEN);
 		Auton_Drive_Targeted(BACKWARD,100);
 		if(pylon == 6)
 			break;
 		if(pylon == 3) {
-			Auton_Lift_Targeted(DOWN,450);
+			Auton_Lift_Targeted(DOWN,410);
 			} else {
-			if(SensorValue[LiftEncoder] < -450) {
-				Auton_Lift_Targeted(DOWN,450);
+			if(SensorValue[LiftEncoder] < -410) {
+				if(pylon == 5) {
+					Auton_Lift_Targeted(DOWN,430);
+					} else {
+					Auton_Lift_Targeted(DOWN,410);
+				}
 				} else {
-				Auton_Lift_Targeted(UP,450);
+				Auton_Lift_Targeted(UP,410);
 			}
 		}
 		lift += 250;
