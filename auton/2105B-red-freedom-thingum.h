@@ -4,7 +4,7 @@ void Auton_Red_Freedom() {
 	Collection(200);
 	Auton_Drive_Targeted_PID(FORWARD, -125);
 	Collection(-150);
-	Auton_Drive_TurnTo(CLOCKWISE, -250); // Needs to be lower
+	Auton_Drive_TurnTo(CLOCKWISE, -150); // Needs to be lower
 	Lift_Target = 575;
 	MinOverride = true;
 	long StartTime = nSysTime;
@@ -14,7 +14,7 @@ void Auton_Red_Freedom() {
 	MinOverride = false;
 	Auton_Drive_Targeted(FORWARD, 90);
 	Collection(800);
-	Auton_Drive_Targeted(BACKWARD, 130); //170
+	Auton_Drive_Targeted(BACKWARD, 170); //170
 	Collection(1000);
 	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 20);
 	Lift_Target = 20; // Lift down
@@ -25,7 +25,7 @@ void Auton_Red_Freedom() {
 	Auton_Drive_Targeted(FORWARD, 380);
 	sleep(250);
 	Collection(700);
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 1250); // Needs to be higher
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 1400); // Needs to be higher
 	Auton_Drive_Targeted(FORWARD, 5);
 	Collection(300);
 	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 2375); // Lower
@@ -34,7 +34,7 @@ void Auton_Red_Freedom() {
 	MinOverride = true;
 	while(((SensorValue[EncoderLiftLeft] + SensorValue[EncoderLiftRight]) / 2) < 340) {}
 	MinOverride = false;
-	Auton_Drive_Targeted(FORWARD, 50);
+	Auton_Drive_Targeted(FORWARD, 70);
 	Collection(1000);
 	writeDebugStreamLine("Cubes scored: %i:%2i.%-3i",LCD_Timer_Mins(0),LCD_Timer_Secs(0,true),LCD_Timer_Msecs(0,true));
 	Auton_Drive_Targeted(BACKWARD, 50);

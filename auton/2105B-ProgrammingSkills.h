@@ -1,4 +1,10 @@
 void Auton_Progskills() {
+Auton_Red_Freedom();
+Lift_Target = 0;
+Auton_WaitForKeyPress(500);
+Auton_Drive(BACKWARD);
+while (true) {}
+/*
 	startTask(Lift_Stabilizer_Left);
 	startTask(Lift_Stabilizer_Right);
 	Collection(200);
