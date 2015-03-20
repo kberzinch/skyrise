@@ -54,9 +54,9 @@ void Collection(int Position, int Timeout = 3000) {
 #include "auton\2105B-blue-atloader.h"
 #include "auton\2105B-red-atloader.h"
 #include "auton\2105B-blue-freedom.h"
-#include "auton\2105B-ProgrammingSkills.h"
 //#include "auton\2105B-red-freedom.h"
 #include "auton\2105B-red-freedom-thingum.h"
+#include "auton\2105B-ProgrammingSkills.h"
 #include "misc\2105B-autonmanager.h"
 
 void ResetDriveEncoders() {

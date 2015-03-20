@@ -1,7 +1,7 @@
 int Lift_Target = 0;
 bool IsStabilizerRunning = false;
 const float Kp = 1.5;
-const float Ki = 0;//.0001;
+const float Ki = 0.0001;
 const int IntegralLimit = 100;
 const float Kd = 0.2;
 bool MinOverride = false;
