@@ -14,7 +14,6 @@
 
 #include "misc\2105A-etc.h"
 
-
 task main() {
 	SensorValue[EncoderLeft] = 0;
 	SensorValue[EncoderRight] = 0;
@@ -25,37 +24,29 @@ task main() {
 		motor[DriveRearRight] = (vexRT[Ch2] - vexRT[Ch4]);
 		motor[DriveMiddle] = vexRT[Ch1];
 		if(vexRT[Btn6U] == 1){
-			//IsStabilizerRunning = false;
-			//Set_Lift_Target();
+			IsStabilizerRunning = false;
+			Set_Lift_Target();
 			motor[LiftTopLeft] = 127;
 			motor[LiftBottomLeft] = 127;
 			motor[LiftTopRight] = 127;
 			motor[LiftBottomRight] = 127;
 			} else if(vexRT[Btn6D] == 1){
-			//IsStabilizerRunning = false;
-			//Set_Lift_Target();
+			IsStabilizerRunning = false;
+			Set_Lift_Target();
 			motor[LiftTopLeft] = -127;
 			motor[LiftBottomLeft] = -127;
 			motor[LiftTopRight] = -127;
 			motor[LiftBottomRight] = -127;
 			} else {
-			/*
 			if(!IsStabilizerRunning) {
 				startTask(Lift_Stabilizer_Left);
 				startTask(Lift_Stabilizer_Right);
 			}
-			//*/
-			motor[LiftTopLeft] = 0;
-			motor[LiftBottomLeft] = 0;
-			motor[LiftTopRight] = 0;
-			motor[LiftBottomRight] = 0;
-
 		}
 		if(vexRT[Btn5D] == 1) {
 			SensorValue[CollectionCube] = 0;
 			} else if(vexRT[Btn5U] == 1) {
 			SensorValue[CollectionCube] = 1;
 		}
-
 	}
 }
