@@ -43,7 +43,7 @@ void Auton_Red_AtLoader() {
 	Auton_Drive_Targeted(BACKWARD,30);
 	Auton_Lift_Targeted(UP,650);
 	Auton_Drive_TurnTo(CLOCKWISE, -250);
-	break;
+	return;
 	sleep(500 + lift);
 	Auton_Lift_Targeted(DOWN,450);
 	lift += 200;
