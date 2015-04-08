@@ -65,8 +65,8 @@ void Set_Lift_Target(int Adjustment = 0) {
 
 task Lift_Stabilizer_Left {
 	const tSensors sensor = sensorLeft;
-	const tMotor motor1 = LiftTopLeft;
-	const tMotor motor2 = LiftBottomLeft;
+	const tMotor motor1 = LiftLeftTop;
+	const tMotor motor2 = LiftLeftBottom;
 	const int offset = leftAdjust;
 	const int mult = leftMultiplier;
 	PID_SEQUENCE
@@ -74,8 +74,8 @@ task Lift_Stabilizer_Left {
 
 task Lift_Stabilizer_Right {
 	const tSensors sensor = sensorRight;
-	const tMotor motor1 = LiftTopRight;
-	const tMotor motor2 = LiftBottomRight;
+	const tMotor motor1 = LiftRightTop;
+	const tMotor motor2 = LiftRightBottom;
 	const int offset = rightAdjust;
 	const int mult = rightMultiplier;
 	PID_SEQUENCE
