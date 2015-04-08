@@ -14,7 +14,7 @@ void Auton_Blue_AtLoader() {
 		Claw(CLOSE);
 		writeDebugStreamLine("!!!%i",SensorValue[SolenoidA]);
 		Auton_Lift_Targeted(UP, 700 + lift);
-		Auton_Drive_TurnTo(CLOCKWISE, -650, 63);
+		Auton_Drive_TurnTo(CLOCKWISE, -700, 63);
 		Auton_Drive(FORWARD);
 		Watchdog = nSysTime;
 		while(SensorValue[AlignButton] == 0 && nSysTime - Watchdog < 1000) {}
