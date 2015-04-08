@@ -1,6 +1,6 @@
 int Lift_Target = 0;
 bool IsStabilizerRunning = false;
-const float Kp = 1.2;
+const float Kp = 1;
 const float Kd = 1.5;
 const float Ki = 0;//.0001;
 const tSensors sensorLeft = I2C_4;
