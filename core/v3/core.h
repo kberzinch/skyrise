@@ -334,6 +334,11 @@ void pre_auton() {
 #endif
 	LCD.Display.Backup = true;
 #endif
+#ifdef BatteryIndicators
+	writeDebugStreamLine("Testing indicators...");
+	TestIndicators();
+	startTask(BatteryIndicate);
+#endif
 	if(!bIfiRobotDisabled) {
 #if defined(_DEBUG)
 		writeDebugStreamLine("Not disabled: exiting");
@@ -348,11 +353,6 @@ void pre_auton() {
 	}
 #if defined(_DEBUG)
 	writeDebugStreamLine("POST started");
-#endif
-#ifdef BatteryIndicators
-	writeDebugStreamLine("Testing indicators...");
-	TestIndicators();
-	startTask(BatteryIndicate);
 #endif
 #if defined(_DEBUG)
 	writeDebugStream("9v connection: ");
