@@ -60,7 +60,6 @@ typedef struct {
 // Must be defined per robot
 void init();
 void ResetDriveEncoders();
-void ResetLiftEncoders();
 bool Lift_TrippedMax();
 bool Lift_TrippedMin();
 
@@ -89,7 +88,7 @@ int Auton_GetMultiplier(tDirection Direction, tMotor WhichMotor) {
 		}
 	case BACKWARD:
 		return -Auton_GetMultiplier(FORWARD, WhichMotor);
-	case LEFT:
+	/*case LEFT:
 #if defined(_DEBUG)
 #ifdef MultiDriveEncoders
 		writeDebugStreamLine("***ATTENTION: Crawling does not work with multiple encoders b/c I didn't feel like making exceptions.");
@@ -111,7 +110,7 @@ int Auton_GetMultiplier(tDirection Direction, tMotor WhichMotor) {
 		writeDebugStreamLine("***ATTENTION: Crawling does not work with multiple encoders b/c I didn't feel like making exceptions.");
 #endif
 #endif
-		return -Auton_GetMultiplier(LEFT, WhichMotor);
+		return -Auton_GetMultiplier(LEFT, WhichMotor);*/
 	case CLOCKWISE:
 		return -1;
 	case COUNTERCLOCKWISE:
@@ -120,11 +119,19 @@ int Auton_GetMultiplier(tDirection Direction, tMotor WhichMotor) {
 	return 0;
 }
 
+// REVIEW HISTORY FOR THIS FUNCTION
 void Auton_Drive(tDirection Direction = STOP, tSpeed Speed = 127, int Time = 0) {
-	motor[DriveFrontLeft] = Speed * Auton_GetMultiplier(Direction,DriveFrontLeft);
-	motor[DriveFrontRight] = Speed * Auton_GetMultiplier(Direction,DriveFrontRight);
-	motor[DriveRearLeft] = Speed * Auton_GetMultiplier(Direction,DriveRearLeft);
-	motor[DriveRearRight] = Speed * Auton_GetMultiplier(Direction,DriveRearRight);
+	if(Direction == LEFT) {
+		motor[DriveCenter] = -Speed;
+		} else if(Direction == RIGHT) {
+		motor[DriveCenter] = Speed;
+		} else {
+		motor[DriveFrontLeft] = Speed * Auton_GetMultiplier(Direction,DriveFrontLeft);
+		motor[DriveFrontRight] = Speed * Auton_GetMultiplier(Direction,DriveFrontRight);
+		motor[DriveRearLeft] = Speed * Auton_GetMultiplier(Direction,DriveRearLeft);
+		motor[DriveRearRight] = Speed * Auton_GetMultiplier(Direction,DriveRearRight);
+		motor[DriveCenter] = 0;
+	}
 	if(Time > 0) {
 		sleep(Time);
 		Auton_Drive();
@@ -190,28 +197,20 @@ void Auton_Drive_Targeted(tDirection Direction, int Distance = 0, tSpeed Speed =
 	ResetDriveEncoders();
 	Auton_Drive(Direction, Speed, 0);
 #if defined(_DEBUG)
-	writeDebugStreamLine("Multiplier is %i", -Auton_GetMultiplier(Direction,DriveRearLeft));
+	writeDebugStreamLine("Multiplier is %i", Auton_GetMultiplier(Direction,DriveRearRight));
 #endif
-	switch(-Auton_GetMultiplier(Direction,DriveRearLeft)) {
+	switch(-Auton_GetMultiplier(Direction,DriveRearRight)) {
 	case -1:
 #if defined(_DEBUG)
-		writeDebugStreamLine("Current encoder reading is %i, wanting less than %i", SensorValue[DriveEncoder], Distance);
+		writeDebugStreamLine("Current encoder reading is %i, wanting less than %i", SensorValue[DriveEncoder], -Auton_GetMultiplier(Direction,DriveRearRight) * Distance);
 #endif
-#ifdef MultiDriveEncoders
-		while(((SensorValue[DriveEncoder] + SensorValue[DriveEncoderLeft]) / 2) > -Auton_GetMultiplier(Direction,DriveRearRight) * Distance && (nSysTime - StartTime) < Timeout) {}
-#else
-		while(SensorValue[DriveEncoder] > -Auton_GetMultiplier(Direction,DriveRearLeft) * Distance && (nSysTime - StartTime) < Timeout) {}
-#endif
+		while(SensorValue[DriveEncoder] > -Auton_GetMultiplier(Direction,DriveRearRight) * Distance && (nSysTime - StartTime) < Timeout) {}
 		break;
 	case 1:
 #if defined(_DEBUG)
-		writeDebugStreamLine("Current encoder reading is %i, wanting greater than %i", SensorValue[DriveEncoder], Distance);
+		writeDebugStreamLine("Current encoder reading is %i, wanting greater than %i", SensorValue[DriveEncoder], -Auton_GetMultiplier(Direction,DriveRearRight) * Distance);
 #endif
-#ifdef MultiDriveEncoders
-		while(((SensorValue[DriveEncoder] + SensorValue[DriveEncoderLeft]) / 2) < -Auton_GetMultiplier(Direction,DriveRearRight) * Distance && (nSysTime - StartTime) < Timeout) {}
-#else
-		while(SensorValue[DriveEncoder] < -Auton_GetMultiplier(Direction,DriveRearLeft) * Distance && (nSysTime - StartTime) < Timeout) {}
-#endif
+		while(SensorValue[DriveEncoder] < -Auton_GetMultiplier(Direction,DriveRearRight) * Distance && (nSysTime - StartTime) < Timeout) {}
 		break;
 	}
 	Auton_Drive();
