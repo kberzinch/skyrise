@@ -4,6 +4,7 @@ task autonomous {
 #if defined(_DEBUG)
 	AutonDataDump();
 #endif
+	allMotorsOff();
 	stopTask(autonomous);
 	}*/
 	switch(Competition.AtLoader) {
@@ -20,6 +21,7 @@ task autonomous {
 		break;
 		//Auton_Freedom();
 	}
+	allMotorsOff();
 #if defined(_DEBUG)
 	AutonDataDump();
 #endif

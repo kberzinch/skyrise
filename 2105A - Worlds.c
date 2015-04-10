@@ -16,10 +16,10 @@
 #pragma config(Motor,  port1,           DriveCenter,   tmotorVex393_HBridge, openLoop, reversed, encoderPort, I2C_1)
 #pragma config(Motor,  port2,           LiftLeftTop,   tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port3,           LiftRightTop,  tmotorVex393_MC29, openLoop, reversed)
-#pragma config(Motor,  port4,           DriveFrontLeft, tmotorVex393_MC29, openLoop, reversed, driveLeft)
-#pragma config(Motor,  port5,           DriveFrontRight, tmotorVex393_MC29, openLoop, reversed, driveRight, encoderPort, I2C_2)
-#pragma config(Motor,  port6,           DriveRearLeft, tmotorVex393_MC29, openLoop, reversed, driveLeft)
-#pragma config(Motor,  port7,           DriveRearRight, tmotorVex393_MC29, openLoop, reversed, driveRight)
+#pragma config(Motor,  port4,           DriveFrontLeft, tmotorVex393HighSpeed_MC29, openLoop, reversed, driveLeft)
+#pragma config(Motor,  port5,           DriveFrontRight, tmotorVex393HighSpeed_MC29, openLoop, reversed, driveRight, encoderPort, I2C_2)
+#pragma config(Motor,  port6,           DriveRearLeft, tmotorVex393HighSpeed_MC29, openLoop, reversed, driveLeft)
+#pragma config(Motor,  port7,           DriveRearRight, tmotorVex393HighSpeed_MC29, openLoop, reversed, driveRight)
 #pragma config(Motor,  port8,           LiftLeftBottom, tmotorVex393_MC29, openLoop, encoderPort, I2C_4)
 #pragma config(Motor,  port9,           LiftRightBottom, tmotorVex393_MC29, openLoop, encoderPort, I2C_3)
 #pragma config(Motor,  port10,          PylonMotor,    tmotorVex393_HBridge, openLoop)
@@ -34,18 +34,25 @@ const tMotor LiftLeftA = LiftLeftTop;
 const tMotor LiftLeftB = LiftLeftBottom;
 const tMotor LiftRightA = LiftRightTop;
 const tMotor LiftRightB = LiftRightBottom;
+const tSensors LiftEncoder = I2C_4;
+const tSensors DriveEncoder = I2C_2;
 #include "core\v3\batteryindicators.h"
 #include "core\v3\core.h"
-#include "auton\2105A-red-atloader.h"
 #include "misc\2105A-stabilizers.h"
+#include "auton\2105A-red-atloader.h"
 #include "misc\2105A-autonmanager.h"
 #include "usercontrol\2105A-john.h"
 
 void init() {
-}
-void ResetDriveEncoders() {
 	nMotorEncoder[LiftLeftBottom] = 0;
 	nMotorEncoder[LiftRightBottom] = 0;
+	SensorValue[SolenoidPylons] = 0;
+	SensorValue[SolenoidCubes] = 0;
+}
+
+void ResetDriveEncoders() {
+	nMotorEncoder[DriveCenter] = 0;
+	nMotorEncoder[DriveFrontRight] = 0;
 }
 
 task PylonLock {
