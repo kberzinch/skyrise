@@ -10,8 +10,8 @@ const int rightAdjust = 0; // -430;
 const int leftMultiplier = -1;
 const int rightMultiplier = 1;
 const int IntegralLimit = 200;
-const int Max = 1400;
-const int Min = -20;
+const int Max = 1600;
+const int Min = -200;
 bool MinOverride = false;
 
 int Normalize(int speed) {

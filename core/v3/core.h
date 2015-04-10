@@ -233,9 +233,9 @@ void Auton_Drive_Targeted_PID(tDirection Direction, int Distance, tSpeed MaxSpee
 #if defined(_DEBUG)
 	writeDebugStreamLine("Multiplier is %i", -Auton_GetMultiplier(Direction,DriveRearRight));
 #endif
-		//writeDebugStreamLine("START-DISTANCE=%i",Distance);
+	//writeDebugStreamLine("START-DISTANCE=%i",Distance);
 	while((nSysTime - StartTime) < Timeout) {
-	//writeDebugStreamLine("Sensor=%i",SensorValue[PID_Drive.Sensor]);
+		//writeDebugStreamLine("Sensor=%i",SensorValue[PID_Drive.Sensor]);
 		Error = SensorValue[PID_Drive.Sensor] - (-Auton_GetMultiplier(Direction,DriveRearRight)) * Distance;
 		//writeDebugStreamLine("Target=%i",(-Auton_GetMultiplier(Direction,DriveRearRight)) * Distance);
 		//writeDebugStreamLine("Error=%i",Error);
@@ -564,11 +564,11 @@ void Auton_Lift_Targeted(tVertical Direction, int NewPosition = 0, tSpeed Speed 
 }
 
 bool Lift_TrippedMin() {
-	return SensorValue[LiftLimitMinA] == 0;
+	return SensorValue[LiftLimitMinA] == 1 || SensorValue[LiftLimitMinB] == 1;
 }
 
 bool Lift_TrippedMax() {
-	return SensorValue[LiftEncoder] < -2000;
+	return ((SensorValue[I2C_3] + SensorValue[I2C_4]) / 2) > 1400;
 }
 
 #ifdef Pneumatics

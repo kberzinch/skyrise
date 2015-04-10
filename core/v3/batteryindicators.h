@@ -1,7 +1,5 @@
 #define BatteryIndicators
 
-tSensors IndicatorBattB;
-
 task BatteryIndicate {
 	while(true) {
 		if(((float)BackupBatteryLevel / (float)1000) < 8.7) {
