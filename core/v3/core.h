@@ -333,6 +333,7 @@ void pre_auton() {
 #endif
 	LCD.Display.Backup = true;
 #endif
+	SensorValue[SolenoidCubes] = 1;
 #ifdef BatteryIndicators
 	writeDebugStreamLine("Testing indicators...");
 	TestIndicators();
