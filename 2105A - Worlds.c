@@ -40,8 +40,8 @@ const tSensors DriveEncoder = I2C_2;
 #include "core\v3\batteryindicators.h"
 #include "core\v3\core.h"
 #include "misc\2105A-stabilizers.h"
-//#include "auton\2105A-red-atloader.h"
-#include "auton\2105A-red-freedom.h"
+#include "auton\2105A-red-atloader.h"
+//#include "auton\2105A-red-freedom.h"
 #include "misc\2105A-autonmanager.h"
 #include "usercontrol\2105A-john.h"
 

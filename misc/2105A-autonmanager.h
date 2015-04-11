@@ -14,7 +14,7 @@ task autonomous {
 			//Auton_Blue_AtLoader();
 			break;
 		case false:
-			//Auton_Red_AtLoader();
+			Auton_Red_AtLoader();
 			break;
 		}
 		break;
@@ -24,7 +24,7 @@ task autonomous {
 			//Auton_Blue_Freedom();
 			break;
 		case false:
-			Auton_Red_Freedom();
+			//Auton_Red_Freedom();
 			break;
 		}
 		break;

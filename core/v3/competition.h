@@ -7,6 +7,7 @@ task autonomous();
 task usercontrol();
 
 bool bStopTasksBetweenModes = true;
+bool bVEXNETActive_last = bVEXNETActive;
 
 #if defined(_DEBUG)
 const string RobotDisabled = "Robot disabled";
@@ -21,6 +22,10 @@ task main() {
 			writeDebugStreamLine("Preauton end");
 #endif
 	while (true) {
+		if(bVEXNETActive_last != bVEXNETActive) {
+			writeDebugStreamLine("Change in VEXnet state");
+			bVEXNETActive_last = bVEXNETActive;
+		}
 #if defined(_DEBUG)
 		if (bIfiRobotDisabled) {
 			writeDebugStreamLine(RobotDisabled);
