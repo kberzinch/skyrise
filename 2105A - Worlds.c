@@ -1,6 +1,6 @@
 #pragma config(I2C_Usage, I2C1, i2cSensors)
 #pragma config(Sensor, in7,    PylonPot,       sensorPotentiometer)
-#pragma config(Sensor, in8,    Gyro,           sensorGyro)
+#pragma config(Sensor, in8,    Gyroscope,      sensorGyro)
 #pragma config(Sensor, dgtl1,  SolenoidCubes,  sensorDigitalOut)
 #pragma config(Sensor, dgtl2,  SolenoidPylons, sensorDigitalOut)
 #pragma config(Sensor, dgtl3,  LiftLimitMinA,  sensorTouch)
@@ -30,6 +30,7 @@ int Pylon_Target = 1800;
 task PylonLock;
 
 #define NoPowerExpander
+#define HasGyro
 const tMotor LiftLeftA = LiftLeftTop;
 const tMotor LiftLeftB = LiftLeftBottom;
 const tMotor LiftRightA = LiftRightTop;
@@ -39,20 +40,28 @@ const tSensors DriveEncoder = I2C_2;
 #include "core\v3\batteryindicators.h"
 #include "core\v3\core.h"
 #include "misc\2105A-stabilizers.h"
-#include "auton\2105A-red-atloader.h"
+//#include "auton\2105A-red-atloader.h"
+#include "auton\2105A-red-freedom.h"
 #include "misc\2105A-autonmanager.h"
 #include "usercontrol\2105A-john.h"
 
 void init() {
+	SensorValue[I2C_1] = 0;
+	SensorValue[I2C_2] = 0;
+	SensorValue[I2C_3] = 0;
+	SensorValue[I2C_4] = 0;
 	nMotorEncoder[LiftLeftBottom] = 0;
 	nMotorEncoder[LiftRightBottom] = 0;
 	SensorValue[SolenoidPylons] = 0;
-	SensorValue[SolenoidCubes] = 0;
+	SensorValue[SolenoidCubes] = 1;
+	SensorValue[Gyroscope] = 0;
 }
 
 void ResetDriveEncoders() {
 	nMotorEncoder[DriveCenter] = 0;
 	nMotorEncoder[DriveFrontRight] = 0;
+	SensorValue[I2C_1] = 0;
+	SensorValue[I2C_2] = 0;
 }
 
 task PylonLock {

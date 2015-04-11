@@ -9,6 +9,8 @@ const int leftAdjust = 0; // -350;
 const int rightAdjust = 0; // -430;
 const int leftMultiplier = -1;
 const int rightMultiplier = 1;
+float leftPower = 1; // PERCENTAGES
+float rightPower = 1;
 const int IntegralLimit = 200;
 const int Max = 1600;
 const int Min = -200;
@@ -55,8 +57,8 @@ while(IsStabilizerRunning) {\
 	last_nSysTime = nSysTime;\
 	previous_error = error;\
 	speed = Kp * error + Kd * derivative + Ki * integral;\
-	motor[motor1] = Normalize(speed);\
-	motor[motor2] = Normalize(speed);\
+	motor[motor1] = Normalize(speed * *power);\
+	motor[motor2] = Normalize(speed * *power);\
 }
 
 void Set_Lift_Target(int Adjustment = 0) {
@@ -69,6 +71,7 @@ task Lift_Stabilizer_Left {
 	const tMotor motor2 = LiftLeftBottom;
 	const int offset = leftAdjust;
 	const int mult = leftMultiplier;
+	const float *power = &leftPower;
 	PID_SEQUENCE
 }
 
@@ -78,5 +81,6 @@ task Lift_Stabilizer_Right {
 	const tMotor motor2 = LiftRightBottom;
 	const int offset = rightAdjust;
 	const int mult = rightMultiplier;
+	const float *power = &rightPower;
 	PID_SEQUENCE
 }

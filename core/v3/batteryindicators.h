@@ -2,14 +2,14 @@
 
 task BatteryIndicate {
 	while(true) {
-		if(((float)BackupBatteryLevel / (float)1000) < 8.7) {
+		if(((float)BackupBatteryLevel / (float)1000) < 7) {
 			SensorValue[BackupBattLEDRed] = 1;
 			SensorValue[BackupBattLEDGreen] = 0;
 			} else {
 			SensorValue[BackupBattLEDRed] = 0;
 			SensorValue[BackupBattLEDGreen] = 1;
 		}
-		if(((float)nImmediateBatteryLevel / (float)1000) < 8.5) {
+		if(((float)nImmediateBatteryLevel / (float)1000) < 8) {
 			SensorValue[MainBattLEDRed] = 1;
 			SensorValue[MainBattLEDGreen] = 0;
 			} else {
