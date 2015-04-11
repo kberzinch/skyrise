@@ -122,15 +122,18 @@ int Auton_GetMultiplier(tDirection Direction, tMotor WhichMotor) {
 // REVIEW HISTORY FOR THIS FUNCTION
 void Auton_Drive(tDirection Direction = STOP, tSpeed Speed = 127, int Time = 0) {
 	if(Direction == LEFT) {
-		motor[DriveCenter] = -Speed;
+		motor[DriveCenterA] = -Speed;
+		motor[DriveCenterB] = -Speed;
 		} else if(Direction == RIGHT) {
-		motor[DriveCenter] = Speed;
+		motor[DriveCenterA] = Speed;
+		motor[DriveCenterB] = Speed;
 		} else {
 		motor[DriveFrontLeft] = Speed * Auton_GetMultiplier(Direction,DriveFrontLeft);
 		motor[DriveFrontRight] = Speed * Auton_GetMultiplier(Direction,DriveFrontRight);
 		motor[DriveRearLeft] = Speed * Auton_GetMultiplier(Direction,DriveRearLeft);
 		motor[DriveRearRight] = Speed * Auton_GetMultiplier(Direction,DriveRearRight);
-		motor[DriveCenter] = 0;
+		motor[DriveCenterA] = 0;
+		motor[DriveCenterB] = 0;
 	}
 	if(Time > 0) {
 		sleep(Time);
@@ -506,7 +509,7 @@ void Auton_Lift(tVertical Direction = VSTOP, tSpeed Speed = 127, int Time = 0) {
 }
 
 // if sensorvalue == newposition nothing will happen
-void Auton_Lift_Targeted(tVertical Direction, int NewPosition = 0, tSpeed Speed = 127, int Timeout = 4000) {
+ void Auton_Lift_Targeted(tVertical Direction, int NewPosition = 0, tSpeed Speed = 127, int Timeout = 4000) {
 	const int StartTime = nSysTime;
 #if defined(_DEBUG)
 	writeDebugStreamLine("Request to move lift to position %i at speed %i",NewPosition,Speed);
@@ -524,7 +527,13 @@ void Auton_Lift_Targeted(tVertical Direction, int NewPosition = 0, tSpeed Speed 
 #endif
 		Auton_Lift();
 #if defined(_DEBUG)
-		writeDebugStreamLine("Done");
+		writeDebugStreamLine("Done in %i ms", nSysTime - StartTime);
+#endif
+#if defined(_DEBUG)
+		writeDebugStreamLine("Done in %i ms", nSysTime - StartTime);
+		if(!((nSysTime - StartTime) < Timeout)) {
+			writeDebugStreamLine("**WARNING: Lift to position %i timed out after %i ms", NewPosition, Timeout);
+		}
 #endif
 		return;
 	}
@@ -541,7 +550,7 @@ void Auton_Lift_Targeted(tVertical Direction, int NewPosition = 0, tSpeed Speed 
 #endif
 		Auton_Lift();
 #if defined(_DEBUG)
-		writeDebugStreamLine("Done");
+		writeDebugStreamLine("Done in %i ms", nSysTime - StartTime);
 #endif
 		} else if(Direction == DOWN) {
 #if defined(_DEBUG)
@@ -555,7 +564,7 @@ void Auton_Lift_Targeted(tVertical Direction, int NewPosition = 0, tSpeed Speed 
 #endif
 		Auton_Lift();
 #if defined(_DEBUG)
-		writeDebugStreamLine("Done");
+		writeDebugStreamLine("Done in %i ms", nSysTime - StartTime);
 		if(!((nSysTime - StartTime) < Timeout)) {
 			writeDebugStreamLine("**WARNING: Lift to position %i timed out after %i ms", NewPosition, Timeout);
 		}
