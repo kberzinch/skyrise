@@ -1,4 +1,4 @@
-void Auton_Red_Freedom() {
+void Auton_Blue_Freedom() {
 	ResetDriveEncoders();
 	Auton_Drive(RIGHT);
 	while(nMotorEncoder[DriveCenterA] > -100) {}
@@ -19,17 +19,17 @@ void Auton_Red_Freedom() {
 	startTask(Lift_Stabilizer_Left);
 	startTask(Lift_Stabilizer_Right);
 	while(((SensorValue[I2C_3] - SensorValue[I2C_4]) / 2) < 100) {}
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE, -25);
-	ResetDriveEncoders();
-	Auton_Drive(LEFT);
-	while(SensorValue[I2C_1] < 400) {}
+	Auton_Drive_TurnTo(CLOCKWISE, 25);
+	/*ResetDriveEncoders();
+	Auton_Drive(RIGHT);
+	while(SensorValue[I2C_1] > -400) {}
 	Auton_Drive();
-	ResetDriveEncoders();
-	Auton_Drive_Targeted(FORWARD, 475);
+	ResetDriveEncoders();*/
+	Auton_Drive_Targeted(FORWARD, 550);
 	Lift_Target = 1000;
 	while(((SensorValue[I2C_3] - SensorValue[I2C_4]) / 2) < 900) {}
 	sleep(500);
-	Auton_Drive_TurnTo(CLOCKWISE, -800, 63);
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 800, 63);
 	Auton_Drive_Targeted(FORWARD, 60);
 	sleep(500);
 	Lift_Target = 800;
@@ -47,7 +47,7 @@ void Auton_Red_Freedom() {
 	Auton_Drive();
 	ResetDriveEncoders();
 	Lift_Target = 400;
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 750);
+	Auton_Drive_TurnTo(CLOCKWISE, -750);
 	SensorValue[SolenoidCubes] = 1;
 	Auton_Drive_Targeted(FORWARD, 400);
 	IsStabilizerRunning = false;
@@ -71,7 +71,7 @@ void Auton_Red_Freedom() {
 	ResetDriveEncoders();
 	//Lift_Target = 150;
 	//while(((SensorValue[I2C_3] - SensorValue[I2C_4]) / 2) > 250) {}
-	Auton_Drive_TurnTo(CLOCKWISE, -750);
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 750);
 	Auton_Drive_Targeted(FORWARD, 50);
 	Lift_Target = 1000;
 	Auton_Drive_Targeted(FORWARD, 400);
