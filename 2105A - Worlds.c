@@ -40,8 +40,15 @@ const tSensors DriveEncoder = I2C_2;
 #include "core\v3\batteryindicators.h"
 #include "core\v3\core.h"
 #include "misc\2105A-stabilizers.h"
-#include "auton\2105A-red-atloader.h"
-//#include "auton\2105A-red-freedom.h"
+
+/*
+ * HEY SULTAN!!! You need to enable autons in autonmanager too. I disabled any I wasn't testing for faster downloads.
+ */
+
+//#include "auton\2105A-red-atloader.h" // 1x cube, maybe 1 pylon if you're lucky. Discuss w/ John RE: using Freedom-style auton for more points more reliably.
+//#include "auton\2105A-red-freedom.h" // 4x cubes, takes 20 seconds
+//#include "auton\2105A-blue-atloader.h" // 4x cubes no pylons
+#include "auton\2105A-blue-freedom.h" // 4x cubes, also takes 20 seconds
 #include "misc\2105A-autonmanager.h"
 #include "usercontrol\2105A-john.h"
 
