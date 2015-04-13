@@ -14,14 +14,14 @@ task autonomous {
 			//Auton_Blue_AtLoader();
 			break;
 		case false:
-			//Auton_Red_AtLoader();
+			Auton_Red_AtLoader();
 			break;
 		}
 		break;
 	case false:
 		switch(Competition.IsBlue) {
 		case true:
-			Auton_Blue_Freedom();
+			//Auton_Blue_Freedom();
 			break;
 		case false:
 			//Auton_Red_Freedom();
