@@ -460,6 +460,18 @@ void pre_auton() {
 	LCD_Menu();
 	clearLCDLine(0);
 	clearLCDLine(1);
+	displayLCDCenteredString(0, "Did you put air");
+	displayLCDCenteredString(1, "in it?       YES");
+	while(nLCDButtons != 4 && bIfiRobotDisabled) {}
+	while(nLCDButtons == 4 && bIfiRobotDisabled) {}
+	clearLCDLine(0);
+	clearLCDLine(1);
+	displayLCDCenteredString(0, "Are you sure?");
+	displayLCDCenteredString(1, "YES");
+	while(nLCDButtons != 2 && bIfiRobotDisabled) {}
+	while(nLCDButtons == 2 && bIfiRobotDisabled) {}
+	clearLCDLine(0);
+	clearLCDLine(1);
 	displayLCDCenteredString(0, "Position robot");
 	displayLCDCenteredString(1, "press any key");
 	while(nLCDButtons == 0 && bIfiRobotDisabled) {}
@@ -487,12 +499,12 @@ void pre_auton() {
 #endif
 }
 
-void Auton_Lift(tVertical Direction = VSTOP, tSpeed Speed = 127, int Time = 0) {
+void Auton_Lift(tVertical Direction = VSTOP, tSpeed Speed = 127, int Time = 0, bool OverrideLimits = false) {
 	if(Lift_TrippedMax() && Direction == UP) {
 		Auton_Lift();
 		return;
 	}
-	if(Lift_TrippedMin() && Direction == DOWN) {
+	if(Lift_TrippedMin() && !OverrideLimits && Direction == DOWN) {
 		Auton_Lift();
 		return;
 	}
