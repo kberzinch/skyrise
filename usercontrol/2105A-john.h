@@ -43,12 +43,5 @@ task usercontrol {
 		}
 		SensorValue[SolenoidCubes] = !vexRT[Btn5D];
 		SensorValue[SolenoidPylons] = vexRT[Btn5U];
-		/*if(vexRT[Btn7L] == 1) {
-		Pylon_Target = 1000;
-		} else if(vexRT[Btn7R] == 1) {
-		Pylon_Target = 3000;
-		} else {
-		Pylon_Target = 1950;
-		}*/
 	}
 }
