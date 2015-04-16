@@ -8,10 +8,11 @@ void Auton_Blue_Freedom() {
 	Auton_Lift_Targeted(UP,300);
 	startTask(Lift_Stabilizer_Left);
 	startTask(Lift_Stabilizer_Right);
-	Auton_Drive_Targeted(FORWARD, 330);
+	Auton_Drive_Targeted(FORWARD, 360);
 	sleep(500);
 	IsStabilizerRunning = false;
-	Auton_Lift_Targeted(DOWN, 0);
+	Auton_Lift_Targeted(DOWN, 1);
+	Auton_Lift(DOWN, 30, 0, true);
 	/*Lift_Target = -100;
 	while(((SensorValue[I2C_3] - SensorValue[I2C_4]) / 2) > -50) {}*/
 	sleep(250);
@@ -29,8 +30,13 @@ void Auton_Blue_Freedom() {
 	Lift_Target = 1000;
 	while(((SensorValue[I2C_3] - SensorValue[I2C_4]) / 2) < 900) {}
 	sleep(500);
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 750, 63);
-	Auton_Drive_Targeted(FORWARD, 80);
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 850, 63);
+	Auton_Drive_Targeted(FORWARD, 100);
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 900, 63);
+	/*ResetDriveEncoders();
+	Auton_Drive(LEFT);
+	while(SensorValue[I2C_1] < 400) {}
+	Auton_Drive();*/
 	sleep(500);
 	Lift_Target = 800;
 	while(((SensorValue[I2C_3] - SensorValue[I2C_4]) / 2) > 800) {}
@@ -54,7 +60,8 @@ void Auton_Blue_Freedom() {
 	SensorValue[SolenoidCubes] = 1;
 	Auton_Drive_Targeted(FORWARD, 220);
 	IsStabilizerRunning = false;
-	Auton_Lift_Targeted(DOWN, 0);
+	Auton_Lift_Targeted(DOWN, 1);
+	Auton_Lift(DOWN, 30, 0, true);
 	Lift_Target = 700;
 	startTask(Lift_Stabilizer_Left);
 	startTask(Lift_Stabilizer_Right);

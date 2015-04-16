@@ -10,6 +10,7 @@ task BatteryIndicate {
 				if(nSysTime - battlast_nSysTime > 100) {
 					battlast_nSysTime = nSysTime;
 					SensorValue[BackupBattLEDRed] = !SensorValue[BackupBattLEDRed];
+					SensorValue[BackupBattLEDGreen] = 0;
 				}
 				} else {
 				SensorValue[BackupBattLEDRed] = 1;
@@ -20,10 +21,11 @@ task BatteryIndicate {
 			SensorValue[BackupBattLEDGreen] = 1;
 		}
 		if(((float)nImmediateBatteryLevel / (float)1000) < 8) {
-		if(((float)nImmediateBatteryLevel / (float)1000) < 7.5) {
+			if(((float)nImmediateBatteryLevel / (float)1000) < 7.8) {
 				if(nSysTime - batt1last_nSysTime > 100) {
 					batt1last_nSysTime = nSysTime;
 					SensorValue[MainBattLEDRed] = !SensorValue[MainBattLEDRed];
+					SensorValue[MainBattLEDGreen] = 0;
 				}
 				} else {
 				SensorValue[MainBattLEDRed] = 1;
