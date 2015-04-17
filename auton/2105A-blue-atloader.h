@@ -9,7 +9,7 @@ void Auton_Blue_AtLoader() {
 	startTask(Lift_Stabilizer_Left);
 	startTask(Lift_Stabilizer_Right);
 	ResetDriveEncoders();
-	Auton_Drive_Targeted(FORWARD, 100);
+	Auton_Drive_Targeted(FORWARD, 150);
 	SensorValue[SolenoidCubes] = 0;
 	sleep(500);
 	Lift_Target = 400;
@@ -18,12 +18,12 @@ void Auton_Blue_AtLoader() {
 	Lift_Target = -100;
 	SensorValue[SolenoidPylons] = 1;
 	while(((SensorValue[I2C_3] - SensorValue[I2C_4]) / 2) > 0) {}
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 620); //770
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 800); //770
 	ResetDriveEncoders();
 	Auton_Drive(RIGHT);
 	while(nMotorEncoder[DriveCenterA] > -600) {}
 	Auton_Drive();
-	Auton_Drive_Targeted(FORWARD, 120);
+	Auton_Drive_Targeted(FORWARD, 140);
 	sleep(500);
 	Auton_Drive(LEFT);
 	while(nMotorEncoder[DriveCenterA] < 150) {}
@@ -39,9 +39,9 @@ void Auton_Blue_AtLoader() {
 	Auton_Drive_Targeted(BACKWARD, 500);
 	Lift_Target = 100;
 	Auton_Drive_TurnTo(CLOCKWISE, 500); // 550
-	Auton_Drive_Targeted(FORWARD, 230); // 240
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 400, 63); // 430
-	Auton_Drive(BACKWARD,63,80); // 100 msec
+	Auton_Drive_Targeted(FORWARD, 200); // 240
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 430, 63); // 430 // 380
+	Auton_Drive(BACKWARD,63,100); // 100 msec
 	sleep(1000);
 	IsStabilizerRunning = false;
 	Auton_Lift_Targeted(DOWN, 1, 127, 500);
@@ -51,17 +51,17 @@ void Auton_Blue_AtLoader() {
 	sleep(1000);
 	Auton_Lift_Targeted(UP,100);
 	Auton_Drive_Targeted(BACKWARD, 100);
-	Auton_Drive_TurnTo(CLOCKWISE, -200);
+	Auton_Drive_TurnTo(CLOCKWISE, -100);
 	Auton_Drive_Targeted(FORWARD, 200);
 	SensorValue[SolenoidCubes] = 1;
-	Auton_Lift_Targeted(DOWN, 0);
-	sleep(500);
+	Auton_Lift_Targeted(DOWN, 1);
+	Auton_Lift(DOWN, 127, 500, true);
 	Auton_Lift_Targeted(UP, 300);
 	Lift_Target = 400;
 	startTask(Lift_Stabilizer_Left);
 	startTask(Lift_Stabilizer_Right);
 	Auton_Drive_Targeted(BACKWARD, 200);
-	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 420, 63); // 430
+	Auton_Drive_TurnTo(COUNTERCLOCKWISE, 400, 63); // 430
 	Auton_Drive_Targeted(FORWARD, 300);
 	SensorValue[SolenoidCubes] = 0;
 	Auton_Drive_Targeted(BACKWARD, 200);

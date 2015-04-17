@@ -15,11 +15,11 @@ const string RobotDisabled = "Robot disabled";
 
 task main() {
 #if defined(_DEBUG)
-			writeDebugStreamLine("Preauton start");
+	writeDebugStreamLine("Preauton start");
 #endif
 	pre_auton();
 #if defined(_DEBUG)
-			writeDebugStreamLine("Preauton end");
+	writeDebugStreamLine("Preauton end");
 #endif
 	while (true) {
 		if(bVEXNETActive_last != bVEXNETActive) {
@@ -51,6 +51,7 @@ task main() {
 				EndTimeSlice();
 			}
 			allMotorsOff();
+			SensorValue[SolenoidCubes] = 0;
 #if defined(_DEBUG)
 			writeDebugStreamLine(RobotDisabled);
 #endif

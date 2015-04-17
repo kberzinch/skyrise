@@ -9,6 +9,7 @@
 int drivemultiplier = 1;
 int dval = 0;
 int deadband = 20;
+int pylonlast = 0;
 
 task usercontrol {
 	while(true) {
@@ -41,7 +42,10 @@ task usercontrol {
 				startTask(Lift_Stabilizer_Right);
 			}
 		}
+		if(pylonlast != vexRT[Btn5U] && vexRT[Btn5U] == 1) {
+			SensorValue[SolenoidPylons] = !SensorValue[SolenoidPylons];
+		}
+		pylonlast = vexRT[Btn5U];
 		SensorValue[SolenoidCubes] = !vexRT[Btn5D];
-		SensorValue[SolenoidPylons] = vexRT[Btn5U];
 	}
 }

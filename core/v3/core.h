@@ -460,7 +460,7 @@ void pre_auton() {
 	LCD_Menu();
 	clearLCDLine(0);
 	clearLCDLine(1);
-	displayLCDCenteredString(0, "Did you put air");
+	/*displayLCDCenteredString(0, "Did you put air");
 	displayLCDCenteredString(1, "in it?       YES");
 	while(nLCDButtons != 4 && bIfiRobotDisabled) {}
 	while(nLCDButtons == 4 && bIfiRobotDisabled) {}
@@ -469,7 +469,7 @@ void pre_auton() {
 	displayLCDCenteredString(0, "Are you sure?");
 	displayLCDCenteredString(1, "YES");
 	while(nLCDButtons != 2 && bIfiRobotDisabled) {}
-	while(nLCDButtons == 2 && bIfiRobotDisabled) {}
+	while(nLCDButtons == 2 && bIfiRobotDisabled) {}*/
 	clearLCDLine(0);
 	clearLCDLine(1);
 	displayLCDCenteredString(0, "Position robot");
