@@ -21,7 +21,7 @@ task BatteryIndicate {
 			SensorValue[BackupBattLEDGreen] = 1;
 		}
 		if(((float)nImmediateBatteryLevel / (float)1000) < 8) {
-			if(((float)nImmediateBatteryLevel / (float)1000) < 7.8) {
+			if(((float)nImmediateBatteryLevel / (float)1000) < 7.5	) {
 				if(nSysTime - batt1last_nSysTime > 100) {
 					batt1last_nSysTime = nSysTime;
 					SensorValue[MainBattLEDRed] = !SensorValue[MainBattLEDRed];
