@@ -481,13 +481,13 @@ void pre_auton() {
 	displayLCDString(0, 0, "*** KEEP BACK ***");
 	displayLCDString(1, 0, "   CALIBRATING");
 
-	// Next 6 lines are verbatim from gyro sample programs
+	/*// Next 6 lines are verbatim from gyro sample programs
 	//Completely clear out any previous sensor readings by setting the port to "sensorNone"
 	SensorType[Gyroscope] = sensorNone;
 	wait1Msec(1000);
 	//Reconfigure Analog Port 8 as a Gyro sensor and allow time for ROBOTC to calibrate it
 	SensorType[Gyroscope] = sensorGyro;
-	wait1Msec(2000);
+	wait1Msec(2000);*/
 
 	clearLCDLine(0);
 	clearLCDLine(1);

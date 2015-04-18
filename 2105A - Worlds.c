@@ -48,7 +48,7 @@ const tSensors DriveEncoder = I2C_2;
 void ReleaseLift() {
 	ResetDriveEncoders();
 	Auton_Drive(RIGHT);
-	while(((SensorValue[I2C_3] - SensorValue[I2C_4]) / 2) < 20) {}
+	while(nMotorEncoder[DriveCenterA] > -160) {}
 	Auton_Drive(LEFT);
 	while(nMotorEncoder[DriveCenterA] < 0) {}
 	Auton_Drive();
@@ -72,6 +72,7 @@ void init() {
 	SensorValue[SolenoidPylons] = 0;
 	SensorValue[SolenoidCubes] = 1;
 	SensorValue[Gyroscope] = 0;
+
 }
 
 void ResetDriveEncoders() {
