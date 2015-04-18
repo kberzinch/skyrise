@@ -1,9 +1,5 @@
 void Auton_Blue_AtLoader() {
-	ResetDriveEncoders();
-	Auton_Drive(RIGHT);
-	while(nMotorEncoder[DriveCenterA] > -100) {}
-	Auton_Drive();
-	ResetDriveEncoders();
+ReleaseLift();
 	Lift_Target = 50;
 	Auton_Lift_Targeted(UP,50);
 	startTask(Lift_Stabilizer_Left);

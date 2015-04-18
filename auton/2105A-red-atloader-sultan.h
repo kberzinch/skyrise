@@ -1,9 +1,5 @@
 void Auton_Red_AtLoader() {
-	ResetDriveEncoders();
-	Auton_Drive(RIGHT);
-	while(nMotorEncoder[DriveCenterA] > -100) {}
-	Auton_Drive();
-	ResetDriveEncoders();
+	ReleaseLift();
 	Lift_Target = 50;
 	Auton_Lift_Targeted(UP,50);
 	startTask(Lift_Stabilizer_Left);
@@ -12,9 +8,11 @@ void Auton_Red_AtLoader() {
 	Auton_Drive_Targeted(FORWARD, 150);
 	SensorValue[SolenoidCubes] = 0;
 	sleep(500);
+	//Auton_Lift_Targeted(UP, 400);
 	Lift_Target = 400;
 	while(((SensorValue[I2C_3] - SensorValue[I2C_4]) / 2) < 200) {}
 	Auton_Drive_Targeted(BACKWARD, 60);
+	//Auton_Lift_Targeted(DOWN, 1);
 	Lift_Target = -100;
 	SensorValue[SolenoidPylons] = 1;
 	while(((SensorValue[I2C_3] - SensorValue[I2C_4]) / 2) > 0) {}
@@ -37,6 +35,7 @@ void Auton_Red_AtLoader() {
 	startTask(Lift_Stabilizer_Left);
 	startTask(Lift_Stabilizer_Right);
 	Auton_Drive_Targeted(BACKWARD, 450);
+	//Auton_Lift_Targeted(DOWN, 100);
 	Lift_Target = 100;
 	Auton_Drive_TurnTo(COUNTERCLOCKWISE, -550);
 	Auton_Drive_Targeted(FORWARD, 210);

@@ -45,6 +45,16 @@ const tSensors DriveEncoder = I2C_2;
  * HEY SULTAN!!! You need to enable autons in autonmanager too. I disabled any I wasn't testing for faster downloads.
  */
 
+void ReleaseLift() {
+	ResetDriveEncoders();
+	Auton_Drive(RIGHT);
+	while(((SensorValue[I2C_3] - SensorValue[I2C_4]) / 2) < 20) {}
+	Auton_Drive(LEFT);
+	while(nMotorEncoder[DriveCenterA] < 0) {}
+	Auton_Drive();
+	ResetDriveEncoders();
+}
+
 #include "auton\2105A-red-atloader-sultan.h" // 1x cube, maybe 1 pylon if you're lucky. Discuss w/ John RE: using Freedom-style auton for more points more reliably.
 #include "auton\2105A-red-freedom-sultan-b.h" // 4x cubes, takes 20 seconds
 #include "auton\2105A-blue-atloader.h" // 4x cubes no pylons

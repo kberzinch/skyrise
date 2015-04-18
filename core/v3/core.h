@@ -88,7 +88,7 @@ int Auton_GetMultiplier(tDirection Direction, tMotor WhichMotor) {
 		}
 	case BACKWARD:
 		return -Auton_GetMultiplier(FORWARD, WhichMotor);
-	/*case LEFT:
+		/*case LEFT:
 #if defined(_DEBUG)
 #ifdef MultiDriveEncoders
 		writeDebugStreamLine("***ATTENTION: Crawling does not work with multiple encoders b/c I didn't feel like making exceptions.");
@@ -96,15 +96,15 @@ int Auton_GetMultiplier(tDirection Direction, tMotor WhichMotor) {
 #endif
 		switch(WhichMotor) {
 		case DriveFrontLeft:
-			return 1;
+		return 1;
 		case DriveFrontRight:
-			return 1;
+		return 1;
 		case DriveRearLeft:
-			return -1;
+		return -1;
 		case DriveRearRight:
-			return -1;
+		return -1;
 		}
-	case RIGHT:
+		case RIGHT:
 #if defined(_DEBUG)
 #ifdef MultiDriveEncoders
 		writeDebugStreamLine("***ATTENTION: Crawling does not work with multiple encoders b/c I didn't feel like making exceptions.");
@@ -395,11 +395,11 @@ void pre_auton() {
 		displayLCDCenteredString(1, POSTErrorText);
 	}
 #endif
-/*#ifndef NoLiftLimits
+	/*#ifndef NoLiftLimits
 	selftest("Lift limits: ");
 	while(!Lift_TrippedMin() || Lift_TrippedMax() && nLCDButtons == 0 && bIfiRobotDisabled) {
-		displayLCDCenteredString(0, "POST ERROR");
-		displayLCDCenteredString(1, "Check lift limits");
+	displayLCDCenteredString(0, "POST ERROR");
+	displayLCDCenteredString(1, "Check lift limits");
 	}
 #endif*/
 	selftest("VEXnet link: ");
@@ -480,13 +480,18 @@ void pre_auton() {
 	clearLCDLine(1);
 	displayLCDString(0, 0, "*** KEEP BACK ***");
 	displayLCDString(1, 0, "   CALIBRATING");
-	sleep(1000);
+
+	// Next 6 lines are verbatim from gyro sample programs
+	//Completely clear out any previous sensor readings by setting the port to "sensorNone"
+	SensorType[Gyroscope] = sensorNone;
+	wait1Msec(1000);
+	//Reconfigure Analog Port 8 as a Gyro sensor and allow time for ROBOTC to calibrate it
+	SensorType[Gyroscope] = sensorGyro;
+	wait1Msec(2000);
+
 	clearLCDLine(0);
 	clearLCDLine(1);
 	startTask(LCD_Display);
-#endif
-#if defined(_DEBUG)
-	writeDebugStreamLine("Waiting to reset encoders...");
 #endif
 #ifndef NoInit
 #if defined(_DEBUG)
@@ -521,7 +526,7 @@ void Auton_Lift(tVertical Direction = VSTOP, tSpeed Speed = 127, int Time = 0, b
 }
 
 // if sensorvalue == newposition nothing will happen
- void Auton_Lift_Targeted(tVertical Direction, int NewPosition = 0, tSpeed Speed = 127, int Timeout = 4000) {
+void Auton_Lift_Targeted(tVertical Direction, int NewPosition = 0, tSpeed Speed = 127, int Timeout = 4000) {
 	const int StartTime = nSysTime;
 #if defined(_DEBUG)
 	writeDebugStreamLine("Request to move lift to position %i at speed %i",NewPosition,Speed);
